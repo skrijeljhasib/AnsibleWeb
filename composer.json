@@ -1,17 +1,16 @@
 {
   "name": "objective-php/starter-kit",
   "description": "Objective PHP Project Template",
-  "type": "skeleton",
   "keywords": [
-    "skeleton",
+    "ansible",
     "objective php"
   ],
   "homepage": "https://github.com/objective-php/starter-kit",
   "license": "GPL-3.0",
   "authors": [
     {
-      "name": "Gauthier 'Rusty' Delamarre",
-      "email": "gauthier@objective-php.org",
+      "name": "Skrijelj Hasib",
+      "email": "h.skrijelj@flash-global.net",
       "role": "lead"
     }
   ],
@@ -20,7 +19,6 @@
     "objective-php/application": "~1.1.0",
     "objective-php/router": "~1.0.0",
     "objective-php/fastroute-package": "~1.0.0",
-    "objective-php/doctrine-package": "~1.0.0",
     "twbs/bootstrap": "^3.3",
     "objective-php/cli": "^1.0.0"
   },
@@ -28,5 +26,8 @@
     "psr-4": {
       "Project\\": "app/src"
     }
+  },
+  "require-dev": {
+    "objective-php/doctrine-package": "dev-master"
   }
 }

@@ -10,7 +10,6 @@ namespace Project;
  */
 
 use ObjectivePHP\Application\AbstractApplication;
-use ObjectivePHP\Application\Operation\ActionRunner;
 use ObjectivePHP\Application\Operation\RequestWrapper;
 use ObjectivePHP\Application\Operation\ResponseInitializer;
 use ObjectivePHP\Application\Operation\ResponseSender;
@@ -20,15 +19,14 @@ use ObjectivePHP\Application\Operation\ViewResolver;
 use ObjectivePHP\Application\View\Helper\Vars;
 use ObjectivePHP\Application\Workflow\Filter\UrlFilter;
 use ObjectivePHP\Cli\Router\CliRouter;
+use ObjectivePHP\Package\Doctrine\DoctrinePackage;
 use ObjectivePHP\Package\FastRoute\FastRouteRouter;
 use ObjectivePHP\Router\Dispatcher;
 use ObjectivePHP\Router\MetaRouter;
 use ObjectivePHP\Router\PathMapperRouter;
 use Project\Cli\HelloWorld;
 use Project\Cli\Test;
-use Project\Cli\Worker2 as Worker;
 use Project\Middleware\LayoutSwitcher;
-use Project\Package\Example\ExamplePackage;
 
 /**
  * Class Application
@@ -103,7 +101,7 @@ class Application extends AbstractApplication
 
         $this->getStep('bootstrap')
             // load external packages
-            ->plug(ExamplePackage::class);
+            ->plug(new DoctrinePackage());
 
     }
 
