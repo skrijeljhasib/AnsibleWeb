@@ -233,7 +233,7 @@ class PlayBook
     public function package_manager($name,$package_manager,$items, $state)
     {
         $arr["name"] = $name;
-        $arr[$package_manager] = "name={{ item }} state=$state";
+        $arr[$package_manager] = "name={{ item }} state=$state update_cache=yes";
         $arr["with_items"] = $items;
 
         return $arr;
@@ -247,12 +247,10 @@ class PlayBook
         return $arr;
     }
 
-    public function wait_for($name,$host,$port,$state)
+    public function wait_for($name,$host,$port,$delay)
     {
         $arr["name"] = $name;
-        $arr["local_action"]["wait_for"]["host"] = $host;
-        $arr["local_action"]["wait_for"]["port"] = $port;
-        $arr["local_action"]["wait_for"]["state"] = $state;
+        $arr["local_action"] = "wait_for host=$host port=$port delay=$delay";
 
         return $arr;
     }

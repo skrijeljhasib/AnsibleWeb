@@ -23,6 +23,9 @@ class PlayBookGateway
             case 'package':
                 $json = $this->package($app);
                 break;
+            case 'wait':
+                $json = $this->wait($app);
+                break;
             case 'clean':
                 $json = $this->clean($app);
                 break;
@@ -94,18 +97,12 @@ class PlayBookGateway
         $lineinfile_inventory_line = '{{ '.$os_server_register.'.server.public_v4 }}';
         $lineinfile_inventory = $playbook->lineinfile($lineinfile_inventory_name,$lineinfile_inventory_path,$lineinfile_inventory_line,'create','yes');
 
-        $wait_for_name = 'Wait for port 22 to be open';
-        $wait_for_host = '{{ '.$os_server_register.'.server.public_v4 }}';
-        $wait_for_port = '22';
-        $wait_for_state = 'started';
-        $wait_for = $playbook->wait_for($wait_for_name,$wait_for_host,$wait_for_port,$wait_for_state);
-
-        $post_tasks = [$lineinfile_tmp,$lineinfile_inventory,$wait_for];
+        $post_tasks = [$lineinfile_tmp,$lineinfile_inventory];
 
         $playbook->tasks($tasks);
         $playbook->post_tasks($post_tasks);
 
-        $unset_parameters = ['pre_tasks','remote_user','connection','local_action'];
+        $unset_parameters = ['pre_tasks','remote_user','connection'];
         $playbook_json = $playbook->toJSON($unset_parameters);
 
         return $playbook_json;
@@ -126,7 +123,7 @@ class PlayBookGateway
         $playbook->setGatherFacts('false');
 
         $raw_name = 'Install Python';
-        $raw_install_python_modules = 'apt -qy install python-simplejson';
+        $raw_install_python_modules = $machine_access['package_manager'].' -y install python-simplejson';
         $raw = $playbook->raw($raw_name,$raw_install_python_modules);
 
         $package_manager_name = 'Install Packages';
@@ -145,6 +142,38 @@ class PlayBookGateway
         $playbook_json = $playbook->toJSON($unset_parameters);
 
         return $playbook_json;
+    }
+
+
+    public function wait(Application $app)
+    {
+        $machine_access = $app->getConfig()->get(MachineAccess::class);
+
+        $playbook = new PlayBook();
+
+        $playbook->setName('Wait');
+        $playbook->setBecome('true');
+        $playbook->setBecomeMethod('sudo');
+        $playbook->setBecomeUser('www-data');
+        $playbook->setBecomeFlags('-s /bin/sh');
+        $playbook->setHosts('localhost');
+        $playbook->setGatherFacts('false');
+
+        $wait_for_name = 'Wait for port 22 to be ready';
+        $wait_for_host = '{{ lookup(\'file\', \''.$machine_access['tmp_file'].'\') }}';
+        $wait_for_port = '22';
+        $wait_for_delay = '10';
+        $wait_for = $playbook->wait_for($wait_for_name,$wait_for_host,$wait_for_port,$wait_for_delay);
+
+        $tasks = [$wait_for];
+
+        $playbook->tasks($tasks);
+
+        $unset_parameters = ['pre_tasks','post_tasks','remote_user','connection'];
+        $playbook_json = $playbook->toJSON($unset_parameters);
+
+        return $playbook_json;
+
     }
 
 
@@ -170,10 +199,9 @@ class PlayBookGateway
 
         $playbook->tasks($tasks);
 
-        $unset_parameters = ['pre_tasks','post_tasks','remote_user','connection','local_action'];
+        $unset_parameters = ['pre_tasks','post_tasks','remote_user','connection'];
         $playbook_json = $playbook->toJSON($unset_parameters);
 
         return $playbook_json;
-
     }
 }
