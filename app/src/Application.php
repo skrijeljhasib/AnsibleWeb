@@ -27,6 +27,7 @@ use ObjectivePHP\Router\PathMapperRouter;
 use Project\Cli\HelloWorld;
 use Project\Cli\Test;
 use Project\Middleware\LayoutSwitcher;
+use Worker;
 
 /**
  * Class Application
