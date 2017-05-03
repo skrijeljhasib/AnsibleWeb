@@ -8,8 +8,8 @@ use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
 
 $host = [
-    "host_config" => "FIXED", // FIXED, CUSTOM, RANDOM
-    "host_name" => "Ansible.test" // Only used if $host_config is FIXED
+    "host_config" => "CUSTOM", // FIXED, CUSTOM, RANDOM
+    "host_name" => "AnsibleWebTest" // Only used if $host_config is FIXED
 ];
 
 $auth = [
@@ -27,6 +27,7 @@ $machine_template = [
     "auto_ip" => "auto-ip",
     "network" => "network",
     "region_name" => "region_name",
+    "timeout" => "300",
     "meta" => [
         "hostname" => $host['host_name']
     ]
