@@ -8,7 +8,7 @@
 
     $app = new Application($autoloader);
 
-    $app->setEnv(getenv('APPLICATION_ENV') ?: 'production');
+    $app->setEnv(getenv('APPLICATION_ENV') ?: 'test');
 
     $app->loadConfig('app/config');
 
