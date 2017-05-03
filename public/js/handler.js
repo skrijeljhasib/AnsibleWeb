@@ -2,9 +2,9 @@ $(document).ready(function () {
 
     $("#selectAllorNot").click(function(){
         if($("#selectAllorNot").is(':checked') ){
-            $('#serverpackages').find('option').attr('selected', true).parent().trigger('change')
+            $('#packages').find('option').attr('selected', true).parent().trigger('change')
         } else {
-            $('#serverpackages').find('option').attr('selected', false).parent().trigger('change')
+            $('#packages').find('option').attr('selected', false).parent().trigger('change')
         }
     });
 
@@ -22,5 +22,7 @@ $(document).ready(function () {
         $(this).tab('show');
     });
 
-    $('select').select2();
+    $('select').select2({
+        placeholder: "Choose ..."
+    });
 });
