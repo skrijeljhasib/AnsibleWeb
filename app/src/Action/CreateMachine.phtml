@@ -1,0 +1,89 @@
+<?php
+
+use ObjectivePHP\Application\View\Helper\Vars;
+use Project\Entity\Package;
+
+?>
+<div class="row">
+    <div class="col-md-offset-3 col-md-6">
+
+        <h3>Configuration</h3>
+        <form id="createMachine">
+
+        <?php
+            if(!Vars::collection('host')->isEmpty())
+            {
+                $host = Vars::collection('host')->toArray();
+                if($host['host_config'] === 'FIXED')
+                {
+                    echo "<label for='name'>Hostname: </label><input id='name' class='form-control' type='text' value=".$host["host_name"]." disabled>";
+                }
+                elseif($host['host_config'] === 'CUSTOM')
+                {
+                    echo "<label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' value=".$host["host_name"]." required>";
+                }
+                elseif($host['host_config'] === 'RANDOM')
+                {
+                    echo "<div class='alert alert-info'>The Hostname will created randomly.</div>";
+                }
+                else
+                {
+                    throw new Exception('Check your openstack.local.php file');
+                }
+            }
+        ?>
+            <br>
+        <h3>Which packages do you need?</h3>
+        <input type="checkbox" id="selectAllorNot" /> <label for="selectAllorNot">Select All</label>
+        <select multiple="multiple" name="packages[]" required id="packages" class="form-control" style="width: 100%">
+            <?php
+
+            Vars::collection('packages')->each(
+                function (Package $package) {
+                    echo "<option value=".$package->getName().">".$package->getName()."</option>";
+                }
+            );
+
+            ?>
+        </select>
+
+        <!--<br><br>
+
+        <h3>Do you need a Webserver?</h3>
+
+        <!- - Nav tabs - ->
+        <ul class="nav nav-tabs" role="tablist" id="myTabs">
+            <li role="presentation" class="active"><a href="#apache" aria-controls="apache" role="tab" data-toggle="tab">Apache</a></li>
+            <li role="presentation"><a href="#ngnix" aria-controls="nginx" role="tab" data-toggle="tab">NginX</a></li>
+        </ul>
+
+        <!- - Tab panes - ->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="apache">
+                apache
+            </div>
+            <div role="tabpanel" class="tab-pane" id="ngnix">
+                nginx
+            </div>
+        </div>-->
+
+        <br><br><br>
+        <input class="btn btn-default btn-block" type="submit" id="SendToAnsibleApi" value="Create and install Machine">
+        </form>
+
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-offset-3 col-md-6">
+        <h2>Result</h2>
+        <!--<div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                0%
+            </div>
+        </div>-->
+        <div id="result" class="jumbotron text-center">
+            <img src="/img/page-loader.gif" id="loading" />
+        </div>
+    </div>
+</div>
