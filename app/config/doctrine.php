@@ -13,9 +13,9 @@ return [
         'driver'        => 'pdo_mysql',
         'host'          => '127.0.0.1',
         'port'          => 3306,
-        'user'          => 'ansible',
-        'password'      => 'q1w2e3!',
-        'dbname'        => 'ansible',
+        'user'          => 'user',
+        'password'      => 'password!',
+        'dbname'        => 'dbname',
         'mapping_types' => [
             'enum' => 'string'
         ]
