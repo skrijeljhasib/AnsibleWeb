@@ -1,50 +1,83 @@
 $(document).ready(function () {
-            $('#installServer').submit(function (event) {
-                event.preventDefault();
+    $('#createMachine').submit(function (event) {
+        event.preventDefault();
 
-                let serverpackages = $('[name="serverpackages[]"]').val();
 
-                let playbooks = '[';
+        let host = {};
+        $('input[name*="host"]').each(function(){
+            host[this.id] = $(this).val();
+        });
+
+        host = JSON.stringify(host);
+
+        let packages = $('[name="packages[]"]').val();
+
+        let playbooks = '[';
+
+        $.ajax({
+            type: 'GET',
+            url: '/playBookJSON',
+            data: {
+                playbook: 'clean'
+            }
+        }).done(function (data) {
+            playbooks += data;
+            playbooks += ',';
+            $.ajax({
+                type: 'GET',
+                url: '/playBookJSON',
+                data: {
+                    playbook: 'machine',
+                    host: host
+                }
+            }).done(function (data) {
+                playbooks += data;
+                playbooks += ',';
 
                 $.ajax({
                     type: 'GET',
                     url: '/playBookJSON',
                     data: {
-                        playbook: 'machine',
+                        playbook: 'wait',
                     }
-                }).done(function(data) {
+                }).done(function (data) {
                     playbooks += data;
                     playbooks += ',';
+
                     $.ajax({
                         type: 'GET',
                         url: '/playBookJSON',
                         data: {
                             playbook: 'package',
-                            packages: serverpackages
+                            packages: packages
                         }
-                    }).done(function(data) {
+                    }).done(function (data) {
                         playbooks += data;
                         playbooks += ']';
+
+                        console.log(playbooks);
 
                         $.ajax({
                             type: 'POST',
                             url: 'http://localhost:8080/post_data',
                             data: playbooks,
-                            dataType : 'json'
-                        }).done(function(data) {
-                            console.log("ok");
-                            $('#result')
-                                .html(data);
-                        }).fail(function (err) {
-                            console.log("not ok");
+                            dataType: 'json'
+                        }).done(function (response) {
+                            $('#result').html(JSON.stringify(response));
+                        }).fail(function (error) {
+                            console.log(JSON.stringify(error));
                         });
-
-                    }).fail(function () {
-                        console.log('failed to generate the package json');
+                    }).fail(function (error) {
+                        console.log(JSON.stringify(error));
                     });
-                }).fail(function () {
-                    console.log('failed to generate the machine json');
+                }).fail(function (error) {
+                    console.log(JSON.stringify(error));
                 });
-
+            }).fail(function (error) {
+                console.log(JSON.stringify(error));
             });
+        }).fail(function (error) {
+            console.log(JSON.stringify(error));
+        });
+    });
 });
