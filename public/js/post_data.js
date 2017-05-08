@@ -59,7 +59,7 @@ $(document).ready(function () {
 
                         $.ajax({
                             type: 'POST',
-                            url: 'http://localhost:8080/post_data',
+                            url: api_ip+'/post_data',
                             data: playbooks,
                             dataType: 'json'
                         }).done(function (response) {
