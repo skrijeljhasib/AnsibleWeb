@@ -16,16 +16,9 @@ class Home extends RenderableAction
     /**
      * @param ApplicationInterface $app
      * @return array
-     * @internal param $ApplicationInterface
-     *
      */
     public function run(ApplicationInterface $app)
     {
-        // Vars class holds view variables
-        //
-        // you can return an array of view variables or
-        // directly call it
-
         Vars::set('page.title', 'Welcome to AnsibleWeb');
     }
 }
