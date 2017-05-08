@@ -27,10 +27,7 @@ $machine_template = [
     "auto_ip" => "auto-ip",
     "network" => "network",
     "region_name" => "region_name",
-    "timeout" => "300",
-    "meta" => [
-        "hostname" => $host['host_name']
-    ]
+    "timeout" => "300"
 ];
 
 
