@@ -6,7 +6,7 @@
  * Time: 16:51
  */
 
-namespace Project\Entity;
+namespace Project\Entity\DB;
 
 /**
  * @Entity @Table(name="packages")
