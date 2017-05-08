@@ -27,7 +27,6 @@ use ObjectivePHP\Router\PathMapperRouter;
 use Project\Cli\HelloWorld;
 use Project\Cli\Test;
 use Project\Middleware\LayoutSwitcher;
-use Worker;
 
 /**
  * Class Application
@@ -61,7 +60,6 @@ class Application extends AbstractApplication
         $cliRouter = new CliRouter();
         $cliRouter->registerCommand(HelloWorld::class);
         $cliRouter->registerCommand(Test::class);
-        $cliRouter->registerCommand(Worker::class);
         $router->register($cliRouter);
 
         $this->getStep('route')->plug($router)->as('router');
