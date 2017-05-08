@@ -34,7 +34,7 @@ use ObjectivePHP\Application\View\Helper\Vars;
 </head>
 
 <body role="document">
-
+<?php echo "<script>let api_ip = '".Vars::collection('api_ip')->toArray()[0]."'</script>";?>
 <?php include __DIR__ . '/partials/navbar.phtml'; ?>
 <br />
 <div class="container theme-showcase" role="main">
