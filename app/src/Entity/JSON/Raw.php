@@ -16,7 +16,7 @@ namespace Project\Entity\JSON;
 class Raw extends Task
 {
     /**
-     * @var
+     * @var string
      */
     private $raw;
 

@@ -16,12 +16,12 @@ namespace Project\Entity\JSON;
 class File extends Task
 {
     /**
-     * @var
+     * @var string
      */
     private $state;
 
     /**
-     * @var
+     * @var string
      */
     private $path;
 

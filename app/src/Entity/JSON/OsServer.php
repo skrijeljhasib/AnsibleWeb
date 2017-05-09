@@ -7,8 +7,6 @@
  */
 
 namespace Project\Entity\JSON;
-use Project\Application;
-use Project\Config\MachineTemplate;
 
 
 /**
@@ -18,52 +16,52 @@ use Project\Config\MachineTemplate;
 class OsServer extends Task
 {
     /**
-     * @var
+     * @var string
      */
     private $state;
 
     /**
-     * @var
+     * @var array
      */
     private $auth;
 
     /**
-     * @var
+     * @var string
      */
     private $name;
 
     /**
-     * @var
+     * @var string
      */
     private $key_name;
 
     /**
-     * @var
+     * @var string
      */
     private $image;
 
     /**
-     * @var
+     * @var string
      */
     private $flavor;
 
     /**
-     * @var
+     * @var string
      */
     private $timeout;
 
     /**
-     * @var
+     * @var string
      */
     private $auto_ip;
 
     /**
-     * @var
+     * @var string
      */
     private $network;
 
     /**
-     * @var
+     * @var string
      */
     private $region_name;
 
@@ -87,7 +85,7 @@ class OsServer extends Task
     /**
      * @return array
      */
-    public function getAuth()
+    public function getAuth():array
     {
         return $this->auth;
     }
@@ -95,7 +93,7 @@ class OsServer extends Task
     /**
      * @param array $auth
      */
-    public function setAuth($auth)
+    public function setAuth(array $auth)
     {
         $this->auth = $auth;
     }

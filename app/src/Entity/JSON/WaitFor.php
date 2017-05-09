@@ -17,19 +17,19 @@ class WaitFor extends Task
 {
 
     /**
-     * @var
+     * @var string
      */
     private $host;
 
 
     /**
-     * @var
+     * @var string
      */
     private $port;
 
 
     /**
-     * @var
+     * @var string
      */
     private $delay;
 

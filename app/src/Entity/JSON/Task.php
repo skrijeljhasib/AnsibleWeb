@@ -16,34 +16,34 @@ namespace Project\Entity\JSON;
 abstract class Task
 {
     /**
-     * @var
+     * @var string
      */
     private $name;
     /**
-     * @var
+     * @var string
      */
     private $local_action;
     /**
-     * @var
+     * @var string
      */
     private $register;
     /**
-     * @var
+     * @var array
      */
     private $with_items;
 
     /**
-     * @var
+     * @var string
      */
     private $until;
 
     /**
-     * @var
+     * @var string
      */
     private $retries;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUntil()
     {
@@ -51,7 +51,7 @@ abstract class Task
     }
 
     /**
-     * @param mixed $until
+     * @param string $until
      */
     public function setUntil($until)
     {
@@ -59,7 +59,7 @@ abstract class Task
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRetries()
     {
@@ -67,7 +67,7 @@ abstract class Task
     }
 
     /**
-     * @param mixed $retries
+     * @param string $retries
      */
     public function setRetries($retries)
     {

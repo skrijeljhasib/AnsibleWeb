@@ -16,17 +16,17 @@ namespace Project\Entity\JSON;
 class LineInFile extends Task
 {
     /**
-     * @var
+     * @var string
      */
     private $path;
 
     /**
-     * @var
+     * @var string
      */
     private $create;
 
     /**
-     * @var
+     * @var string
      */
     private $line;
 

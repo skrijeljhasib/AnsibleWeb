@@ -16,7 +16,7 @@ namespace Project\Entity\JSON;
 class Shell extends Task
 {
     /**
-     * @var
+     * @var string
      */
     private $shell;
 

@@ -8,10 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
-use Project\Application;
-use Project\Config\OpenStackAuth;
-
 /**
  * Class OsServerAuth
  * @package Project\Entity\JSON
@@ -20,22 +16,22 @@ class OsServerAuth extends Task
 {
 
     /**
-     * @var
+     * @var string
      */
     private $auth_url;
 
     /**
-     * @var
+     * @var string
      */
     private $username;
 
     /**
-     * @var
+     * @var string
      */
     private $password;
 
     /**
-     * @var
+     * @var string
      */
     private $project_name;
 

@@ -17,51 +17,51 @@ class PlayBook
 {
 
     /**
-     * @var
+     * @var string
      */
     protected $name;
     /**
-     * @var
+     * @var string
      */
     protected $hosts;
     /**
-     * @var
+     * @var string
      */
     protected $gather_facts;
     /**
-     * @var
+     * @var string
      */
     protected $connection;
     /**
-     * @var
+     * @var string
      */
     protected $remote_user;
     /**
-     * @var
+     * @var string
      */
     protected $become;
     /**
-     * @var
+     * @var string
      */
     protected $become_method;
     /**
-     * @var
+     * @var string
      */
     protected $become_user;
     /**
-     * @var
+     * @var string
      */
     protected $become_flags;
     /**
-     * @var
+     * @var array
      */
     protected $pre_tasks;
     /**
-     * @var
+     * @var array
      */
     protected $tasks;
     /**
-     * @var
+     * @var array
      */
     protected $post_tasks;
 

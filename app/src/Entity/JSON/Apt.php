@@ -32,19 +32,19 @@ class Apt extends Task
 
 
     /**
-     * @var
+     * @var string
      */
     private $name;
     /**
-     * @var
+     * @var string
      */
     private $state;
     /**
-     * @var
+     * @var string
      */
     private $update_cache;
     /**
-     * @var
+     * @var string
      */
     private $upgrade;
 
