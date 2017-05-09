@@ -30,7 +30,7 @@ class Package
     /**
      * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -38,7 +38,7 @@ class Package
     /**
      * @return string
      */
-    public function getName()
+    public function getName():string
     {
         return $this->name;
     }
@@ -46,7 +46,7 @@ class Package
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
