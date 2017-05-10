@@ -10,13 +10,7 @@ use Project\Config\MachineTemplate;
 
 
 $ansible_api = [
-    "address" => "address",
-    "tmp_file" => "/tmp/new_host.txt"
-];
-
-$host = [
-    "host_config" => "CUSTOM", // FIXED, CUSTOM, RANDOM
-    "host_name" => "AnsibleWebTest" // Only used if $host_config is set to FIXED
+    "address" => "address"
 ];
 
 $openstack_auth = [
@@ -26,8 +20,12 @@ $openstack_auth = [
     "project_name" => "project_name"
 ];
 
+$host = [
+    "host_config" => "CUSTOM", // FIXED, CUSTOM, RANDOM
+];
+
 $machine_template = [
-    "name" => $host['host_name'],
+    "name" => "AnsibleWebTest",
     "key_name" => "ansiblekey",
     "image" => "image",
     "flavor" => "flavor",
