@@ -12,13 +12,14 @@ namespace Project\Service;
 use Project\Entity\JSON\PlayBook;
 use Project\Entity\JSON\WaitFor;
 
-class WaitService
+class WaitSSHService
 {
-    public function load($ansible_api)
+    public function load($app_get)
     {
         $playbook = new PlayBook();
 
-        $playbook->setName('Wait');
+        $playbook->setName('Wait for SSH');
+        $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');
         $playbook->setBecomeFlags('-s /bin/sh');
@@ -26,7 +27,7 @@ class WaitService
         $playbook->setGatherFacts('false');
 
         $wait_for = new WaitFor();
-        $wait_for->setHost('{{ lookup(\'file\', \''.$ansible_api['tmp_file'].'\') }}');
+        $wait_for->setHost('{{ lookup(\'file\', \'/tmp/'.$app_get->get('tmp_file').'\') }}');
         $wait_for->setPort('22');
         $wait_for->setDelay('10');
 

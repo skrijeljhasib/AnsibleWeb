@@ -13,9 +13,9 @@ use Project\Entity\JSON\OsServer;
 use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
 
-class MachineService
+class InstallMachineService
 {
-    public function load($ansible_api, $openstack_auth, $machine_template, $host, $env, $getHost)
+    public function load($openstack_auth, $machine_template, $host, $env, $app_get)
     {
         switch ($host['host_config'])
         {
@@ -24,11 +24,10 @@ class MachineService
                 $machine_template['name'] = $name;
                 break;
             case 'FIXED':
-                $name = $host['host_name'].'.'.$env;
-                $machine_template['name'] = $name;
+                $machine_template['name'] = $machine_template['name'].'.'.$env;;
                 break;
             case 'CUSTOM':
-                $host = json_decode($getHost);
+                $host = json_decode($app_get->get('host'));
                 foreach ($host as $key => $value)
                 {
                     $machine_template[$key] = $value;
@@ -61,7 +60,7 @@ class MachineService
         $os_server->setAuth($os_server_auth->toArray());
 
         $lineinfile_tmp = new LineInFile();
-        $lineinfile_tmp->setPath($ansible_api['tmp_file']);
+        $lineinfile_tmp->setPath('/tmp/'.$app_get->get('tmp_file'));
         $lineinfile_tmp->setCreate('yes');
         $lineinfile_tmp->setLine('{{ '.$os_server->getRegister().'.server.public_v4 }}');
 

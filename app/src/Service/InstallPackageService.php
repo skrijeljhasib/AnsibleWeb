@@ -13,14 +13,14 @@ use Project\Entity\JSON\Apt;
 use Project\Entity\JSON\PlayBook;
 use Project\Entity\JSON\Raw;
 
-class PackageService
+class InstallPackageService
 {
-    public function load($ansible_api, $machine_access, $getPackages)
+    public function load($machine_access, $app_get)
     {
         $playbook = new PlayBook();
 
         $playbook->setName('Install Package(s)');
-        $playbook->setHosts('{{ lookup(\'file\', \''.$ansible_api['tmp_file'].'\') }}');
+        $playbook->setHosts('{{ lookup(\'file\', \'/tmp/'.$app_get->get('tmp_file').'\') }}');
         $playbook->setConnection('ssh');
         $playbook->setRemoteUser($machine_access['remote_user']);
         $playbook->setBecome('true');
@@ -40,7 +40,7 @@ class PackageService
         $apt = new Apt();
         $apt->setAName(Apt::MULTIPLE_ITEMS);
         $apt->setState(Apt::LATEST);
-        $apt->setWithItems($getPackages);
+        $apt->setWithItems($app_get->get('packages'));
 
         $playbook->setPreTask($raw->toArray());
         $playbook->setTask($apt_update->toArray());

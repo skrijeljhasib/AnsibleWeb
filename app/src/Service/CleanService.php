@@ -14,7 +14,7 @@ use Project\Entity\JSON\PlayBook;
 
 class CleanService
 {
-    public function load($ansible_api)
+    public function load($app_get)
     {
         $playbook = new PlayBook();
 
@@ -27,7 +27,7 @@ class CleanService
 
         $file = new File();
         $file->setState('absent');
-        $file->setPath($ansible_api['tmp_file']);;
+        $file->setPath('/tmp/'.$app_get->get('tmp_file'));
 
         $playbook->setTask($file->toArray());
 
