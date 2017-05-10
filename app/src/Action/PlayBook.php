@@ -9,9 +9,10 @@ use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
 use Project\Service\CleanService;
-use Project\Service\WaitService;
-use Project\Service\MachineService;
-use Project\Service\PackageService;
+use Project\Service\GetAllMachineService;
+use Project\Service\WaitSSHService;
+use Project\Service\InstallMachineService;
+use Project\Service\InstallPackageService;
 use stdClass;
 
 /**
@@ -44,38 +45,44 @@ class PlayBook
 
         switch ($app->getRequest()->getParameters()->get('playbook'))
         {
-            case 'machine':
-                $machineService = new MachineService();
+            case 'installmachine':
+                $machineService = new InstallMachineService();
                 $json = $machineService->load(
-                    $this->ansible_api,
                     $this->openstack_auth,
                     $this->machine_template,
                     $this->host,
                     $app->getEnv(),
-                    $app->getRequest()->getParameters()->get('host')
+                    $app->getRequest()->getParameters()
                 );
                 break;
 
-            case 'package':
-                $packageService = new PackageService();
+            case 'installpackage':
+                $packageService = new InstallPackageService();
                 $json = $packageService->load(
-                    $this->ansible_api,
                     $this->machine_access,
-                    $app->getRequest()->getParameters()->get('packages')
+                    $app->getRequest()->getParameters()
                 );
                 break;
 
-            case 'wait':
-                $waitService = new WaitService();
+            case 'waitssh':
+                $waitService = new WaitSSHService();
                 $json = $waitService->load(
-                    $this->ansible_api
+                    $app->getRequest()->getParameters()
                 );
                 break;
 
             case 'clean':
                 $cleanService = new CleanService();
                 $json = $cleanService->load(
-                    $this->ansible_api
+                    $app->getRequest()->getParameters()
+                );
+                break;
+
+            case 'getAllMachine':
+                $getAllMachineService = new GetAllMachineService();
+                $json = $getAllMachineService->load(
+                    $this->machine_template,
+                    $this->openstack_auth
                 );
                 break;
 
