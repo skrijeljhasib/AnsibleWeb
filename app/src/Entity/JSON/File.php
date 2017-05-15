@@ -23,6 +23,11 @@ class File extends Task
     /**
      * @var string
      */
+    private $src;
+
+    /**
+     * @var string
+     */
     private $path;
 
     /**
@@ -32,6 +37,23 @@ class File extends Task
     {
         return $this->state;
     }
+
+    /**
+     * @return string
+     */
+    public function getSrc(): string
+    {
+        return $this->src;
+    }
+
+    /**
+     * @param string $src
+     */
+    public function setSrc(string $src)
+    {
+        $this->src = $src;
+    }
+
 
     /**
      * @param string $state
