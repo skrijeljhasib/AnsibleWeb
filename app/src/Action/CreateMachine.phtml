@@ -3,115 +3,175 @@
 use ObjectivePHP\Application\View\Helper\Vars;
 use Project\Entity\DB\Package;
 
+echo "<script>let api_ip = '" . Vars::collection('ansible_api')->toArray()["address"] . "'</script>";
+
 ?>
 <div class="row">
-    <div class="col-md-offset-3 col-md-6">
+    <div class="col-md-offset-2 col-md-8">
 
 
-        <form id="createMachine"><div class="page-header">
-        <div class="page-header">
-            <h3>Configuration</h3>
-        </div>
-        <div class="well">
-        <?php
-            if(!Vars::collection('host')->isEmpty())
-            {
-                $host = Vars::collection('host')->toArray();
-                if($host['host_config'] === 'FIXED')
-                {
-                    echo "<label for='name'>Hostname: </label><input id='name' class='form-control' type='text' value=".$host["host_name"]." disabled>";
-                }
-                elseif($host['host_config'] === 'CUSTOM')
-                {
-                    echo "<label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' value=".$host["host_name"]." required>";
-                }
-                elseif($host['host_config'] === 'RANDOM')
-                {
-                    echo "<div class='alert alert-info'>The Hostname will created randomly.</div>";
-                }
-                else
-                {
-                    throw new Exception('Check your openstack.local.php file');
-                }
-            }
-        ?>
-        </div>
+        <form id="createMachine">
+            <div class="page-header">
+                <div class="page-header">
+                    <h3>Configuration</h3>
+                </div>
+                <div class="well">
+                    <?php
+                    if (!Vars::collection('host')->isEmpty()) {
+                        $host = Vars::collection('host')->toArray();
+                        $machine_template = Vars::collection('machine_template')->toArray();
+                        if ($host['host_config'] === 'FIXED') {
+                            echo "<label for='name'>Hostname: </label><input id='name' class='form-control' type='text' value=" . $machine_template["name"] . " disabled>";
+                        } elseif ($host['host_config'] === 'CUSTOM') {
+                            echo "<label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' value=" . $machine_template["name"] . " required>";
+                        } elseif ($host['host_config'] === 'RANDOM') {
+                            echo "<div class='alert alert-info'>The Hostname will created randomly.</div>";
+                        } else {
+                            throw new Exception('Check your openstack.local.php file');
+                        }
+                    }
+                    ?>
+                </div>
 
-        <div class="page-header">
-            <h3>Which packages do you need?</h3>
-        </div>
+                <div class="page-header">
+                    <h3>Which packages do you need?</h3>
+                </div>
 
-        <div class="well">
-        <input type="checkbox" id="selectAllorNot" /><label for="selectAllorNot">Select All</label>
-        <select id="packages" name="packages[]" class="form-control" style="width: 100%" multiple="multiple" required>
-            <?php
+                <div class="well">
+                    <label for="selectAllorNot">All: <input type="checkbox" id="selectAllorNot"/></label><br>
 
-            Vars::collection('packages')->each(
-                function (Package $package) {
-                    echo "<option value=".$package->getName().">".$package->getName()."</option>";
-                }
-            );
+                    <select id="packages" name="packages[]" class="form-control" style="width: 100%" multiple="multiple"
+                            required>
+                        <?php
 
-            ?>
-        </select>
-        </div>
+                        Vars::collection('packages')->each(
+                            function (Package $package) {
+                                echo "<option value=" . $package->getName() . ">" . $package->getName() . "</option>";
+                            }
+                        );
 
-                <!--
-        <div class="page-header">
-            <h3>Do you need a Webserver?</h3>
-        </div>
-        <div class="well">
+                        ?>
+                    </select>
+                </div>
 
-        <!- - Nav tabs - ->
-        <ul class="nav nav-tabs" role="tablist" id="myTabs">
-            <li role="presentation" class="active"><a href="#apache" aria-controls="apache" role="tab" data-toggle="tab">Apache</a></li>
-            <li role="presentation"><a href="#ngnix" aria-controls="nginx" role="tab" data-toggle="tab">NginX</a></li>
-        </ul>
 
-        <!- - Tab panes - ->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="apache">
-                apache
-            </div>
-            <div role="tabpanel" class="tab-pane" id="ngnix">
-                nginx
-            </div>
-        </div>
-        </div>
+                <div class="page-header">
+                    <h3>Do you need a Webserver?</h3>
+                </div>
+                <div class="well">
 
-        <div class="page-header">
-            <h3>Do you need a DBMS?</h3>
-        </div>
-        <div class="well">
+                    <!- - Nav tabs - ->
+                    <ul class="nav nav-tabs" role="tablist" id="webserverTabs">
+                        <li role="presentation" class="active"><a href="#apache" aria-controls="apache" role="tab"
+                                                                  data-toggle="tab">Apache</a></li>
+                        <li role="presentation"><a href="#ngnix" aria-controls="nginx" role="tab" data-toggle="tab">NginX</a>
+                        </li>
+                    </ul>
 
-        <!- - Nav tabs - ->
-        <ul class="nav nav-tabs" role="tablist" id="myTabs">
-            <li role="presentation" class="active"><a href="#mysql" aria-controls="apache" role="tab" data-toggle="tab">Apache</a></li>
-            <li role="presentation"><a href="#ngnix" aria-controls="nginx" role="tab" data-toggle="tab">NginX</a></li>
-        </ul>
-        <!- - Tab panes - ->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="apache">
-                apache
-            </div>
-            <div role="tabpanel" class="tab-pane" id="ngnix">
-                nginx
-            </div>
-        </div>
-        </div>
--->
-        <br>
-        <input class="btn btn-default btn-block" type="submit" id="SendToAnsibleApi" value="Create and install Machine">
+                    <!- - Tab panes - ->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="apache">
+                            <br>
+                            <label> Install Apache:
+                                <input type="checkbox" name="webserver[]" id="apacheCheckbox" class="checkbox">
+                            </label>
+                            <br>
+                            <label> DocumentRoot:
+                                <input disabled required type="text" class="form-control" id="apache_document_root">
+                            </label>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="ngnix">
+                            <br>
+                            <label> Install Nginx:
+                                <input type="checkbox" name="webserver[]" id="nginxCheckbox" class="checkbox">
+                            </label>
+                            <br>
+                            <label> DocumentRoot:
+                                <input disabled required type="text" class="form-control" id="nginx_document_root">
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="page-header">
+                    <h3>Do you need a DBMS?</h3>
+                </div>
+                <div class="well">
+
+                    <!- - Nav tabs - ->
+                    <ul class="nav nav-tabs" role="tablist" id="databaseTabs">
+                        <li role="presentation" class="active"><a href="#mysql" aria-controls="mysql" role="tab"
+                                                                  data-toggle="tab">MySQL</a></li>
+                        <li role="presentation"><a href="#mongodb" aria-controls="mongodb" role="tab" data-toggle="tab">MongoDB</a>
+                        </li>
+                    </ul>
+
+                    <!- - Tab panes - ->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="mysql">
+                            <br>
+                            <label> Install MySQL:
+                                <input type="checkbox" name="database[]" id="mysqlCheckbox" class="checkbox">
+                            </label>
+                            <br>
+                            <label> Root Password:
+                                <input disabled required type="password" class="form-control" id="mysql_root_password">
+                            </label>
+                            <label> Database:
+                                <input disabled required type="text" class="form-control" id="mysql_database">
+                            </label>
+                            <label> New User:
+                                <input disabled required type="text" class="form-control" id="mysql_new_user">
+                            </label>
+                            <label> New User Password:
+                                <input disabled required type="password" class="form-control"
+                                       id="mysql_new_user_password">
+                            </label>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="mongodb">
+                            <br>
+                            <label> Install MongoDB:
+                                <input type="checkbox" name="database[]" id="mongodbCheckbox" class="checkbox">
+                            </label>
+                            <br>
+                            <label> Database:
+                                <input disabled required type="text" class="form-control" id="mongodb_database">
+                            </label>
+                            <label> New User:
+                                <input disabled required type="text" class="form-control" id="mongodb_new_user">
+                            </label>
+                            <label> New User Password:
+                                <input disabled required type="password" class="form-control"
+                                       id="mongodb_new_user_password">
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br>
+                <input class="btn btn-default btn-block" type="submit" id="SendToAnsibleApi"
+                       value="Create and install Machine">
         </form>
 
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-offset-3 col-md-6">
+    <div class="col-md-offset-2 col-md-8">
         <h2>Result</h2>
         <div id="result" class="jumbotron text-center">
-            <img src="/img/page-loader.gif" id="loading" />
+            <img src="/img/page-loader.gif" id="loading"/>
         </div>
+    </div>
+</div>
+
+<div class="modal text-center" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-header">
+        <h1 style="color: white;">Please Wait</h1>
+    </div>
+    <div class="modal-body">
+        <img src="/img/page-loader.gif"/>
     </div>
 </div>
