@@ -9,12 +9,17 @@
 namespace Project\Service;
 
 
+use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\Apt;
 use Project\Entity\JSON\PlayBook;
-use Project\Entity\JSON\Raw;
 
 class InstallPackageService
 {
+    /**
+     * @param $machine_access array
+     * @param $app_get ParameterContainerInterface
+     * @return string
+     */
     public function load($machine_access, $app_get)
     {
         $playbook = new PlayBook();
@@ -28,9 +33,6 @@ class InstallPackageService
         $playbook->setBecomeUser('root');
         $playbook->setGatherFacts('false');
 
-        $raw = new Raw();
-        $raw->setRaw('apt -y install aptitude python-apt');
-
         $apt_update = new Apt();
         $apt_update->setUpdateCache('yes');
 
@@ -39,12 +41,11 @@ class InstallPackageService
 
         $apt = new Apt();
         $apt->setAName(Apt::MULTIPLE_ITEMS);
-        $apt->setState(Apt::LATEST);
+        $apt->setState(Apt::PRESENT);
         $apt->setWithItems($app_get->get('packages'));
 
-        $playbook->setPreTask($raw->toArray());
-        $playbook->setTask($apt_update->toArray());
-        $playbook->setTask($apt_upgrade->toArray());
+        //$playbook->setTask($apt_update->toArray());
+        //$playbook->setTask($apt_upgrade->toArray());
         $playbook->setTask($apt->toArray());
 
         $playbook_json = $playbook->toJSON();

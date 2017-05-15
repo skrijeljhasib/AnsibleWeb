@@ -8,6 +8,8 @@
 
 namespace Project\Service;
 
+use ObjectivePHP\Config\Config;
+use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\LineInFile;
 use Project\Entity\JSON\OsServer;
 use Project\Entity\JSON\OsServerAuth;
@@ -15,6 +17,14 @@ use Project\Entity\JSON\PlayBook;
 
 class InstallMachineService
 {
+    /**
+     * @param $openstack_auth array
+     * @param $machine_template array
+     * @param $host array
+     * @param $env string
+     * @param $app_get ParameterContainerInterface
+     * @return string
+     */
     public function load($openstack_auth, $machine_template, $host, $env, $app_get)
     {
         switch ($host['host_config'])

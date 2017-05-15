@@ -9,11 +9,16 @@
 namespace Project\Service;
 
 
+use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\PlayBook;
 use Project\Entity\JSON\WaitFor;
 
 class WaitSSHService
 {
+    /**
+     * @param $app_get ParameterContainerInterface
+     * @return string
+     */
     public function load($app_get)
     {
         $playbook = new PlayBook();
