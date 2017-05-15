@@ -8,6 +8,9 @@ use Project\Config\Host;
 use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
+use Project\Service\DatabaseService;
+use Project\Service\InstallDependenciesService;
+use Project\Service\WebServerService;
 use Project\Service\CleanService;
 use Project\Service\GetAllMachineService;
 use Project\Service\WaitSSHService;
@@ -64,6 +67,14 @@ class PlayBook
                 );
                 break;
 
+            case 'installdependencies':
+                $installDependencies = new InstallDependenciesService();
+                $json = $installDependencies->load(
+                    $this->machine_access,
+                    $app->getRequest()->getParameters()
+                );
+                break;
+
             case 'waitssh':
                 $waitService = new WaitSSHService();
                 $json = $waitService->load(
@@ -83,6 +94,38 @@ class PlayBook
                 $json = $getAllMachineService->load(
                     $this->machine_template,
                     $this->openstack_auth
+                );
+                break;
+
+            case 'apache':
+                $webserverService = new WebServerService();
+                $webserverService->load(
+                    $this->machine_access,
+                    $app->getRequest()->getParameters()
+                );
+                $json = $webserverService->apache(
+                    $app->getRequest()->getParameters()
+                );
+                break;
+            case 'mysql':
+                $databaseService = new DatabaseService();
+                $databaseService->load(
+                    $this->machine_access,
+                    $app->getRequest()->getParameters()
+                );
+                $json = $databaseService->mysql(
+                    $app->getRequest()->getParameters()
+                );
+                break;
+
+            case 'mongodb':
+                $databaseService = new DatabaseService();
+                $databaseService->load(
+                    $this->machine_access,
+                    $app->getRequest()->getParameters()
+                );
+                $json = $databaseService->mongodb(
+                    $app->getRequest()->getParameters()
                 );
                 break;
 
