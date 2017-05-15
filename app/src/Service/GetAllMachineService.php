@@ -15,6 +15,11 @@ use Project\Entity\JSON\PlayBook;
 
 class GetAllMachineService
 {
+    /**
+     * @param $machine_template array
+     * @param $openstack_auth array
+     * @return string
+     */
     public function load($machine_template,$openstack_auth)
     {
         $playbook = new PlayBook();
