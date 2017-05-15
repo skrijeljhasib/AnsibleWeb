@@ -41,7 +41,7 @@ class Shell extends Task
      */
     public function toArray():array
     {
-        $array["shell"] = array_filter(get_object_vars($this));
+        $array = array_filter(get_object_vars($this));
 
         $array += parent::toArray();
 
