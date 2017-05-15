@@ -14,6 +14,7 @@ use ObjectivePHP\Application\View\Helper\Vars;
 use ObjectivePHP\Html\Exception;
 use Project\Config\AnsibleApi;
 use Project\Config\Host;
+use Project\Config\MachineTemplate;
 
 class CreateMachine extends RenderableAction
 {
@@ -28,8 +29,8 @@ class CreateMachine extends RenderableAction
         Vars::set('page.title', 'Create your machine');
 
         $host = $app->getConfig()->get(Host::class);
-        $api_ip = $app->getConfig()->get(AnsibleApi::class);
-
+        $machine_template = $app->getConfig()->get(MachineTemplate::class);
+        $ansible_api = $app->getConfig()->get(AnsibleApi::class);
 
         try
         {
@@ -41,7 +42,7 @@ class CreateMachine extends RenderableAction
             throw new Exception('Can not load packages from DB');
         }
 
-        return compact('packages','host','api_ip');
+        return compact('packages','host','ansible_api','machine_template');
     }
 
 }
