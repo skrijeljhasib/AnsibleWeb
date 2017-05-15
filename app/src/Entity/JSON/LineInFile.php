@@ -30,6 +30,48 @@ class LineInFile extends Task
      */
     private $line;
 
+    /**
+     * @var string
+     */
+    private $regexp;
+
+    /**
+     * @var string
+     */
+    private $backrefs;
+
+    /**
+     * @return string
+     */
+    public function getRegexp(): string
+    {
+        return $this->regexp;
+    }
+
+    /**
+     * @param string $regexp
+     */
+    public function setRegexp(string $regexp)
+    {
+        $this->regexp = $regexp;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackrefs(): string
+    {
+        return $this->backrefs;
+    }
+
+    /**
+     * @param string $backrefs
+     */
+    public function setBackrefs(string $backrefs)
+    {
+        $this->backrefs = $backrefs;
+    }
+
 
     /**
      * @return string
