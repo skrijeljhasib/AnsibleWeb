@@ -9,11 +9,16 @@
 namespace Project\Service;
 
 
+use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\File;
 use Project\Entity\JSON\PlayBook;
 
 class CleanService
 {
+    /**
+     * @param $app_get ParameterContainerInterface
+     * @return string
+     */
     public function load($app_get)
     {
         $playbook = new PlayBook();
