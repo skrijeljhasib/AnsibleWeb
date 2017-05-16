@@ -1,17 +1,17 @@
 {
-  "name": "objective-php/starter-kit",
-  "description": "Objective PHP Project Template",
+  "name": "AnsibleWeb",
+  "description": "Ansible Web Portal front End",
   "keywords": [
     "ansible",
     "objective php"
   ],
-  "homepage": "https://github.com/objective-php/starter-kit",
+  "homepage": "https://github.com/skrijeljhasib/AnsibleWeb",
   "license": "GPL-3.0",
   "authors": [
     {
       "name": "Skrijelj Hasib",
       "email": "h.skrijelj@flash-global.net",
-      "role": "lead"
+      "role": "dev"
     }
   ],
   "require": {
