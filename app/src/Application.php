@@ -62,6 +62,8 @@ class Application extends AbstractApplication
         $cliRouter->registerCommand(Test::class);
         $router->register($cliRouter);
 
+        $this->getServicesFactory()->registerService(['id' => 'cli.router', 'instance' => $cliRouter]);
+
         $this->getStep('route')->plug($router)->as('router');
 
 
