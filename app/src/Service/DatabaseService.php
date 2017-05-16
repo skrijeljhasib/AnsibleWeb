@@ -91,7 +91,8 @@ class DatabaseService
 
         $apt = new Apt();
         $apt->setState(Apt::PRESENT);
-        $apt->setAName('mongodb');
+        $apt->setAName(Apt::MULTIPLE_ITEMS);
+        $apt->setWithItems(['mongodb','python-pymongo']);
 
         $mongodb = new MongoDBUser();
         $mongodb->setUName($app_get->get('mongodb_new_user'));
