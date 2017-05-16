@@ -12,7 +12,6 @@ namespace Project\Service;
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\PlayBook;
 use Project\Entity\JSON\Raw;
-use Project\Entity\JSON\Shell;
 
 class InstallDependenciesService
 {
@@ -35,21 +34,21 @@ class InstallDependenciesService
         $playbook->setBecomeUser('root');
         $playbook->setGatherFacts('false');
 
+        $raw_clean = new Raw();
+        $raw_clean->setRaw('apt-get clean');
+
         $raw_rm = new Raw();
-        $raw_rm->setRaw('rm /var/lib/apt/lists/*');
+        $raw_rm->setRaw('rm -r /var/lib/apt/lists/');
 
         $raw_update = new Raw();
         $raw_update->setRaw('apt-get update');
 
-        $raw_upgrade = new Raw();
-        $raw_upgrade->setRaw('apt-get upgrade');
-
         $raw_simplejson = new Raw();
         $raw_simplejson->setRaw('apt-get -y install python-simplejson');
 
+        $playbook->setTask($raw_clean->toArray());
         $playbook->setTask($raw_rm->toArray());
         $playbook->setTask($raw_update->toArray());
-        $playbook->setTask($raw_upgrade->toArray());
         $playbook->setTask($raw_simplejson->toArray());
 
         $playbook_json = $playbook->toJSON();
