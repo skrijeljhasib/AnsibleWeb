@@ -79,7 +79,8 @@ $(document).ready(function () {
                                     type: 'POST',
                                     url: api_ip+'/post_data',
                                     data: JSON.stringify(playbooks),
-                                    dataType: 'json'
+                                    dataType: 'json',
+                                    timeout: 0
                                 }).done(function (response) {
 
                                     console.log(response);
