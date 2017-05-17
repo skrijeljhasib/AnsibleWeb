@@ -34,22 +34,10 @@ class InstallDependenciesService
         $playbook->setBecomeUser('root');
         $playbook->setGatherFacts('false');
 
-        $raw_clean = new Raw();
-        $raw_clean->setRaw('apt-get clean');
+        $raw = new Raw();
+        $raw->setRaw('apt-get update ; apt-get -y upgrade ; apt-get -y install python-simplejson');
 
-        $raw_rm = new Raw();
-        $raw_rm->setRaw('rm -r /var/lib/apt/lists/');
-
-        $raw_update = new Raw();
-        $raw_update->setRaw('apt-get update');
-
-        $raw_simplejson = new Raw();
-        $raw_simplejson->setRaw('apt-get -y install python-simplejson');
-
-        $playbook->setTask($raw_clean->toArray());
-        $playbook->setTask($raw_rm->toArray());
-        $playbook->setTask($raw_update->toArray());
-        $playbook->setTask($raw_simplejson->toArray());
+        $playbook->setTask($raw->toArray());
 
         $playbook_json = $playbook->toJSON();
 
