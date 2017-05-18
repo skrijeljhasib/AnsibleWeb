@@ -24,6 +24,7 @@ class CleanService
         $playbook = new PlayBook();
 
         $playbook->setName('Clean');
+        $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');
         $playbook->setBecomeFlags('-s /bin/sh');
