@@ -10,6 +10,7 @@ use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
 use Project\Service\DatabaseService;
 use Project\Service\InstallDependenciesService;
+use Project\Service\UpdateService;
 use Project\Service\WebServerService;
 use Project\Service\CleanService;
 use Project\Service\GetAllMachineService;
@@ -78,6 +79,14 @@ class PlayBook
             case 'waitssh':
                 $waitService = new WaitSSHService();
                 $json = $waitService->load(
+                    $app->getRequest()->getParameters()
+                );
+                break;
+
+            case 'update':
+                $updateService = new UpdateService();
+                $json = $updateService->load(
+                    $this->machine_access,
                     $app->getRequest()->getParameters()
                 );
                 break;

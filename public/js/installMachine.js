@@ -49,53 +49,66 @@ $(document).ready(function () {
                         type: 'GET',
                         url: '/playBookJSON',
                         data: {
-                            playbook: 'installdependencies',
+                            playbook: 'update',
                             tmp_file: random_string
                         }
-                    }).done(function (installdependencies) {
-
-                        playbooks.push(JSON.parse(installdependencies));
+                    }).done(function (update) {
+                        playbooks.push(JSON.parse(update));
 
                         $.ajax({
                             type: 'GET',
                             url: '/playBookJSON',
                             data: {
-                                playbook: 'installpackage',
-                                packages: packages,
+                                playbook: 'installdependencies',
                                 tmp_file: random_string
                             }
-                        }).done(function (installpackage) {
-                            playbooks.push(JSON.parse(installpackage));
+                        }).done(function (installdependencies) {
 
-                            $.when(
+                            playbooks.push(JSON.parse(installdependencies));
 
-                                checkDatabase(),
-                                checkWebServer()
+                            $.ajax({
+                                type: 'GET',
+                                url: '/playBookJSON',
+                                data: {
+                                    playbook: 'installpackage',
+                                    packages: packages,
+                                    tmp_file: random_string
+                                }
+                            }).done(function (installpackage) {
+                                playbooks.push(JSON.parse(installpackage));
 
-                            ).then(function () {
+                                $.when(
 
-                                console.log(JSON.stringify(playbooks));
-                                $.ajax({
-                                    type: 'POST',
-                                    url: api_ip+'/post_data',
-                                    data: JSON.stringify(playbooks),
-                                    dataType: 'json',
-                                    timeout: 0
-                                }).done(function (response) {
+                                    checkDatabase(),
+                                    checkWebServer()
 
-                                    console.log(response);
-                                    $('#result').html(response[2].invocation.module_args.host);
+                                ).then(function () {
 
-                                }).fail(function (error) {
-                                    console.log(JSON.stringify(error));
+                                    console.log(JSON.stringify(playbooks));
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: api_ip+'/post_data',
+                                        data: JSON.stringify(playbooks),
+                                        dataType: 'json',
+                                        timeout: 0
+                                    }).done(function (response) {
+
+                                        console.log(response);
+                                        $('#result').html(response[2].invocation.module_args.host);
+
+                                    }).fail(function (error) {
+                                        console.log(JSON.stringify(error));
+                                    });
+
                                 });
 
+                            }).fail(function (error) {
+                                console.log(JSON.stringify(error));
                             });
 
                         }).fail(function (error) {
                             console.log(JSON.stringify(error));
                         });
-
                     }).fail(function (error) {
                         console.log(JSON.stringify(error));
                     });
