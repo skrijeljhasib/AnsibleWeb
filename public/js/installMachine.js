@@ -35,6 +35,16 @@ $(document).ready(function () {
             }).done(function (installmachine) {
                 playbooks.push(JSON.parse(installmachine));
 
+                $.ajax({
+                    type: 'GET',
+                    url: '/playBookJSON',
+                    data: {
+                        playbook: 'waitssh',
+                        tmp_file: random_string
+                    }
+                }).done(function (waitssh) {
+                    playbooks.push(JSON.parse(waitssh));
+
                     $.ajax({
                         type: 'GET',
                         url: '/playBookJSON',
@@ -95,6 +105,10 @@ $(document).ready(function () {
                             }).fail(function (error) {
                                 console.log(JSON.stringify(error));
                             });
+
+                        }).fail(function (error) {
+                            console.log(JSON.stringify(error));
+                        });
                     }).fail(function (error) {
                         console.log(JSON.stringify(error));
                     });

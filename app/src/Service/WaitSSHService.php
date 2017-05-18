@@ -34,7 +34,6 @@ class WaitSSHService
         $wait_for = new WaitFor();
         $wait_for->setHost('{{ lookup(\'file\', \'/tmp/'.$app_get->get('tmp_file').'\') }}');
         $wait_for->setPort('22');
-        $wait_for->setDelay('10');
 
         $playbook->setTask($wait_for->toArray());
 
