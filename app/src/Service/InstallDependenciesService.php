@@ -35,7 +35,7 @@ class InstallDependenciesService
         $playbook->setGatherFacts('false');
 
         $raw = new Raw();
-        $raw->setRaw('apt-get update ; apt-get -y upgrade ; apt-get -y install python-simplejson');
+        $raw->setRaw('apt-get -y install python-simplejson');
 
         $playbook->setTask($raw->toArray());
 
