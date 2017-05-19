@@ -35,7 +35,7 @@ class UpdateService
         $playbook->setGatherFacts('false');
 
         $raw = new Raw();
-        $raw->setRaw('apt-get update');
+        $raw->setRaw('apt-get install -f ; apt-get update');
 
         $playbook->setTask($raw->toArray());
 
