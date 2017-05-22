@@ -3,12 +3,9 @@
 use ObjectivePHP\Application\View\Helper\Vars;
 use Project\Entity\DB\Package;
 
-echo "<script>let api_ip = '" . Vars::collection('ansible_api')->toArray()["address"] . "'</script>";
-
 ?>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-
 
         <form id="createMachine">
             <div class="page-header">

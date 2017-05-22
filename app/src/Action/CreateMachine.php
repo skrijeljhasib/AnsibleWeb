@@ -30,7 +30,6 @@ class CreateMachine extends RenderableAction
 
         $host = $app->getConfig()->get(Host::class);
         $machine_template = $app->getConfig()->get(MachineTemplate::class);
-        $ansible_api = $app->getConfig()->get(AnsibleApi::class);
 
         try
         {

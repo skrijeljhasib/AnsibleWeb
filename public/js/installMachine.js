@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    let playbooks = [];
     let random_string = Math.random().toString(36).substring(7);
 
     $('#createMachine').submit(function (event) {
@@ -16,96 +15,66 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: '/playBookJSON',
+            url: 'PlayBook',
             data: {
                 playbook: 'clean',
                 tmp_file: random_string
             }
-        }).done(function (clean) {
-            playbooks.push(JSON.parse(clean));
+        }).done(function () {
 
             $.ajax({
                 type: 'GET',
-                url: '/playBookJSON',
+                url: 'PlayBook',
                 data: {
                     playbook: 'installmachine',
                     host: host,
                     tmp_file: random_string
                 }
-            }).done(function (installmachine) {
-                playbooks.push(JSON.parse(installmachine));
+            }).done(function () {
 
                 $.ajax({
                     type: 'GET',
-                    url: '/playBookJSON',
+                    url: 'PlayBook',
                     data: {
                         playbook: 'waitssh',
                         tmp_file: random_string
                     }
-                }).done(function (waitssh) {
-                    playbooks.push(JSON.parse(waitssh));
+                }).done(function () {
 
                     $.ajax({
                         type: 'GET',
-                        url: '/playBookJSON',
+                        url: 'PlayBook',
                         data: {
                             playbook: 'update',
                             tmp_file: random_string
                         }
-                    }).done(function (update) {
-                        playbooks.push(JSON.parse(update));
+                    }).done(function () {
 
                         $.ajax({
                             type: 'GET',
-                            url: '/playBookJSON',
+                            url: 'PlayBook',
                             data: {
                                 playbook: 'installdependencies',
                                 tmp_file: random_string
                             }
-                        }).done(function (installdependencies) {
-
-                            playbooks.push(JSON.parse(installdependencies));
+                        }).done(function () {
 
                             $.ajax({
                                 type: 'GET',
-                                url: '/playBookJSON',
+                                url: 'PlayBook',
                                 data: {
                                     playbook: 'installpackage',
                                     packages: packages,
                                     tmp_file: random_string
                                 }
-                            }).done(function (installpackage) {
-                                playbooks.push(JSON.parse(installpackage));
+                            }).done(function () {
 
-                                $.when(
-
-                                    checkDatabase(),
-                                    checkWebServer()
-
-                                ).then(function () {
-
-                                    console.log(JSON.stringify(playbooks));
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: api_ip+'/post_data',
-                                        data: JSON.stringify(playbooks),
-                                        dataType: 'json',
-                                        timeout: 0
-                                    }).done(function (response) {
-
-                                        console.log(response);
-                                        $('#result').html(response[2].invocation.module_args.host);
-
-                                    }).fail(function (error) {
-                                        console.log(JSON.stringify(error));
-                                    });
-
-                                });
+                                checkDatabase();
+                                checkWebServer();
 
                             }).fail(function (error) {
                                 console.log(JSON.stringify(error));
                             });
-
                         }).fail(function (error) {
                             console.log(JSON.stringify(error));
                         });
@@ -129,14 +98,14 @@ $(document).ready(function () {
         {
             return $.ajax({
                 type: 'GET',
-                url: '/playBookJSON',
+                url: 'PlayBook',
                 data: {
                     playbook: 'apache',
                     tmp_file: random_string,
                     document_root: $('#apache_document_root').val(),
                 }
-            }).done(function (apache) {
-                playbooks.push(JSON.parse(apache));
+            }).done(function () {
+
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
@@ -146,14 +115,14 @@ $(document).ready(function () {
         {
             return $.ajax({
                 type: 'GET',
-                url: '/playBookJSON',
+                url: 'PlayBook',
                 data: {
                     playbook: 'nginx',
                     tmp_file: random_string,
                     document_root: $('#nginx_document_root').val(),
                 }
-            }).done(function (nginx) {
-                playbooks.push(JSON.parse(nginx));
+            }).done(function () {
+
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
@@ -166,7 +135,7 @@ $(document).ready(function () {
         {
             return $.ajax({
                 type: 'GET',
-                url: '/playBookJSON',
+                url: 'PlayBook',
                 data: {
                     playbook: 'mysql',
                     tmp_file: random_string,
@@ -175,8 +144,8 @@ $(document).ready(function () {
                     mysql_new_user_password: $('#mysql_new_user_password').val(),
                     mysql_database: $('#mysql_database').val(),
                 }
-            }).done(function (apache) {
-                playbooks.push(JSON.parse(apache));
+            }).done(function () {
+
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
@@ -186,7 +155,7 @@ $(document).ready(function () {
         {
             return $.ajax({
                 type: 'GET',
-                url: '/playBookJSON',
+                url: 'PlayBook',
                 data: {
                     playbook: 'mongodb',
                     tmp_file: random_string,
@@ -194,8 +163,8 @@ $(document).ready(function () {
                     mongodb_new_user_password: $('#mongodb_new_user_password').val(),
                     mongodb_database: $('#mongodb_database').val(),
                 }
-            }).done(function (apache) {
-                playbooks.push(JSON.parse(apache));
+            }).done(function () {
+
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
