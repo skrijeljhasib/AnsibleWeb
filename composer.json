@@ -22,7 +22,8 @@
     "twbs/bootstrap": "^3.3",
     "objective-php/cli": "^1.0.4",
     "objective-php/doctrine-package": "~1.0",
-    "objective-php/beanstalk-package": "dev-master"
+    "objective-php/beanstalk-package": "dev-master",
+    "guzzlehttp/guzzle": "~6.0"
   },
   "autoload": {
     "psr-4": {
