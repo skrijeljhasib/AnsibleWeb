@@ -18,6 +18,7 @@ use Project\Service\WaitSSHService;
 use Project\Service\InstallMachineService;
 use Project\Service\InstallPackageService;
 use stdClass;
+use Pheanstalk\Pheanstalk;
 
 /**
  * Class PlayBook
@@ -41,6 +42,8 @@ class PlayBook
      */
     function __invoke(Application $app)
     {
+        $pheanstalk = new Pheanstalk('127.0.0.1');
+
         $this->ansible_api = $app->getConfig()->get(AnsibleApi::class);
         $this->openstack_auth = $app->getConfig()->get(OpenStackAuth::class);
         $this->machine_template = $app->getConfig()->get(MachineTemplate::class);
@@ -142,6 +145,6 @@ class PlayBook
                 $json = json_encode(new stdClass);
         }
 
-        echo $json;
+        $pheanstalk->useTube('ansible-json')->put($json);
     }
 }
