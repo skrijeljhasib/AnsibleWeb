@@ -9,6 +9,9 @@
 namespace Project\Cli;
 
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Cli\Action\AbstractCliAction;
 use Pheanstalk\Pheanstalk;
@@ -32,42 +35,47 @@ class PlayBookWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk('127.0.0.1');
 
-        while (true)
-        {
-            $job = $pheanstalk->watch('ansible-json')
+        while (true) {
+
+            $job = $pheanstalk->watch('ansible-post')
                 ->ignore('default')
                 ->reserve();
 
-            $ch = curl_init($ansible_api["address"].'/post_data');
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $job->getData());
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: ' . strlen($job->getData()))
-            );
-
-            $result = curl_exec($ch);
-
-            if (curl_errno($ch))
+            if($job !== false)
             {
-                echo 'Couldn\'t send request: ' . curl_error($ch) . '\n';
+                try {
+                    $client = new Client(
+                        [
+                            'base_uri' => $ansible_api["address"],
+                            'headers' => ['Content-Type' => 'application/json']
+                        ]
+                    );
+
+                    $response = $client->request('POST', '/post_data',
+                        [
+                            'json' => json_decode($job->getData())
+                        ]
+                    );
+
+                    if ($response->getStatusCode() == 200) {
+                        $pheanstalk->useTube('ansible-get')->put($response->getBody());
+                        $pheanstalk->delete($job);
+                    } else {
+                        echo 'Request failed: HTTP status code: ' . $response->getStatusCode();
+                    }
+
+                } catch (RequestException $e) {
+                    echo Psr7\str($e->getRequest());
+                    if ($e->hasResponse()) {
+                        echo Psr7\str($e->getResponse());
+                    }
+                }
             }
             else
             {
-                $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                if ($resultStatus == 200)
-                {
-                    echo $result . '\n';
-                    $pheanstalk->delete($job);
-                }
-                else
-                {
-                    echo 'Request failed: HTTP status code: ' . $resultStatus . '\n';
-                }
+                sleep(3);
             }
 
-            curl_close($ch);
         }
     }
 }
