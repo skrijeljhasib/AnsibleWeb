@@ -32,7 +32,7 @@ class PlayBook
      * @var array $openstack_auth       Should contain the openstack authentication config
      * @var array $machine_template     Contains the type of machine which will be installed
      * @var array $machine_access       Contains the username of the machine to connect remotely
-     * @var array $host                 Should contain the meta data of the new created host like hostname
+     * @var array $host                 FIXED, CUSTOM, RANDOM
      */
     private $ansible_api, $openstack_auth, $machine_template, $machine_access, $host;
 
@@ -145,6 +145,6 @@ class PlayBook
                 $json = json_encode(new stdClass);
         }
 
-        $pheanstalk->useTube('ansible-json')->put($json);
+        $pheanstalk->useTube('ansible-post')->put($json);
     }
 }
