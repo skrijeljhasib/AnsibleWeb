@@ -1,18 +1,14 @@
 $(document).ready(function () {
-    let machines = [];
+    /*let machines = [];
     $('#pleaseWaitDialog').modal();
 
     $.ajax({
         type: 'GET',
-        url: '/playBookJSON',
+        url: 'PlayBook',
         data: {
             playbook: 'getAllMachine'
         }
-    }).done(function (data) {
-
-        let playbooks = '[';
-        playbooks += data;
-        playbooks += ']';
+    }).done(function () {
 
         $.ajax({
             type: 'POST',
@@ -43,6 +39,6 @@ $(document).ready(function () {
 
     }).fail(function (error) {
         console.log(JSON.stringify(error));
-    })
+    })*/
 
 });
