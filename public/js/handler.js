@@ -33,17 +33,6 @@ $(document).ready(function () {
         }
     });
 
-    const loading = $('#loading').hide();
-    $(document)
-        .ajaxStart(function ()
-        {
-            loading.show();
-        })
-        .ajaxStop(function ()
-        {
-            loading.hide();
-        });
-
     $('input[type="checkbox"]').on('change', function() {
         $('input[name="' + this.name + '"]').not(this).prop('checked', false);
 
