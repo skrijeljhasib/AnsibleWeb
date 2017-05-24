@@ -86,14 +86,6 @@ class PlayBook
                 );
                 break;
 
-            case 'update':
-                $updateService = new UpdateService();
-                $json = $updateService->load(
-                    $this->machine_access,
-                    $app->getRequest()->getParameters()
-                );
-                break;
-
             case 'clean':
                 $cleanService = new CleanService();
                 $json = $cleanService->load(
