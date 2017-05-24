@@ -221,12 +221,10 @@ $(document).ready(function () {
 
     try
     {
-        socket = new WebSocket('ws://localhost:9000');
+        socket = new WebSocket('ws://'+window.location.hostname+':9000');
 
         socket.onopen = function () {
             console.log('connection open');
-
-            return;
         };
 
         socket.onmessage = function (msg) {
@@ -235,7 +233,7 @@ $(document).ready(function () {
 
             $(".progress-bar").animate({
                 width: progress+'%'
-            }, 2500);
+            }, 1500);
             $('.progress-bar').text(progress+'%');
 
             $('#result').append('<p>'+msg.data+'</p>');
@@ -248,14 +246,10 @@ $(document).ready(function () {
 
                 $('#SendToAnsibleApi').removeAttr("disabled");
             }
-
-            return;
         };
 
         socket.onclose = function () {
             console.log('connection closed');
-
-            return;
         };
 
     }

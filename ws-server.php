@@ -7,10 +7,10 @@ require __DIR__ . '/vendor/autoload.php';
 $pheanstalk = new Pheanstalk('127.0.0.1');
 
 $websocket = new Hoa\Websocket\Server(
-    new Hoa\Socket\Server('ws://127.0.0.1:9000')
+    new Hoa\Socket\Server('ws://0.0.0.0:9000')
 );
 
-$websocket->on('open', function (Bucket $bucket) {
+$websocket->on('open', function () {
     echo 'new connection', "\n";
 
     return;
@@ -29,7 +29,7 @@ $websocket->on('message', function (Bucket $bucket) use ($pheanstalk) {
     return;
 });
 
-$websocket->on('close', function (Bucket $bucket) {
+$websocket->on('close', function () {
     echo 'connection closed', "\n";
 
     return;
