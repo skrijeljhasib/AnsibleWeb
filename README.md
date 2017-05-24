@@ -20,7 +20,7 @@ sudo a2enmod rewrite
 
 Download the project and place it in your Apache2 DocumentRoot folder.
 
-Execute inside the AnsibleWeb Folder:
+Run composer inside the AnsibleWeb Folder:
 ```
 composer install
 ```
@@ -42,6 +42,7 @@ vendor/bin/doctrine orm:schema-tool:create
 
 
 ### Supervisor
+Open:
 ```
 sudo vi /etc/supervisor/conf.d/queue.conf
 ```
@@ -63,6 +64,12 @@ autorestart=true
 stderr_logfile=/var/log/supervisor/websocket-stderr.log
 stdout_logfile=/var/log/supervisor/websocket-stdout.log
 
+```
+Run:
+```
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo service supervisor restart
 ```
 
 #### Default Packages
