@@ -39,8 +39,8 @@ $(document).ready(function () {
                 }
             }).done(function () {
 
-                socket.send('Clean');
                 progessbar_count++;
+                socket.send('Clean');
 
                 $.ajax({
                     type: 'GET',
@@ -52,8 +52,8 @@ $(document).ready(function () {
                     }
                 }).done(function () {
 
-                    socket.send('Install Machine');
                     progessbar_count++;
+                    socket.send('Install Machine');
 
                     $.ajax({
                         type: 'GET',
@@ -64,20 +64,8 @@ $(document).ready(function () {
                         }
                     }).done(function () {
 
-                        socket.send('Wait SSH');
                         progessbar_count++;
-
-                        $.ajax({
-                            type: 'GET',
-                            url: 'PlayBook',
-                            data: {
-                                playbook: 'update',
-                                tmp_file: random_string
-                            }
-                        }).done(function () {
-
-                            socket.send('Update');
-                            progessbar_count++;
+                        socket.send('Wait SSH');
 
                             $.ajax({
                                 type: 'GET',
@@ -88,34 +76,16 @@ $(document).ready(function () {
                                 }
                             }).done(function () {
 
-                                socket.send('Install Dependencies');
                                 progessbar_count++;
+                                socket.send('Install Dependencies');
 
-                                $.ajax({
-                                    type: 'GET',
-                                    url: 'PlayBook',
-                                    data: {
-                                        playbook: 'installpackage',
-                                        packages: packages,
-                                        tmp_file: random_string
-                                    }
-                                }).done(function () {
+                                checkPackages(packages);
+                                checkDatabase();
+                                checkWebServer();
 
-                                    socket.send('Install Packages');
-                                    progessbar_count++;
-
-                                    checkDatabase();
-                                    checkWebServer();
-
-                                }).fail(function (error) {
-                                    console.log(JSON.stringify(error));
-                                });
                             }).fail(function (error) {
                                 console.log(JSON.stringify(error));
                             });
-                        }).fail(function (error) {
-                            console.log(JSON.stringify(error));
-                        });
                     }).fail(function (error) {
                         console.log(JSON.stringify(error));
                     });
@@ -132,7 +102,9 @@ $(document).ready(function () {
     {
         if($('#apacheCheckbox').is(':checked'))
         {
-            return $.ajax({
+            progessbar_count++;
+
+            $.ajax({
                 type: 'GET',
                 url: 'PlayBook',
                 data: {
@@ -141,10 +113,7 @@ $(document).ready(function () {
                     document_root: $('#apache_document_root').val(),
                 }
             }).done(function () {
-
                 socket.send('Install Webserver');
-                progessbar_count++;
-
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
@@ -152,7 +121,9 @@ $(document).ready(function () {
 
         else if($('#nginxCheckbox').is(':checked'))
         {
-            return $.ajax({
+            progessbar_count++;
+
+            $.ajax({
                 type: 'GET',
                 url: 'PlayBook',
                 data: {
@@ -161,10 +132,7 @@ $(document).ready(function () {
                     document_root: $('#nginx_document_root').val(),
                 }
             }).done(function () {
-
                 socket.send('Install Webserver');
-                progessbar_count++;
-
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
@@ -175,7 +143,9 @@ $(document).ready(function () {
     {
         if($('#mysqlCheckbox').is(':checked'))
         {
-            return $.ajax({
+            progessbar_count++;
+
+            $.ajax({
                 type: 'GET',
                 url: 'PlayBook',
                 data: {
@@ -187,10 +157,7 @@ $(document).ready(function () {
                     mysql_database: $('#mysql_database').val(),
                 }
             }).done(function () {
-
                 socket.send('Install Database');
-                progessbar_count++;
-
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
@@ -198,7 +165,9 @@ $(document).ready(function () {
 
         else if($('#mongodbCheckbox').is(':checked'))
         {
-            return $.ajax({
+            progessbar_count++;
+
+            $.ajax({
                 type: 'GET',
                 url: 'PlayBook',
                 data: {
@@ -210,14 +179,34 @@ $(document).ready(function () {
                 }
             }).done(function () {
                 socket.send('Install Database');
-                progessbar_count++;
-
             }).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
         }
     }
 
+    function checkPackages(packages)
+    {
+        if(packages)
+        {
+            progessbar_count++;
+
+            $.ajax({
+                type: 'GET',
+                url: 'PlayBook',
+                data: {
+                    playbook: 'installpackage',
+                    packages: packages,
+                    tmp_file: random_string
+                }
+            }).done(function () {
+                socket.send('Install Packages');
+            }).fail(function (error) {
+                console.log(JSON.stringify(error));
+            });
+        }
+
+    }
 
     try
     {
