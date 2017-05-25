@@ -1,0 +1,26 @@
+<?php
+
+use ObjectivePHP\Application\View\Helper\Vars;
+use Project\Entity\DB\Hosts;
+
+?>
+<div class="container">
+<?php
+                    if (!Vars::collection('hosts')->isEmpty()) {
+                        $hosts = Vars::collection('hosts')->toArray(); ?>
+			<table class="table">
+			<thead>
+      				<tr>
+        				<th>Id</th>
+        				<th>Name</th>
+        				<th>Ip</th>
+      				</tr>
+    			</thead>
+    			<tbody>			
+			<?php foreach ( $hosts as $host) {
+				echo '<tr><td>' . $host->getid() . '</td><td>' . $host->getname() . '</td><td>' . $host->getip() . '</td></tr>';
+			} ?>
+			</tbody></table><?php
+                    }
+ ?>
+<div>
