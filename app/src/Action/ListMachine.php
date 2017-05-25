@@ -31,6 +31,7 @@ class CreateMachine extends RenderableAction
         {
             $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
             $hosts = $hosts_gateway->fetch();
+	    $ansible_api = $app->getConfig()->get(AnsibleApi::class);
         }
         catch (Exception $e)
         {

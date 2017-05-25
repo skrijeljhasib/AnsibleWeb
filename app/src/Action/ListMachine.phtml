@@ -4,7 +4,29 @@ use ObjectivePHP\Application\View\Helper\Vars;
 use Project\Entity\DB\Hosts;
 
 ?>
+<script>
+function listMachine() {
+    let machines = [];
+//    $('#pleaseWaitDialog').modal();
+
+    $.ajax({
+        type: 'GET',
+        url: 'PlayBook',
+        data: {
+            playbook: 'getAllMachine'
+        }
+    })
+    .done(function () {
+
+    })
+    .fail(function (error) {
+        console.log(JSON.stringify(error));
+    })
+
+};
+</script>
 <div class="container">
+<div align="right"><input type="button" class="btn btn-default" value="Refresh" onclick="listMachine();"/></div>
 <?php
                     if (!Vars::collection('hosts')->isEmpty()) {
                         $hosts = Vars::collection('hosts')->toArray(); ?>
