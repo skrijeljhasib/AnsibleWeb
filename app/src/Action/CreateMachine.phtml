@@ -18,7 +18,7 @@ use Project\Entity\DB\Package;
                         if ($host['host_config'] === 'FIXED') {
                             echo "<label for='name'>Hostname: </label><input id='name' class='form-control' type='text' value=" . $machine_template["name"] . " disabled>";
                         } elseif ($host['host_config'] === 'CUSTOM') {
-                            echo "<label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' value=" . $machine_template["name"] . " required>";
+                            echo "<label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' required>";
                         } elseif ($host['host_config'] === 'RANDOM') {
                             echo "<div class='alert alert-info'>The Hostname will created randomly.</div>";
                         } else {

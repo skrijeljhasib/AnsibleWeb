@@ -37,6 +37,6 @@ class CreateMachine extends RenderableAction
             throw new Exception('Can not load packages from DB');
         }
 
-        return compact('packages', 'host', 'ansible_api', 'machine_template');
+        return compact('packages', 'host', 'machine_template');
     }
 }

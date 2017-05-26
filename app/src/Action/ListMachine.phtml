@@ -1,13 +1,11 @@
 <?php
 
 use ObjectivePHP\Application\View\Helper\Vars;
-use Project\Entity\DB\Hosts;
 
 ?>
 <script>
 function listMachine() {
     let machines = [];
-//    $('#pleaseWaitDialog').modal();
 
     $.ajax({
         type: 'GET',

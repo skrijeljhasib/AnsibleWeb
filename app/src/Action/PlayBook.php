@@ -12,7 +12,6 @@ use Project\Service\DatabaseService;
 use Project\Service\InstallDependenciesService;
 use Project\Service\WebServerService;
 use Project\Service\CleanService;
-use Project\Service\GetAllMachineService;
 use Project\Service\WaitSSHService;
 use Project\Service\InstallMachineService;
 use Project\Service\InstallPackageService;
@@ -88,14 +87,6 @@ class PlayBook
                 $cleanService = new CleanService();
                 $json = $cleanService->load(
                     $app->getRequest()->getParameters()
-                );
-                break;
-
-            case 'getAllMachine':
-                $getAllMachineService = new GetAllMachineService();
-                $json = $getAllMachineService->load(
-                    $this->machine_template,
-                    $this->openstack_auth
                 );
                 break;
 
