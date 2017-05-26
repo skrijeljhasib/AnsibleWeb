@@ -25,7 +25,7 @@ Run composer inside the AnsibleWeb Folder:
 composer install
 ```
 
-#### Apache Configuration file example :
+### Apache Configuration file example :
 
 ```
 DocumentRoot /var/www/html/ansibleweb/public/index.php
@@ -38,6 +38,13 @@ DocumentRoot /var/www/html/ansibleweb/public/index.php
 * AnsibleWeb folder execute this:
 ```
 vendor/bin/doctrine orm:schema-tool:create
+```
+
+
+#### SQL
+
+```
+
 ```
 
 
@@ -55,6 +62,20 @@ autostart=true
 autorestart=true
 stderr_logfile=/var/log/supervisor/ansible-worker-stderr.log
 stdout_logfile=/var/log/supervisor/ansible-worker-stdout.log
+```
+Open:
+```
+sudo vi /etc/supervisor/conf.d/update-hosts-table.conf
+```
+Add:
+```
+[program:get-hosts-ansible]
+command=php vendor/bin/op get-hosts-worker
+directory=/var/www/html/AnsibleWeb/
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/supervisor/get-hosts-worker-stderr.log
+stdout_logfile=/var/log/supervisor/get-hosts-worker-stdout.log
 ```
 Open:
 ```
@@ -76,11 +97,6 @@ Run:
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo service supervisor restart
-```
-
-#### Default Packages
-
-```
 ```
 
 ## Contributors
