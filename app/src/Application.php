@@ -24,6 +24,7 @@ use ObjectivePHP\Package\FastRoute\FastRouteRouter;
 use ObjectivePHP\Router\Dispatcher;
 use ObjectivePHP\Router\MetaRouter;
 use ObjectivePHP\Router\PathMapperRouter;
+use Project\Cli\GetAllMachineWorker;
 use Project\Cli\HelloWorld;
 use Project\Cli\PlayBookWorker;
 use Project\Cli\Test;
@@ -62,6 +63,7 @@ class Application extends AbstractApplication
         $cliRouter->registerCommand(HelloWorld::class);
         $cliRouter->registerCommand(Test::class);
         $cliRouter->registerCommand(PlayBookWorker::class);
+        $cliRouter->registerCommand(GetAllMachineWorker::class);
         $router->register($cliRouter);
 
         $this->getServicesFactory()->registerService(['id' => 'cli.router', 'instance' => $cliRouter]);
