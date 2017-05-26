@@ -73,22 +73,12 @@ class GetAllMachineWorker extends AbstractCliAction
 
                         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
 
-                        $db_hosts = $hosts_gateway->fetch();
+                        $host = new Host();
+                        $host->setId($id);
+                        $host->setName($name);
+                        $host->setIp($public_v4);
 
-                        $db_ids = [];
-
-                        foreach ($db_hosts as $db_host) {
-                            $db_ids[] = $db_host->getId();
-                        }
-
-                        if(!in_array($id,$db_ids)) {
-                            $host = new Host();
-                            $host->setId($id);
-                            $host->setName($name);
-                            $host->setIp($public_v4);
-
-                            $hosts_gateway->put($host);
-                        }
+                        $hosts_gateway->put($host);
                     }
 
                 } else {

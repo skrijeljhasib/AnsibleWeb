@@ -33,11 +33,12 @@ class HostGateway
     {
         $hosts = !is_array($hosts) ? [$hosts] : $hosts;
         foreach ($hosts as $host) {
-            $this->getEntityManager()->persist($host);
+            $this->getEntityManager()->merge($host);
         }
         $this->getEntityManager()->flush();
         return true;
     }
+
 
 
     public function delete($id)
