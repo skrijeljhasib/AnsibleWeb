@@ -10,40 +10,33 @@ namespace Project\Entity\DB;
 
 /**
  * @Entity @Table(name="hosts")
+ * @UniqueEntity(fields="ip", message="Ip already exists.")
+ * @UniqueEntity(fields="name", message="Name already exists.")
  **/
 class Host
 {
-
     /**
-     * @Id @Column(type="string")
-     * @var string
+     * @Id @GeneratedValue @Column(type="integer")
+     * @var int
      **/
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=64, unique=true)
      * @var string
      **/
     protected $name;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=15, unique=true)
      * @var string
      **/
     protected $ip;
 
     /**
-     * @param string $id
+     * @return int
      */
-    public function setId(string $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getId():string
+    public function getId():int
     {
         return $this->id;
     }
