@@ -11,12 +11,12 @@ namespace Project\Entity\DB;
 /**
  * @Entity @Table(name="hosts")
  **/
-class Hosts
+class Host
 {
 
     /**
-     * @Id @GeneratedValue @Column(type="integer")
-     * @var int
+     * @Id @Column(type="string")
+     * @var string
      **/
     protected $id;
 
@@ -32,11 +32,18 @@ class Hosts
      **/
     protected $ip;
 
+    /**
+     * @param string $id
+     */
+    public function setId(string $id)
+    {
+        $this->id = $id;
+    }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId():int
+    public function getId():string
     {
         return $this->id;
     }
@@ -70,6 +77,6 @@ class Hosts
      */
     public function setIp(string $ip)
     {
-        $this->name = $ip;
+        $this->ip = $ip;
     }
 }
