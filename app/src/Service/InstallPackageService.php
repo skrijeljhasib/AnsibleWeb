@@ -8,7 +8,6 @@
 
 namespace Project\Service;
 
-
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\Apt;
 use Project\Entity\JSON\PlayBook;

@@ -12,7 +12,6 @@ use ObjectivePHP\Application\Action\RenderableAction;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Application\View\Helper\Vars;
 use ObjectivePHP\Html\Exception;
-use Project\Config\AnsibleApi;
 use Project\Config\Host;
 use Project\Config\MachineTemplate;
 
@@ -31,17 +30,13 @@ class CreateMachine extends RenderableAction
         $host = $app->getConfig()->get(Host::class);
         $machine_template = $app->getConfig()->get(MachineTemplate::class);
 
-        try
-        {
+        try {
             $package_gateway = $app->getServicesFactory()->get('gateway.packages');
             $packages = $package_gateway->fetch();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw new Exception('Can not load packages from DB');
         }
 
-        return compact('packages','host','ansible_api','machine_template');
+        return compact('packages', 'host', 'ansible_api', 'machine_template');
     }
-
 }

@@ -27,7 +27,7 @@ class DatabaseService
      * @param $machine_access array
      * @param $app_get ParameterContainerInterface
      */
-    public function load($machine_access,$app_get)
+    public function load($machine_access, $app_get)
     {
         $this->playbook = new PlayBook();
 

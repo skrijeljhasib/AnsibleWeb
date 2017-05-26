@@ -8,7 +8,6 @@ use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
 use Project\Config\MachineTemplate;
 
-
 $ansible_api = [
     "address" => "address"
 ];

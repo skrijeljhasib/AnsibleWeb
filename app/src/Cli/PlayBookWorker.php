@@ -8,7 +8,6 @@
 
 namespace Project\Cli;
 
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
@@ -36,13 +35,11 @@ class PlayBookWorker extends AbstractCliAction
         $pheanstalk = new Pheanstalk('127.0.0.1');
 
         while (true) {
-
             $job = $pheanstalk->watch('ansible-post')
                 ->ignore('default')
                 ->reserve();
 
-            if($job !== false)
-            {
+            if ($job !== false) {
                 try {
                     $client = new Client(
                         [
@@ -63,19 +60,15 @@ class PlayBookWorker extends AbstractCliAction
                     } else {
                         echo 'Request failed: HTTP status code: ' . $response->getStatusCode();
                     }
-
                 } catch (RequestException $e) {
                     echo Psr7\str($e->getRequest());
                     if ($e->hasResponse()) {
                         echo Psr7\str($e->getResponse());
                     }
                 }
-            }
-            else
-            {
+            } else {
                 sleep(3);
             }
-
         }
     }
 }

@@ -110,8 +110,7 @@ class OsServerAuth extends Task
      */
     public function setAuthFromConfigFile(array $openstack_auth)
     {
-        foreach ($openstack_auth as $key => $value)
-        {
+        foreach ($openstack_auth as $key => $value) {
             $this->$key = $value;
         }
     }
@@ -127,5 +126,4 @@ class OsServerAuth extends Task
 
         return $array;
     }
-
 }

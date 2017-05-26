@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 /**
  * Class WaitFor
  * @package Project\Entity\JSON

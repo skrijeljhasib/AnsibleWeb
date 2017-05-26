@@ -10,7 +10,6 @@ use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
 use Project\Service\DatabaseService;
 use Project\Service\InstallDependenciesService;
-use Project\Service\UpdateService;
 use Project\Service\WebServerService;
 use Project\Service\CleanService;
 use Project\Service\GetAllMachineService;
@@ -50,8 +49,7 @@ class PlayBook
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
 
-        switch ($app->getRequest()->getParameters()->get('playbook'))
-        {
+        switch ($app->getRequest()->getParameters()->get('playbook')) {
             case 'installmachine':
                 $machineService = new InstallMachineService();
                 $json = $machineService->load(

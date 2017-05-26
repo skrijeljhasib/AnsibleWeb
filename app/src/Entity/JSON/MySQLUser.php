@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 /**
  * Class MySQLUser
  * @package Project\Entity\JSON
@@ -172,6 +171,4 @@ class MySQLUser extends Task
 
         return $array;
     }
-
-
 }

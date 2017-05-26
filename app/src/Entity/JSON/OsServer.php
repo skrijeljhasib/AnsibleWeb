@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 /**
  * Class OsServer
  * @package Project\Entity\JSON
@@ -235,8 +234,7 @@ class OsServer extends Task
      */
     public function setMachineFromConfigFile(array $machine_template)
     {
-        foreach ($machine_template as $key => $value)
-        {
+        foreach ($machine_template as $key => $value) {
             $this->$key = $value;
         }
     }

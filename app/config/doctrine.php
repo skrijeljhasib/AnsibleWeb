@@ -7,6 +7,7 @@
  */
 
 use ObjectivePHP\Package\Doctrine\Config\EntityManager;
+
 return [
     new EntityManager('default', [
         'entities.locations' => ['app/src/Entity'],

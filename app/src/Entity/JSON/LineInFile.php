@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 /**
  * Class LineInFile
  * @package Project\Entity\JSON

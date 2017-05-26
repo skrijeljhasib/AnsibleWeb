@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 /**
  * Class Task
  * @package Project\Entity\JSON
@@ -82,8 +81,7 @@ abstract class Task
     public function toArray()
     {
         $array = [];
-        foreach (array_filter(get_object_vars($this)) as $key => $value)
-        {
+        foreach (array_filter(get_object_vars($this)) as $key => $value) {
             $array[$key] = $value;
         }
         return $array;
@@ -160,5 +158,4 @@ abstract class Task
     {
         $this->local_action = $local_action;
     }
-
 }

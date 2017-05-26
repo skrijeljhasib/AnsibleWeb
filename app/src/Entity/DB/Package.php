@@ -50,5 +50,4 @@ class Package
     {
         $this->name = $name;
     }
-
 }

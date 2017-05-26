@@ -12,10 +12,9 @@ use ObjectivePHP\Application\Action\RenderableAction;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Application\View\Helper\Vars;
 use ObjectivePHP\Html\Exception;
-use Project\Config\AnsibleApi;
 use Project\Config\Host;
 
-class CreateMachine extends RenderableAction
+class DeleteMachine extends RenderableAction
 {
 
     /**
@@ -29,7 +28,6 @@ class CreateMachine extends RenderableAction
 
         $host = $app->getConfig()->get(Host::class);
 
-        return compact('host','ansible_api');
+        return compact('host', 'ansible_api');
     }
-
 }

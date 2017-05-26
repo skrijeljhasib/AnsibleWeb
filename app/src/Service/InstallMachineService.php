@@ -8,7 +8,6 @@
 
 namespace Project\Service;
 
-use ObjectivePHP\Config\Config;
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\LineInFile;
 use Project\Entity\JSON\OsServer;
@@ -27,27 +26,26 @@ class InstallMachineService
      */
     public function load($openstack_auth, $machine_template, $host, $env, $app_get)
     {
-        switch ($host['host_config'])
-        {
+        switch ($host['host_config']) {
             case 'RANDOM':
-                $name = substr(md5(microtime()),rand(0,26),15).'.'.$env;
+                $name = substr(md5(microtime()), rand(0, 26), 15).'.'.$env;
                 $machine_template['name'] = $name;
                 break;
             case 'FIXED':
-                $machine_template['name'] = $machine_template['name'].'.'.$env;;
+                $machine_template['name'] = $machine_template['name'].'.'.$env;
+                ;
                 break;
             case 'CUSTOM':
                 $host = json_decode($app_get->get('host'));
-                foreach ($host as $key => $value)
-                {
+                foreach ($host as $key => $value) {
                     $machine_template[$key] = $value;
-                    if($key === 'name') {
+                    if ($key === 'name') {
                         $machine_template['name'] = $value.'.'.$env;
                     }
                 }
                 break;
             default:
-                $name = substr(md5(microtime()),rand(0,26),15).'.'.$env;
+                $name = substr(md5(microtime()), rand(0, 26), 15).'.'.$env;
                 $machine_template['name'] = $name;
         }
 

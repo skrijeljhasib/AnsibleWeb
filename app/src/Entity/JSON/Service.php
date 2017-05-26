@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 class Service extends Task
 {
     /**
@@ -65,6 +64,4 @@ class Service extends Task
 
         return $array;
     }
-
-
 }

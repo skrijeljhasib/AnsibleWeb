@@ -13,7 +13,7 @@ $(document).ready(function () {
 
         $(".progress-bar").animate({
             width: '0%'
-        }, 500);
+        }, 250);
         $('.progress-bar').text('0%');
 
         $('#SendToAnsibleApi').attr('disabled', true);

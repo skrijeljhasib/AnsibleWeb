@@ -9,7 +9,6 @@
 
 namespace Project\Cli;
 
-
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Cli\Action\AbstractCliAction;
 use ObjectivePHP\Cli\Action\Parameter\Toggle;
@@ -33,17 +32,12 @@ class Test extends AbstractCliAction
     {
         echo "TEST" . PHP_EOL;
         
-        if($this->getParam('verbose') >= 1)
-        {
+        if ($this->getParam('verbose') >= 1) {
             echo 'VERBOSE ON' . PHP_EOL;
         }
             
-        if($this->getParam('verbose') >= 2)
-        {
+        if ($this->getParam('verbose') >= 2) {
             echo 'EXTRA VERBOSE ON' . PHP_EOL;
         }
-            
-            
     }
-    
 }

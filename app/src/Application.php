@@ -91,7 +91,6 @@ class Application extends AbstractApplication
             ->plug(new ViewRenderer())->as('view-renderer');
 
         $this->getStep('end')->plug(new ResponseSender());
-
     }
 
     /**
@@ -105,9 +104,5 @@ class Application extends AbstractApplication
         $this->getStep('bootstrap')
             // load external packages
             ->plug(new DoctrinePackage());
-
     }
-
 }
-
-

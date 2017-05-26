@@ -72,5 +72,4 @@ class PackageGateway
     {
         $this->entityManager = $entityManager;
     }
-
 }

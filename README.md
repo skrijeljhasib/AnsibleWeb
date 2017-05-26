@@ -55,7 +55,13 @@ autostart=true
 autorestart=true
 stderr_logfile=/var/log/supervisor/ansible-worker-stderr.log
 stdout_logfile=/var/log/supervisor/ansible-worker-stdout.log
-
+```
+Open:
+```
+sudo vi /etc/supervisor/conf.d/websocket.conf
+```
+Add:
+```
 [program:websocket]
 command=php ws-server.php
 directory=/var/www/html/AnsibleWeb/

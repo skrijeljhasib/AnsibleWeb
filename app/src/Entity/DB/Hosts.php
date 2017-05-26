@@ -72,5 +72,4 @@ class Hosts
     {
         $this->name = $ip;
     }
-
 }

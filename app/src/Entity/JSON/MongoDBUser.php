@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 class MongoDBUser extends Task
 {
 
@@ -107,5 +106,4 @@ class MongoDBUser extends Task
 
         return $array;
     }
-
 }

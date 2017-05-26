@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 /**
  * Class PlayBook
  * @package Project\Entity
@@ -284,7 +283,6 @@ class PlayBook
     {
         $playbook_array = array_filter(get_object_vars($this));
 
-        return json_encode($playbook_array,JSON_UNESCAPED_SLASHES);
+        return json_encode($playbook_array, JSON_UNESCAPED_SLASHES);
     }
-
 }

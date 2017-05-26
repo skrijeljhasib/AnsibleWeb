@@ -8,7 +8,6 @@
 
 namespace Project\Service;
 
-
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\PlayBook;
 use Project\Entity\JSON\Raw;
@@ -21,7 +20,7 @@ class InstallDependenciesService
      * @param $app_get ParameterContainerInterface
      * @return string
      */
-    public function load($machine_access,$app_get)
+    public function load($machine_access, $app_get)
     {
         $playbook = new PlayBook();
 
@@ -43,5 +42,4 @@ class InstallDependenciesService
 
         return $playbook_json;
     }
-
 }

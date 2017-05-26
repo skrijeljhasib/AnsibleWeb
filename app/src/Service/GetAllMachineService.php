@@ -8,7 +8,6 @@
 
 namespace Project\Service;
 
-
 use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\OsServerFacts;
 use Project\Entity\JSON\PlayBook;
@@ -20,7 +19,7 @@ class GetAllMachineService
      * @param $openstack_auth array
      * @return string
      */
-    public function load($machine_template,$openstack_auth)
+    public function load($machine_template, $openstack_auth)
     {
         $playbook = new PlayBook();
 

@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 class Apt extends Task
 {
     /**

@@ -8,7 +8,6 @@
 
 namespace Project\Config;
 
-
 use ObjectivePHP\Config\SingleValueDirective;
 
 class Host extends SingleValueDirective

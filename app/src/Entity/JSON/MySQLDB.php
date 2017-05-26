@@ -8,7 +8,6 @@
 
 namespace Project\Entity\JSON;
 
-
 class MySQLDB extends Task
 {
 
@@ -110,5 +109,4 @@ class MySQLDB extends Task
 
         return $array;
     }
-
 }

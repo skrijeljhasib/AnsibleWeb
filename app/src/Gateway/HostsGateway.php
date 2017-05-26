@@ -25,7 +25,7 @@ class HostsGateway
     }
 
     /**
-     * @param Package|Package[] $hosts
+     * @param Hosts|Hosts[] $hosts
      *
      * @return bool
      */
@@ -72,5 +72,4 @@ class HostsGateway
     {
         $this->entityManager = $entityManager;
     }
-
 }

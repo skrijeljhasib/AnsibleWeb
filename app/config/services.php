@@ -25,7 +25,7 @@ use Project\Gateway\HostsGateway;
                 'setEntityManager' => [new ServiceReference('doctrine.em.default')],
             ]
         ]),
-       new Service([
+        new Service([
             'id' => 'gateway.hosts',
             'class' => HostsGateway::class,
             'setters' => [
