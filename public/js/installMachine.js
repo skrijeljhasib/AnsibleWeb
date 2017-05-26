@@ -6,6 +6,29 @@ $(document).ready(function () {
 
     let random_string = Math.random().toString(36).substring(7);
 
+    $('#name').keyup(function() {
+        let hostname = $(this).val();
+
+        $.ajax({
+            type: 'GET',
+            url: 'CheckHostName',
+            data: {
+                name: hostname
+            }
+        }).done(function (data) {
+            if(data === 'ok') {
+                $('#name').css('border-color','green');
+                $('#SendToAnsibleApi').attr('disabled',false);
+            }
+            else {
+                $('#name').css('border-color','red');
+                $('#SendToAnsibleApi').attr('disabled',true);
+            }
+        }).fail(function (error) {
+            console.log(JSON.stringify(error));
+        });
+    });
+
     $('#createMachine').submit(function (event) {
         event.preventDefault();
 
