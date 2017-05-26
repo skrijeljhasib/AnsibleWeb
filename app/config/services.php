@@ -4,7 +4,7 @@ use ObjectivePHP\ServicesFactory\Config\Service;
 use ObjectivePHP\Matcher\Matcher;
 use ObjectivePHP\ServicesFactory\ServiceReference;
 use Project\Gateway\PackageGateway;
-use Project\Gateway\HostsGateway;
+use Project\Gateway\HostGateway;
 
 /**
      * Declare your services specifications here
@@ -27,7 +27,7 @@ use Project\Gateway\HostsGateway;
         ]),
         new Service([
             'id' => 'gateway.hosts',
-            'class' => HostsGateway::class,
+            'class' => HostGateway::class,
             'setters' => [
                 'setEntityManager' => [new ServiceReference('doctrine.em.default')],
             ]

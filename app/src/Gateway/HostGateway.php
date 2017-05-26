@@ -2,13 +2,13 @@
 
 namespace Project\Gateway;
 
-use Project\Entity\DB\Hosts;
+use Project\Entity\DB\Host;
 
-class HostsGateway
+class HostGateway
 {
 
     protected $entityManager;
-    protected $defaultTargetEntity = Hosts::class;
+    protected $defaultTargetEntity = Host::class;
 
     /**
      * @param null $id
@@ -25,7 +25,7 @@ class HostsGateway
     }
 
     /**
-     * @param Hosts|Hosts[] $hosts
+     * @param Host|Host[] $hosts
      *
      * @return bool
      */
