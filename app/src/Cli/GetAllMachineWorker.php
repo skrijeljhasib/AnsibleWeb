@@ -45,8 +45,8 @@ class GetAllMachineWorker extends AbstractCliAction
             $openstack_auth
         );
 
-        while (true)
-        {
+//        while (true)
+//        {
             try {
                 $client = new Client(
                     [
@@ -62,19 +62,17 @@ class GetAllMachineWorker extends AbstractCliAction
                 );
 
                 if ($response->getStatusCode() == 200) {
-
                     $machines = json_decode($response->getBody(), true);
 
                     for($i = 0; $i < count($machines['ansible_facts']['openstack_servers']); $i++) {
 
-                        $id = $machines['ansible_facts']['openstack_servers'][$i]['id'];
+                        //$id = $machines['ansible_facts']['openstack_servers'][$i]['id'];
                         $name = $machines['ansible_facts']['openstack_servers'][$i]['name'];
-                        $public_v4 = $machines['ansible_facts']['openstack_servers'][$i]['public_v4'];
+                        $public_v4= $machines['ansible_facts']['openstack_servers'][$i]['networks']['Ext-Net'][0];
 
                         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
 
                         $host = new Host();
-                        $host->setId($id);
                         $host->setName($name);
                         $host->setIp($public_v4);
 
@@ -93,5 +91,5 @@ class GetAllMachineWorker extends AbstractCliAction
         }
 
 
-    }
+  //  }
 }
