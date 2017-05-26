@@ -25,9 +25,7 @@ use ObjectivePHP\Router\Dispatcher;
 use ObjectivePHP\Router\MetaRouter;
 use ObjectivePHP\Router\PathMapperRouter;
 use Project\Cli\GetAllMachineWorker;
-use Project\Cli\HelloWorld;
 use Project\Cli\PlayBookWorker;
-use Project\Cli\Test;
 use Project\Middleware\LayoutSwitcher;
 
 /**
@@ -60,8 +58,6 @@ class Application extends AbstractApplication
 
         // integrates CLI commands
         $cliRouter = new CliRouter();
-        $cliRouter->registerCommand(HelloWorld::class);
-        $cliRouter->registerCommand(Test::class);
         $cliRouter->registerCommand(PlayBookWorker::class);
         $cliRouter->registerCommand(GetAllMachineWorker::class);
         $router->register($cliRouter);
