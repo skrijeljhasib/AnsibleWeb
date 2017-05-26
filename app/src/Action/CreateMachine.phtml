@@ -8,11 +8,9 @@ use Project\Entity\DB\Package;
     <div class="col-md-offset-2 col-md-8">
 
         <form id="createMachine">
-            <div class="page-header">
-                <div class="page-header">
-                    <h3>Configuration</h3>
-                </div>
-                <div class="well">
+		<div class="panel panel-primary">
+                	<div class="panel-heading">Configuration</div>
+                        <div class="panel-body">
                     <?php
                     if (!Vars::collection('host')->isEmpty()) {
                         $host = Vars::collection('host')->toArray();
@@ -28,13 +26,12 @@ use Project\Entity\DB\Package;
                         }
                     }
                     ?>
-                </div>
+                	</div>
+		</div>
 
-                <div class="page-header">
-                    <h3>Which packages do you need?</h3>
-                </div>
-
-                <div class="well">
+		<div id="pkgpanel" class="panel panel-default">
+                        <div class="panel-heading"><a href="#pkgpanel" onClick="$(pkgbody).toggle();">Packages</a></div>
+                        <div class="panel-body"><div id="pkgbody" style="display: none;">
                     <label for="selectAllorNot">All: <input type="checkbox" id="selectAllorNot"/></label><br>
 
                     <select id="packages" name="packages[]" class="form-control" style="width: 100%" multiple="multiple">
@@ -48,15 +45,13 @@ use Project\Entity\DB\Package;
 
                         ?>
                     </select>
+			</div>
+			</div>
                 </div>
 
-
-                <div class="page-header">
-                    <h3>Do you need a Webserver?</h3>
-                </div>
-                <div class="well">
-
-                    <!- - Nav tabs - ->
+		<div d="wspanel" class="panel panel-default">
+                        <div class="panel-heading"><a href="#wspanel" onClick="$(wsbody).toggle();">Web Server</a></div>
+                        <div class="panel-body"><div id="wsbody" style="display: none;">
                     <ul class="nav nav-tabs" role="tablist" id="webserverTabs">
                         <li role="presentation" class="active"><a href="#apache" aria-controls="apache" role="tab"
                                                                   data-toggle="tab">Apache</a></li>
@@ -64,7 +59,6 @@ use Project\Entity\DB\Package;
                         </li>
                     </ul>
 
-                    <!- - Tab panes - ->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="apache">
                             <br>
@@ -87,15 +81,12 @@ use Project\Entity\DB\Package;
                             </label>
                         </div>
                     </div>
-
+			</div></div>
                 </div>
 
-                <div class="page-header">
-                    <h3>Do you need a DBMS?</h3>
-                </div>
-                <div class="well">
-
-                    <!- - Nav tabs - ->
+		    <div id="dbpanel" class="panel panel-default">
+                        <div class="panel-heading"><a href="#dbpanel" onClick="$(dbbody).toggle();">Database</a></div>
+                        <div class="panel-body"><div id="dbbody" style="display: none;">
                     <ul class="nav nav-tabs" role="tablist" id="databaseTabs">
                         <li role="presentation" class="active"><a href="#mysql" aria-controls="mysql" role="tab"
                                                                   data-toggle="tab">MySQL</a></li>
@@ -103,7 +94,6 @@ use Project\Entity\DB\Package;
                         </li>
                     </ul>
 
-                    <!- - Tab panes - ->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="mysql">
                             <br>
@@ -143,8 +133,8 @@ use Project\Entity\DB\Package;
                             </label>
                         </div>
                     </div>
-
-                </div>
+			</div>
+                </div></div>
 
                 <br>
                 <input class="btn btn-default btn-block" type="submit" id="SendToAnsibleApi"
@@ -154,14 +144,18 @@ use Project\Entity\DB\Package;
     </div>
 </div>
 
-<div class="row">
+<!-- <div id="outputcreation" class="row" style="display: none"> -->
+<br><br><div id="outputcreation" class="row">
     <div class="col-md-offset-2 col-md-8">
+
+               <div class="panel panel-default">
+                        <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
+                        <div class="panel-body"><div id="outputbody" style="display: none;">
+
         <h2>Process</h2>
         <div id="progress" class="progress progress-striped">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
-                 aria-valuemin="0" aria-valuemax="100" style="width: 0%;"
-            >
-                0%
+                 aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%
             </div>
         </div>
         <h2>Log</h2>
@@ -170,7 +164,7 @@ use Project\Entity\DB\Package;
         </div>
         <h2>IP-Address</h2>
         <div id="ipaddress" class="jumbotron text-center">
-
+</div></div></div>
         </div>
     </div>
 </div>
