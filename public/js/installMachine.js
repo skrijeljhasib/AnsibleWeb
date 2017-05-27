@@ -234,6 +234,9 @@ $(document).ready(function () {
     try
     {
         socket = new WebSocket('ws://'+window.location.hostname+':9000');
+	socket.onerror=function(event){
+	   console.log('connection error');
+	}
 
         socket.onopen = function () {
             console.log('connection open');
