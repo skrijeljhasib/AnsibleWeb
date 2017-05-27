@@ -23,8 +23,32 @@ function listMachine() {
 
 };
 </script>
+<style>
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    margin: auto;
+}</style>
+<div class="modal fade" id="confirmRefreshListModal">
+        <div class="vertical-alignment-helper">
+        <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
+                <div class="modal-content">
+                        <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Confirm Refresh</h4>
+                        </div>
+                        <div class="modal-body">
+                                <div class="modal-group"><p class="text-center">Are you sure tou want to Refresh Machine List ?</p></div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="listMachine();">Yes</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+                        </div>
+                </div>
+        </div>
+        </div>
+</div>
 <div class="container">
-<div align="right"><input type="button" class="btn btn-danger" value="Refresh" onclick="listMachine();"/></div>
+<div align="right"><input type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmRefreshListModal" value="Refresh" /></div>
 <?php
                     if (!Vars::collection('hosts')->isEmpty()) {
                         $hosts = Vars::collection('hosts')->toArray(); ?>
