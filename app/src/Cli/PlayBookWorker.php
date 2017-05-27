@@ -32,7 +32,7 @@ class PlayBookWorker extends AbstractCliAction
     {
         $ansible_api = $app->getConfig()->get(AnsibleApi::class);
 
-        $pheanstalk = new Pheanstalk('127.0.0.1');
+        $pheanstalk = new Pheanstalk($ansible_api['beanstalk']);
 
         while (true) {
             $job = $pheanstalk->watch('ansible-post')

@@ -9,7 +9,8 @@ use Project\Config\OpenStackAuth;
 use Project\Config\MachineTemplate;
 
 $ansible_api = [
-    "address" => "address"
+    "address" => "address",
+    "beanstalk" => "127.0.0.1"
 ];
 
 $openstack_auth = [

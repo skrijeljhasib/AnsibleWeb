@@ -40,13 +40,14 @@ class PlayBook
      */
     function __invoke(Application $app)
     {
-        $pheanstalk = new Pheanstalk('127.0.0.1');
 
         $this->ansible_api = $app->getConfig()->get(AnsibleApi::class);
         $this->openstack_auth = $app->getConfig()->get(OpenStackAuth::class);
         $this->machine_template = $app->getConfig()->get(MachineTemplate::class);
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
+
+        $pheanstalk = new Pheanstalk($ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
             case 'installmachine':
