@@ -31,4 +31,20 @@ $(document).ready(function () {
         });
     });
 
+    $('#confirmDeleteMachine').click(function (event) {
+        event.preventDefault();
+
+            $.ajax({
+                type: 'GET',
+                url: 'PlayBook',
+                data: {
+                    playbook: 'deletemachine',
+		    name: name,
+		    location: 'BHS1' 
+                }
+            })
+	    .done(function () {
+	    });
+	});
+
 });

@@ -14,6 +14,7 @@ use Project\Service\WebServerService;
 use Project\Service\CleanService;
 use Project\Service\WaitSSHService;
 use Project\Service\InstallMachineService;
+use Project\Service\DeleteMachineService;
 use Project\Service\InstallPackageService;
 use stdClass;
 use Pheanstalk\Pheanstalk;
@@ -49,6 +50,14 @@ class PlayBook
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
+	    case 'deletemachine':
+               $machineService = new DeleteMachineService();
+                $json = $machineService->load(
+                $this->openstack_auth,
+                'lav.test',
+                'BHS1'
+                );
+		break;
             case 'installmachine':
                 $machineService = new InstallMachineService();
                 $json = $machineService->load(
