@@ -46,8 +46,7 @@ class PlayBook
         $this->machine_template = $app->getConfig()->get(MachineTemplate::class);
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
-
-        $pheanstalk = new Pheanstalk($ansible_api["beanstalk"]);
+        $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
             case 'installmachine':
