@@ -26,6 +26,7 @@ use ObjectivePHP\Router\MetaRouter;
 use ObjectivePHP\Router\PathMapperRouter;
 use Project\Cli\GetAllMachineWorker;
 use Project\Cli\PlayBookWorker;
+use Project\Cli\WebSocketWorker;
 use Project\Middleware\LayoutSwitcher;
 
 /**
@@ -60,6 +61,7 @@ class Application extends AbstractApplication
         $cliRouter = new CliRouter();
         $cliRouter->registerCommand(PlayBookWorker::class);
         $cliRouter->registerCommand(GetAllMachineWorker::class);
+        $cliRouter->registerCommand(WebSocketWorker::class);
         $router->register($cliRouter);
 
         $this->getServicesFactory()->registerService(['id' => 'cli.router', 'instance' => $cliRouter]);
