@@ -15,6 +15,7 @@ use Project\Service\CleanService;
 use Project\Service\WaitSSHService;
 use Project\Service\InstallMachineService;
 use Project\Service\DeleteMachineService;
+use Project\Service\GetAllMachineService;
 use Project\Service\InstallPackageService;
 use stdClass;
 use Pheanstalk\Pheanstalk;
@@ -32,8 +33,9 @@ class PlayBook
      * @var array $machine_template     Contains the type of machine which will be installed
      * @var array $machine_access       Contains the username of the machine to connect remotely
      * @var array $host                 FIXED, CUSTOM, RANDOM
+     * @var string $tube		Beanstalk tube	
      */
-    private $ansible_api, $openstack_auth, $machine_template, $machine_access, $host;
+    private $ansible_api, $openstack_auth, $machine_template, $machine_access, $host, $tube;
 
     /**
      * Check the playbook get parameter and return a json string of the playbook to the client
@@ -48,10 +50,20 @@ class PlayBook
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
+	$this->tube = 'ansible-post';
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
+	    case 'getallmachine':
+		$this->tube = 'getallmachine';
+                $machineService = new GetAllMachineService();
+                $json = $machineService->load(
+		$this->machine_template,
+                $this->openstack_auth
+                );
+                break;
 	    case 'deletemachine':
-               $machineService = new DeleteMachineService();
+		$this->tube = 'deletemachine';
+                $machineService = new DeleteMachineService();
                 $json = $machineService->load(
                 $this->openstack_auth,
                 'lav.test',
@@ -59,6 +71,7 @@ class PlayBook
                 );
 		break;
             case 'installmachine':
+		$this->tube = 'installmachine';
                 $machineService = new InstallMachineService();
                 $json = $machineService->load(
                     $this->openstack_auth,
@@ -68,7 +81,6 @@ class PlayBook
                     $app->getRequest()->getParameters()
                 );
                 break;
-
             case 'installpackage':
                 $packageService = new InstallPackageService();
                 $json = $packageService->load(
@@ -135,6 +147,6 @@ class PlayBook
                 $json = json_encode(new stdClass);
         }
 
-        $pheanstalk->useTube('ansible-post')->put($json);
+        $pheanstalk->useTube($this->tube)->put($json);
     }
 }
