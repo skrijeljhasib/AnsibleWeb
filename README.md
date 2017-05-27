@@ -84,7 +84,7 @@ sudo vi /etc/supervisor/conf.d/websocket.conf
 Add:
 ```
 [program:websocket]
-command=php ws-server.php
+command=php vendor/bin/op websocket-worker
 directory=/var/www/html/AnsibleWeb/
 autostart=true
 autorestart=true
