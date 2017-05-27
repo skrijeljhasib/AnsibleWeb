@@ -6,6 +6,17 @@ use ObjectivePHP\Application\View\Helper\Vars;
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
 
+		<form id="createMachine">
+                <div class="panel panel-primary">
+                        <div class="panel-heading">Hostname</div>
+                        <div class="panel-body">
+			<label for='name'>Hostname: </label><input id='nametodelete' class='form-control' name='host[name]' type='text' required>
+			</div>
+		</div>
+		</form>
+
+		<div align="right"><input id="deletebtn" type="button" class="btn btn-danger" value="Delete" disabled/></div><br>
+
                <div class="panel panel-default">
                         <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
                         <div class="panel-body"><div id="outputbody" style="display: none;">
