@@ -66,16 +66,19 @@ class GetAllMachineWorker extends AbstractCliAction
 
                     for($i = 0; $i < count($machines['ansible_facts']['openstack_servers']); $i++) {
 
-                        //$id = $machines['ansible_facts']['openstack_servers'][$i]['id'];
                         $name = $machines['ansible_facts']['openstack_servers'][$i]['name'];
+			$hostid = $machines['ansible_facts']['openstack_servers'][$i]['hostId'];
+			$status = $machines['ansible_facts']['openstack_servers'][$i]['status'];
+			$location = $machines['ansible_facts']['openstack_servers'][$i]['region'];
                         $public_v4= $machines['ansible_facts']['openstack_servers'][$i]['networks']['Ext-Net'][0];
 
                         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
-
                         $host = new Host();
                         $host->setName($name);
                         $host->setIp($public_v4);
-
+			$host->setHostID($hostid);
+			$host->setLocation($location);
+			$host->setStatus($status);
                         $hosts_gateway->put($host);
                     }
 

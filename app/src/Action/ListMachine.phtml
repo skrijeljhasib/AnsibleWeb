@@ -34,11 +34,13 @@ function listMachine() {
         				<th>Id</th>
         				<th>Name</th>
         				<th>Ip</th>
+					<th>Location</th>
+					<th>Status</th>
       				</tr>
     			</thead>
     			<tbody>			
 			<?php foreach ( $hosts as $host) {
-				echo '<tr><td>' . $host->getid() . '</td><td>' . $host->getname() . '</td><td>' . $host->getip() . '</td></tr>';
+				echo '<tr><td>' . $host->getid() . '</td><td>' . $host->getname() . '</td><td>' . $host->getip() . '</td><td>' . $host->getLocation() . '</td><td>' . $host->getStatus() . '</td></tr>';
 			} ?>
 			</tbody></table><?php
                     }

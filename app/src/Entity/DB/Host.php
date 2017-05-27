@@ -34,6 +34,24 @@ class Host
     protected $ip;
 
     /**
+     * @Column(type="string", unique=true)
+     * @var string
+     **/
+    protected $hostid;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     **/
+    protected $location;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     **/
+    protected $status;
+
+    /**
      * @return int
      */
     public function getId():int
@@ -55,6 +73,54 @@ class Host
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHostID():string
+    {
+        return $this->hostid;
+    }
+
+    /**
+     * @param string $hostID
+     */
+    public function setHostID(string $hostid)
+    {
+        $this->hostid = $hostid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation():string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string location
+     */
+    public function setLocation(string $location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus():string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status)
+    {
+        $this->status = $status;
     }
 
     /**
