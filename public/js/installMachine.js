@@ -75,6 +75,17 @@ $(document).ready(function () {
                     }
                 }).done(function () {
 
+
+		    $.ajax({
+                    type: 'GET',
+                    url: 'PlayBook',
+                    data: {
+                        playbook: 'addtohostfile',
+                        host: host,
+                        tmp_file: random_string
+                    }
+                }).done(function () {
+
                     progessbar_count++;
                     socket.send('Install Machine');
 
@@ -116,6 +127,9 @@ $(document).ready(function () {
                     console.log(JSON.stringify(error));
                 });
             }).fail(function (error) {
+                console.log(JSON.stringify(error));
+            });
+	}).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
     });

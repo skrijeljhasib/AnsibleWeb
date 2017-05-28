@@ -56,7 +56,8 @@ class PlayBookWorker extends AbstractCliAction
                     );
 
                     if ($response->getStatusCode() == 200) {
-                        $pheanstalk->useTube('ansible-get')->put($response->getBody());
+			$pheanstalk->useTube('ansible-get-'.$pheanstalk->statsJob($job)['tube'])->put($response->getBody());
+                        //$pheanstalk->useTube('ansible-get')->put($response->getBody());
 			echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
 			echo 'job  : ' . $job->getData();
                         $pheanstalk->delete($job);

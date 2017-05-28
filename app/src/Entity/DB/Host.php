@@ -28,16 +28,16 @@ class Host
     protected $name;
 
     /**
-     * @Column(type="string", length=15, unique=true)
+     * @Column(type="string", length=15, unique=true, nullable=true)
      * @var string
      **/
-    protected $ip;
+    protected $ip = '0.0.0.0';
 
     /**
-     * @Column(type="string", unique=true)
+     * @Column(type="string", unique=true, nullable=true)
      * @var string
      **/
-    protected $hostid;
+    protected $hostid = 'NA';
 
     /**
      * @Column(type="string")

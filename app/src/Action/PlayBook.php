@@ -17,6 +17,7 @@ use Project\Service\InstallMachineService;
 use Project\Service\DeleteMachineService;
 use Project\Service\GetAllMachineService;
 use Project\Service\InstallPackageService;
+use Project\Service\AddToHostFile;
 use stdClass;
 use Pheanstalk\Pheanstalk;
 
@@ -77,10 +78,13 @@ class PlayBook
                     $this->openstack_auth,
                     $this->machine_template,
                     $this->host,
-                    $app->getEnv(),
-                    $app->getRequest()->getParameters()
+		    $app
                 );
                 break;
+	    case 'addtohostfile':
+		$addtohotfile = new AddToHostFile();
+		$json = $addtohotfile->load();
+		break;
             case 'installpackage':
                 $packageService = new InstallPackageService();
                 $json = $packageService->load(

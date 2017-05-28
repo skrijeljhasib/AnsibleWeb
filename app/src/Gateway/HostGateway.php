@@ -66,6 +66,18 @@ class HostGateway
         return true;
     }
 
+     /**
+     *
+     * @return boolean
+     */
+
+    public function deleteAll()
+    {
+        $this->getEntityManager()->createQuery('DELETE FROM Project\Entity\DB\Host')->execute();
+        $this->getEntityManager()->flush();
+        return true;
+    }
+
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
