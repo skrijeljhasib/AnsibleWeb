@@ -22,11 +22,9 @@ class AddToHostFile
      * @param $ip
      * @return string
      */
-    public function load($ip)
+    public function load($app_get)
     {
-	$env = $app->getEnv();
-        $app_get = $app->getRequest()->getParameters();
-
+	$ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
         $playbook->setName('AddToHostFile');
@@ -40,7 +38,7 @@ class AddToHostFile
         $lineinfile_inventory = new LineInFile();
         $lineinfile_inventory->setPath('{{ inventory_file }}');
         $lineinfile_inventory->setCreate('yes');
-        $lineinfile_inventory->setLine('{{ '.$os_server->getRegister().'.server.public_v4 }}');*/
+        $lineinfile_inventory->setLine($ip);
 
         $playbook->setTask($lineinfile_inventory->toArray());
 

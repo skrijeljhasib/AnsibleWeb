@@ -20,11 +20,11 @@ use Project\Config\AnsibleApi;
  * Class PlayBookWorker
  * @package Project\Listener
  */
-class PlayBookWorker extends AbstractCliAction
+class PostWorker extends AbstractCliAction
 {
     public function __construct()
     {
-        $this->setCommand('ansible-worker');
+        $this->setCommand('post-worker');
         $this->setDescription('Send JSON String as a POST Request to AnsibleApi');
     }
 

@@ -20,6 +20,7 @@ class WaitSSHService
      */
     public function load($app_get)
     {
+	$ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
         $playbook->setName('Wait for SSH');
@@ -31,7 +32,7 @@ class WaitSSHService
         $playbook->setGatherFacts('false');
 
         $wait_for = new WaitFor();
-        $wait_for->setHost('{{ lookup(\'file\', \'/tmp/'.$app_get->get('tmp_file').'\') }}');
+        $wait_for->setHost($ip);
         $wait_for->setPort('22');
 
         $playbook->setTask($wait_for->toArray());

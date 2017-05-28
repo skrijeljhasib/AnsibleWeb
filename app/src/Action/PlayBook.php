@@ -82,10 +82,12 @@ class PlayBook
                 );
                 break;
 	    case 'addtohostfile':
+		$this->tube = 'ansible-post';
 		$addtohotfile = new AddToHostFile();
-		$json = $addtohotfile->load();
+		$json = $addtohotfile->load($app->getRequest()->getParameters());
 		break;
             case 'installpackage':
+		$this->tube = 'ansible-post';
                 $packageService = new InstallPackageService();
                 $json = $packageService->load(
                     $this->machine_access,
@@ -94,6 +96,7 @@ class PlayBook
                 break;
 
             case 'installdependencies':
+		$this->tube = 'ansible-post';
                 $installDependencies = new InstallDependenciesService();
                 $json = $installDependencies->load(
                     $this->machine_access,
@@ -102,6 +105,7 @@ class PlayBook
                 break;
 
             case 'waitssh':
+		$this->tube = 'ansible-post';
                 $waitService = new WaitSSHService();
                 $json = $waitService->load(
                     $app->getRequest()->getParameters()
@@ -109,6 +113,7 @@ class PlayBook
                 break;
 
             case 'clean':
+		$this->tube = 'ansible-post';
                 $cleanService = new CleanService();
                 $json = $cleanService->load(
                     $app->getRequest()->getParameters()
