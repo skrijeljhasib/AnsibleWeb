@@ -2,13 +2,13 @@
 
 namespace Project\Gateway;
 
-use Project\Entity\DB\Host;
+use Project\Entity\DB\Jobs;
 
-class HostGateway
+class JobsGateway
 {
 
     protected $entityManager;
-    protected $defaultTargetEntity = Host::class;
+    protected $defaultTargetEntity = Jobs::class;
 
     /**
      * @param null $id
@@ -25,29 +25,15 @@ class HostGateway
     }
 
     /**
-     * @param string $name
-     *
-     * @return array|object
-     */
-    public function fetchFromName($name)
-    {
-        if ($name) {
-            return $this->getRepository()->find($name);
-        } else {
-            return [];
-        }
-    }
-
-    /**
-     * @param Host|Host[] $hosts
+     * @param Jobs|Jobs[] $jobs
      *
      * @return bool
      */
-    public function put($hosts)
+    public function put($jobs)
     {
-        $hosts = !is_array($hosts) ? [$hosts] : $hosts;
-        foreach ($hosts as $host) {
-            $this->getEntityManager()->merge($host);
+        $jobs = !is_array($jobs) ? [$jobs] : $jobs;
+        foreach ($jobs as $job) {
+            $this->getEntityManager()->merge($job);
         }
         $this->getEntityManager()->flush();
         return true;

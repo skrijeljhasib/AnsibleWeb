@@ -31,5 +31,12 @@ use Project\Gateway\HostGateway;
             'setters' => [
                 'setEntityManager' => [new ServiceReference('doctrine.em.default')],
             ]
+        ]),
+        new Service([
+            'id' => 'gateway.jobs',
+            'class' => JobsGateway::class,
+            'setters' => [
+                'setEntityManager' => [new ServiceReference('doctrine.em.default')],
+            ]
         ])
     ];

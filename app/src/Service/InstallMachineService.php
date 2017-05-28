@@ -83,6 +83,21 @@ class InstallMachineService
 
         $playbook_json = $playbook->toJSON();
 
+	$jobs_gateway = $app->getServicesFactory()->get('gateway.jobs');
+        $jobs = new Jobs();
+        $jobs->setName('CreateMachine'.$machine_template['name']);
+        $jobs->setStatus(0);
+	$jobs->setJson($playbook_json);
+        $jobs->setTube('installmachine');
+        $jobss_gateway->put($jobs);
+
+	$hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
+        $host = new Host();
+        $host->setName($machine_template['name']);
+        $host->setLocation($location);
+        $host->setStatus('CREATING');
+        $hosts_gateway->put($host);
+
         return $playbook_json;
     }
 }
