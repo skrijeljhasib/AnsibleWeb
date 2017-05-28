@@ -52,6 +52,12 @@ class Host
     protected $status;
 
     /**
+     * @Column(type="integer",length=2)
+     * @var int
+     **/
+    protected $state = 0;
+
+    /**
      * @return int
      */
     public function getId():int
@@ -121,6 +127,22 @@ class Host
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+   /**
+     * @return int
+     */
+    public function getState():int
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setState(int $state)
+    {
+        $this->status = $state;
     }
 
     /**
