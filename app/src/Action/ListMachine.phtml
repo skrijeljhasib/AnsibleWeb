@@ -67,7 +67,8 @@ function listMachine() {
 				if ($host->getStatus() != 'ACTIVE') { 
 					$trclass = 'class="danger"';
 				 }
-				echo '<tr '. $class . '><td>' . $host->getid() . '</td><td><a href="#" data-toggle="tooltip" title="hostid='. $host->getHostID() . '">' . $host->getname() . '</a></td><td>' . $host->getip() . '</td><td>' . $host->getLocation() . '</td><td>' . $host->getStatus() . '</td></tr>';
+				echo '<tr '. $trclass . '><td>' . $host->getid() . '</td><td><a href="#" data-toggle="tooltip" title="hostid='. $host->getHostID() . '">' . $host->getname() . '</a></td><td>' . $host->getip() . '</td><td>' . $host->getLocation() . '</td><td>' . $host->getStatus() . '</td></tr>';
+				$trclass = '';
 			} ?>
 			</tbody></table></div><?php
                     }

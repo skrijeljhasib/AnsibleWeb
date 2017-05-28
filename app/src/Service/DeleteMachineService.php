@@ -13,6 +13,8 @@ use Project\Entity\JSON\LineInFile;
 use Project\Entity\JSON\OsServer;
 use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
+use Project\Entity\DB\Host;
+use Project\Entity\DB\Jobs;
 
 class DeleteMachineService
 {
@@ -22,7 +24,7 @@ class DeleteMachineService
      * @param $location string
      * @return string
      */
-    public function load($openstack_auth, $name, $location)
+    public function load($openstack_auth, $name, $location, $app)
     {
         $playbook = new PlayBook();
 
@@ -46,6 +48,20 @@ class DeleteMachineService
         $playbook->setTask($os_server->toArray());
 
         $playbook_json = $playbook->toJSON();
+
+        $jobs_gateway = $app->getServicesFactory()->get('gateway.jobs');
+        $jobs = new Jobs();
+        $jobs->setName('DeleteMachine'.$name);
+        $jobs->setStatus(0);
+        $jobs->setJson($playbook_json);
+        $jobs->setTube('deletemachine');
+        $jobs_gateway->put($jobs);
+
+	$hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
+	$host = $hosts_gateway->fetchByName($name);
+	$host->setStatus('DELETING');
+        $hosts_gateway->put($host);
+	//$hosts_gateway->delete($host);
 
         return $playbook_json;
     }

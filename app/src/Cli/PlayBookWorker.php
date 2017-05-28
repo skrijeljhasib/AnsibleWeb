@@ -34,22 +34,21 @@ class PlayBookWorker extends AbstractCliAction
         $pheanstalk = new Pheanstalk($ansible_api['beanstalk']);
 
         while (true) {
-            $job =	 $pheanstalk->watch('ansible-post')
-				->watch('getallmachine')
+            $job =	 $pheanstalk->watch('getallmachine')
 				->watch('deletemachine')
+				->watch('ansible-post')
 				->watch('installmachine')
                 		->ignore('default')
                 		->reserve();
-
             if ($job !== false) {
-                try {
+
                     $client = new Client(
                         [
                             'base_uri' => $ansible_api["address"],
                             'headers' => ['Content-Type' => 'application/json']
                         ]
                     );
-
+		try {
                     $response = $client->request('POST', '/post_data',
                         [
                             'json' => json_decode($job->getData())
@@ -58,9 +57,13 @@ class PlayBookWorker extends AbstractCliAction
 
                     if ($response->getStatusCode() == 200) {
                         $pheanstalk->useTube('ansible-get')->put($response->getBody());
+			echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
+			echo 'job  : ' . $job->getData();
                         $pheanstalk->delete($job);
+			
                     } else {
                         echo 'Request failed: HTTP status code: ' . $response->getStatusCode();
+			$pheanstalk->bury($job);
                     }
                 } catch (RequestException $e) {
                     echo Psr7\str($e->getRequest());

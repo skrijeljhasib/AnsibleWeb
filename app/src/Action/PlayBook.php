@@ -66,7 +66,8 @@ class PlayBook
                 $json = $machineService->load(
                 $this->openstack_auth,
                 'lav.test',
-                'BHS1'
+                'BHS1',
+		$app
                 );
 		break;
             case 'installmachine':

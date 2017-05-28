@@ -89,7 +89,7 @@ class InstallMachineService
         $jobs->setStatus(0);
 	$jobs->setJson($playbook_json);
         $jobs->setTube('installmachine');
-        $jobss_gateway->put($jobs);
+        $jobs_gateway->put($jobs);
 
 	$hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
         $host = new Host();

@@ -8,7 +8,7 @@
 
 namespace Project\Entity\DB;
 
-/*n
+/**
  * @Entity @Table(name="jobs")
  **/
 class Jobs
@@ -25,13 +25,13 @@ class Jobs
      **/
     protected $name;
     /**
-     * @Column(type="string")
+     * @Column(type="json_array")
      * @var string
      **/
     protected $json;
 
     /**
-     * @Column(type="string,length=64")
+     * @Column(type="string", length=64)
      * @var string
      **/
     protected $tube;

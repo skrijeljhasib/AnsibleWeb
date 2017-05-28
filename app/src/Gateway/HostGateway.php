@@ -29,10 +29,10 @@ class HostGateway
      *
      * @return array|object
      */
-    public function fetchFromName($name)
+    public function fetchByName($name)
     {
         if ($name) {
-            return $this->getRepository()->find($name);
+            return $this->getRepository()->findOneBy(array('name' => $name));
         } else {
             return [];
         }
@@ -53,16 +53,18 @@ class HostGateway
         return true;
     }
 
-
+     /**
+     * @param integer $id
+     *
+     * @return boolean
+     */
 
     public function delete($id)
     {
-        $this->getEntityManager()->delete($id);
+        $this->getEntityManager()->remove($id);
         $this->getEntityManager()->flush();
         return true;
     }
-
-
 
     /**
      * @return \Doctrine\ORM\EntityRepository

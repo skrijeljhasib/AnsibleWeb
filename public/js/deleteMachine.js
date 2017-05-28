@@ -39,7 +39,7 @@ $(document).ready(function () {
                 url: 'PlayBook',
                 data: {
                     playbook: 'deletemachine',
-		    name: name,
+		    name: document.getElementById("nametodelete").value ,
 		    location: 'BHS1' 
                 }
             })
