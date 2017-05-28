@@ -31,13 +31,15 @@ class PlayBookWorker extends AbstractCliAction
     public function run(ApplicationInterface $app)
     {
         $ansible_api = $app->getConfig()->get(AnsibleApi::class);
-
         $pheanstalk = new Pheanstalk($ansible_api['beanstalk']);
 
         while (true) {
-            $job = $pheanstalk->watch('ansible-post')
-                ->ignore('default')
-                ->reserve();
+            $job =	 $pheanstalk->watch('ansible-post')
+				->watch('getallmachine')
+				->watch('deletemachine')
+				->watch('installmachine')
+                		->ignore('default')
+                		->reserve();
 
             if ($job !== false) {
                 try {
@@ -67,6 +69,7 @@ class PlayBookWorker extends AbstractCliAction
                     }
                 }
             } else {
+		echo 'waiting...';
                 sleep(3);
             }
         }

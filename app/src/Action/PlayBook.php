@@ -50,7 +50,6 @@ class PlayBook
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
-	$this->tube = 'ansible-post';
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
 	    case 'getallmachine':
@@ -146,7 +145,8 @@ class PlayBook
             default:
                 $json = json_encode(new stdClass);
         }
-
-        $pheanstalk->useTube($this->tube)->put($json);
+	if (!empty($this->tube)) {
+        	$pheanstalk->useTube($this->tube)->put($json);
+	}
     }
 }

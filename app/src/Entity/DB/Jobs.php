@@ -31,6 +31,12 @@ class Jobs
     protected $json;
 
     /**
+     * @Column(type="string,length=64")
+     * @var string
+     **/
+    protected $tube;
+
+    /**
      * @Column(type="string")
      * @var string
      **/
@@ -87,4 +93,22 @@ class Jobs
     public function setStatus(string $status)
     {
         $this->status = $status;
-    }}
+    }
+
+    /**
+     * @return string
+     */
+    public function getTube():string
+    {
+        return $this->tube;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setTube(string $tube)
+    {
+        $this->tube = $tube;
+    }
+
+}
