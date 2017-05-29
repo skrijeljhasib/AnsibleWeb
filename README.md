@@ -51,49 +51,50 @@ vendor/bin/doctrine orm:schema-tool:create
 ### Supervisor
 Open:
 ```
-sudo vi /etc/supervisor/conf.d/queue.conf
+sudo vi /etc/supervisor/conf.d/get-worker.conf
 ```
 Add:
 ```
-[program:ansible-queue]
-command=php vendor/bin/op ansible-worker
+[program:get-worker]
+command=php vendor/bin/op get-worker
 directory=/var/www/html/AnsibleWeb/
 autostart=true
 autorestart=true
-stderr_logfile=/var/log/supervisor/ansible-worker-stderr.log
-stdout_logfile=/var/log/supervisor/ansible-worker-stdout.log
+stderr_logfile=/var/log/supervisor/get-worker-stderr.log
+stdout_logfile=/var/log/supervisor/get-worker-stdout.log
 ```
 Open:
 ```
-sudo vi /etc/supervisor/conf.d/update-hosts-table.conf
+sudo vi /etc/supervisor/conf.d/post-worker.conf
 ```
 Add:
 ```
-[program:get-hosts-ansible]
-command=php vendor/bin/op get-hosts-worker
+[program:post-worker]
+command=php vendor/bin/op post-worker
 directory=/var/www/html/AnsibleWeb/
 autostart=true
 autorestart=true
-stderr_logfile=/var/log/supervisor/get-hosts-worker-stderr.log
-stdout_logfile=/var/log/supervisor/get-hosts-worker-stdout.log
+stderr_logfile=/var/log/supervisor/post-worker-stderr.log
+stdout_logfile=/var/log/supervisor/post-worker-stdout.log
 ```
 Open:
 ```
-sudo vi /etc/supervisor/conf.d/websocket.conf
+sudo vi /etc/supervisor/conf.d/socket-worker.conf
 ```
 Add:
 ```
-[program:websocket]
-command=php vendor/bin/op websocket-worker
+[program:socket-worker]
+command=php vendor/bin/op socket-worker
 directory=/var/www/html/AnsibleWeb/
 autostart=true
 autorestart=true
-stderr_logfile=/var/log/supervisor/websocket-stderr.log
-stdout_logfile=/var/log/supervisor/websocket-stdout.log
+stderr_logfile=/var/log/supervisor/socket-worker-stderr.log
+stdout_logfile=/var/log/supervisor/socket-worker-stdout.log
 
 ```
 Run:
 ```
+sudo beanstalkd restart
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo service supervisor restart
