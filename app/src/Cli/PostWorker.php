@@ -14,11 +14,11 @@ use GuzzleHttp\Exception\RequestException;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Cli\Action\AbstractCliAction;
 use Pheanstalk\Pheanstalk;
-use Project\Config\AnsibleApi;
+use Project\Config\Url;
 
 /**
- * Class PlayBookWorker
- * @package Project\Listener
+ * Class PostWorker
+ * @package Project\Cli
  */
 class PostWorker extends AbstractCliAction
 {
@@ -30,25 +30,25 @@ class PostWorker extends AbstractCliAction
 
     public function run(ApplicationInterface $app)
     {
-        $ansible_api = $app->getConfig()->get(AnsibleApi::class);
-        $pheanstalk = new Pheanstalk($ansible_api['beanstalk']);
+        $url = $app->getConfig()->get(Url::class);
+        $pheanstalk = new Pheanstalk($url['beanstalk']);
 
         while (true) {
-            $job =	 $pheanstalk->watch('getallmachine')
-				->watch('deletemachine')
-				->watch('ansible-post')
-				->watch('installmachine')
-                		->ignore('default')
-                		->reserve();
+            $job = $pheanstalk->watch('getallmachine')
+                ->watch('deletemachine')
+                ->watch('ansible-post')
+                ->watch('installmachine')
+                ->ignore('default')
+                ->reserve();
             if ($job !== false) {
 
-                    $client = new Client(
-                        [
-                            'base_uri' => $ansible_api["address"],
-                            'headers' => ['Content-Type' => 'application/json']
-                        ]
-                    );
-		try {
+                $client = new Client(
+                    [
+                        'base_uri' => $url["ansible_api"],
+                        'headers' => ['Content-Type' => 'application/json']
+                    ]
+                );
+                try {
                     $response = $client->request('POST', '/post_data',
                         [
                             'json' => json_decode($job->getData())
@@ -56,15 +56,14 @@ class PostWorker extends AbstractCliAction
                     );
 
                     if ($response->getStatusCode() == 200) {
-			$pheanstalk->useTube('ansible-get-'.$pheanstalk->statsJob($job)['tube'])->put($response->getBody());
-                        //$pheanstalk->useTube('ansible-get')->put($response->getBody());
-			echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
-			echo 'job  : ' . $job->getData();
+                        $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody());
+                        echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
+                        echo 'job  : ' . $job->getData();
                         $pheanstalk->delete($job);
-			
+
                     } else {
                         echo 'Request failed: HTTP status code: ' . $response->getStatusCode();
-			$pheanstalk->bury($job);
+                        $pheanstalk->bury($job);
                     }
                 } catch (RequestException $e) {
                     echo Psr7\str($e->getRequest());
@@ -73,7 +72,7 @@ class PostWorker extends AbstractCliAction
                     }
                 }
             } else {
-		echo 'waiting...';
+                echo 'waiting...';
                 sleep(3);
             }
         }
