@@ -10,40 +10,57 @@ namespace Project\Entity\DB;
 
 /**
  * @Entity @Table(name="hosts")
+ * @UniqueEntity(fields="ip", message="Ip already exists.")
+ * @UniqueEntity(fields="name", message="Name already exists.")
  **/
 class Host
 {
-
     /**
-     * @Id @Column(type="string")
-     * @var string
+     * @Id @GeneratedValue @Column(type="integer")
+     * @var int
      **/
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=64, unique=true)
      * @var string
      **/
     protected $name;
 
     /**
+     * @Column(type="string", length=15, unique=true, nullable=true)
+     * @var string
+     **/
+    protected $ip = '0.0.0.0';
+
+    /**
+     * @Column(type="string", unique=true, nullable=true)
+     * @var string
+     **/
+    protected $hostid = 'NA';
+
+    /**
      * @Column(type="string")
      * @var string
      **/
-    protected $ip;
+    protected $location;
 
     /**
-     * @param string $id
-     */
-    public function setId(string $id)
-    {
-        $this->id = $id;
-    }
+     * @Column(type="string")
+     * @var string
+     **/
+    protected $status;
 
     /**
-     * @return string
+     * @Column(type="integer",length=2)
+     * @var int
+     **/
+    protected $state = 0;
+
+    /**
+     * @return int
      */
-    public function getId():string
+    public function getId():int
     {
         return $this->id;
     }
@@ -62,6 +79,70 @@ class Host
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHostID():string
+    {
+        return $this->hostid;
+    }
+
+    /**
+     * @param string $hostID
+     */
+    public function setHostID(string $hostid)
+    {
+        $this->hostid = $hostid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation():string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string location
+     */
+    public function setLocation(string $location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus():string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status)
+    {
+        $this->status = $status;
+    }
+
+   /**
+     * @return int
+     */
+    public function getState():int
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setState(int $state)
+    {
+        $this->status = $state;
     }
 
     /**

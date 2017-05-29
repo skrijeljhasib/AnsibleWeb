@@ -22,10 +22,11 @@ class InstallDependenciesService
      */
     public function load($machine_access, $app_get)
     {
+	$ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
         $playbook->setName('Install Dependencies');
-        $playbook->setHosts('{{ lookup(\'file\', \'/tmp/'.$app_get->get('tmp_file').'\') }}');
+        $playbook->setHosts($ip);
         $playbook->setConnection('ssh');
         $playbook->setRemoteUser($machine_access['remote_user']);
         $playbook->setBecome('true');

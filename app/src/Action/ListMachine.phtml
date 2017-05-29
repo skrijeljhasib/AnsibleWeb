@@ -11,7 +11,7 @@ function listMachine() {
         type: 'GET',
         url: 'PlayBook',
         data: {
-            playbook: 'getAllMachine'
+            playbook: 'getallmachine'
         }
     })
     .done(function () {
@@ -23,24 +23,54 @@ function listMachine() {
 
 };
 </script>
+<style>
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    margin: auto;
+}</style>
+<div class="modal fade" id="confirmRefreshListModal">
+        <div class="vertical-alignment-helper">
+        <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
+                <div class="modal-content">
+                        <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Confirm Refresh</h4>
+                        </div>
+                        <div class="modal-body">
+                                <div class="modal-group"><p class="text-center">Are you sure tou want to Refresh Machine List ?</p></div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="listMachine();">Yes</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+                        </div>
+                </div>
+        </div>
+        </div>
+</div>
 <div class="container">
-<div align="right"><input type="button" class="btn btn-default" value="Refresh" onclick="listMachine();"/></div>
+<div align="right"><input type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmRefreshListModal" value="Refresh" /></div>
 <?php
                     if (!Vars::collection('hosts')->isEmpty()) {
                         $hosts = Vars::collection('hosts')->toArray(); ?>
-			<table class="table">
+			<div class="table-responsive"><table class="table table-hover">
 			<thead>
       				<tr>
         				<th>Id</th>
         				<th>Name</th>
         				<th>Ip</th>
+					<th>Location</th>
+					<th>Status</th>
       				</tr>
     			</thead>
     			<tbody>			
 			<?php foreach ( $hosts as $host) {
-				echo '<tr><td>' . $host->getid() . '</td><td>' . $host->getname() . '</td><td>' . $host->getip() . '</td></tr>';
+				if ($host->getStatus() != 'ACTIVE') { 
+					$trclass = 'class="danger"';
+				 }
+				echo '<tr '. $trclass . '><td>' . $host->getid() . '</td><td><a href="#" data-toggle="tooltip" title="hostid='. $host->getHostID() . '">' . $host->getname() . '</a></td><td>' . $host->getip() . '</td><td>' . $host->getLocation() . '</td><td>' . $host->getStatus() . '</td></tr>';
+				$trclass = '';
 			} ?>
-			</tbody></table><?php
+			</tbody></table></div><?php
                     }
  ?>
 <div>

@@ -20,7 +20,7 @@
     "objective-php/router": "~1.0.0",
     "objective-php/fastroute-package": "~1.0.0",
     "twbs/bootstrap": "^3.3",
-    "objective-php/cli": "^1.0.4",
+    "objective-php/cli": "^1.0.6",
     "objective-php/doctrine-package": "~1.0",
     "objective-php/beanstalk-package": "dev-master",
     "guzzlehttp/guzzle": "~6.0",

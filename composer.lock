@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ba310a0298855718acc3063ba77f2d5",
+    "content-hash": "2f85e9412a25f30d7f394560be686eda",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1646,16 +1646,16 @@
         },
         {
             "name": "objective-php/cli",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/cli.git",
-                "reference": "2efa4f959e8b026196fc4b51990ea7c4a6a9593c"
+                "reference": "bbe8cebf2b31569cbab2ad338ed9b33dbe304442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/cli/zipball/2efa4f959e8b026196fc4b51990ea7c4a6a9593c",
-                "reference": "2efa4f959e8b026196fc4b51990ea7c4a6a9593c",
+                "url": "https://api.github.com/repos/objective-php/cli/zipball/bbe8cebf2b31569cbab2ad338ed9b33dbe304442",
+                "reference": "bbe8cebf2b31569cbab2ad338ed9b33dbe304442",
                 "shasum": ""
             },
             "require": {
@@ -1690,7 +1690,7 @@
                 "cli",
                 "objective php"
             ],
-            "time": "2017-05-10T15:18:20+00:00"
+            "time": "2017-05-27T13:12:58+00:00"
         },
         {
             "name": "objective-php/components",

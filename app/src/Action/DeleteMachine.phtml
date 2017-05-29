@@ -3,8 +3,45 @@
 use ObjectivePHP\Application\View\Helper\Vars;
 
 ?>
+<script src="/js/deleteMachine.js"></script>
+<style>
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    margin: auto;
+}</style>
+<div class="modal fade" id="confirmDeleteModal">
+	<div class="vertical-alignment-helper">
+	<div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
+      		<div class="modal-content">
+        		<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          			<h4 class="modal-title">Confirm Delete</h4>
+        		</div>
+        		<div class="modal-body">
+          			<div class="modal-group"><p class="text-center">Are you sure tou want to Delete machine ?</p></div>
+        			<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteMachine">Yes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
+      			</div>
+    		</div>
+	</div>
+	</div>
+</div>
+
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
+
+		<form id="createMachine">
+                <div class="panel panel-primary">
+                        <div class="panel-heading">Hostname</div>
+                        <div class="panel-body">
+			<label for='name'>Hostname: </label><input id='nametodelete' class='form-control' name='host[name]' type='text' required>
+			</div>
+		</div>
+		</form>
+
+		<div align="right"><input id="deletebtn" type="button" data-toggle="modal" data-target="#confirmDeleteModal" class="btn btn-danger" value="Delete" disabled/></div><br>
 
                <div class="panel panel-default">
                         <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>

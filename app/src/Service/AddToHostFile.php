@@ -3,19 +3,23 @@
  * Created by PhpStorm.
  * User: skrijeljhasib
  * Date: 09.05.17
- * Time: 16:00
+ * Time: 15:22
  */
 
 namespace Project\Service;
 
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
+use Project\Entity\JSON\LineInFile;
+use Project\Entity\JSON\OsServer;
+use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
-use Project\Entity\JSON\WaitFor;
+use Project\Entity\DB\Host;
+use Project\Entity\DB\Jobs;
 
-class WaitSSHService
+class AddToHostFile
 {
     /**
-     * @param $app_get ParameterContainerInterface
+     * @param $ip
      * @return string
      */
     public function load($app_get)
@@ -23,7 +27,7 @@ class WaitSSHService
 	$ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
-        $playbook->setName('Wait for SSH');
+        $playbook->setName('AddToHostFile');
         $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');
@@ -31,11 +35,12 @@ class WaitSSHService
         $playbook->setHosts('localhost');
         $playbook->setGatherFacts('false');
 
-        $wait_for = new WaitFor();
-        $wait_for->setHost($ip);
-        $wait_for->setPort('22');
+        $lineinfile_inventory = new LineInFile();
+        $lineinfile_inventory->setPath('{{ inventory_file }}');
+        $lineinfile_inventory->setCreate('yes');
+        $lineinfile_inventory->setLine($ip);
 
-        $playbook->setTask($wait_for->toArray());
+        $playbook->setTask($lineinfile_inventory->toArray());
 
         $playbook_json = $playbook->toJSON();
 

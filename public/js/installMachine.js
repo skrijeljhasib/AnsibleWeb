@@ -53,7 +53,7 @@ $(document).ready(function () {
 
         let packages = $('[name="packages[]"]').val();
 
-            $.ajax({
+/*            $.ajax({
                 type: 'GET',
                 url: 'PlayBook',
                 data: {
@@ -64,7 +64,7 @@ $(document).ready(function () {
 
                 progessbar_count++;
                 socket.send('Clean');
-
+*/
                 $.ajax({
                     type: 'GET',
                     url: 'PlayBook',
@@ -75,7 +75,19 @@ $(document).ready(function () {
                     }
                 }).done(function () {
 
-                    progessbar_count++;
+		/*progessbar_count++;
+                socket.send('AddtoHostFile');
+		    $.ajax({
+                    type: 'GET',
+                    url: 'PlayBook',
+                    data: {
+                        playbook: 'addtohostfile',
+                        host: host,
+                        //tmp_file: random_string
+                    }
+                }).done(function () {
+
+/*                    progessbar_count++;
                     socket.send('Install Machine');
 
                     $.ajax({
@@ -116,6 +128,9 @@ $(document).ready(function () {
                     console.log(JSON.stringify(error));
                 });
             }).fail(function (error) {
+                console.log(JSON.stringify(error));
+            }); */
+	}).fail(function (error) {
                 console.log(JSON.stringify(error));
             });
     });
@@ -234,6 +249,9 @@ $(document).ready(function () {
     try
     {
         socket = new WebSocket('ws://'+window.location.hostname+':9000');
+	socket.onerror=function(event){
+	   console.log('connection error');
+	}
 
         socket.onopen = function () {
             console.log('connection open');

@@ -64,6 +64,10 @@ class OsServer extends Task
      */
     private $region_name;
 
+   /**
+     * @var bool
+     */
+    private $wait;
 
     /**
      * @return string
@@ -227,6 +231,23 @@ class OsServer extends Task
     public function setRegionName(string $region_name)
     {
         $this->region_name = $region_name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getWait():bool
+    {
+        return $this->wait;
+    }
+
+
+    /**
+     * @param bool wait
+     */
+    public function setWait(bool $wait)
+    {
+        $this->wait = $wait;
     }
 
     /**
