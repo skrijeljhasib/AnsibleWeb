@@ -2,15 +2,16 @@
 
 namespace Config;
 
-use Project\Config\AnsibleApi;
+use Project\Config\Url;
 use Project\Config\Host;
 use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
 use Project\Config\MachineTemplate;
 
-$ansible_api = [
-    "address" => "address",
-    "beanstalk" => "127.0.0.1"
+$url = [
+    "ansible_api" => "http://127.0.0.1",
+    "beanstalk" => "127.0.0.1",
+    "ansible_playbook" => "http://127.0.0.1"
 ];
 
 $openstack_auth = [
@@ -45,5 +46,5 @@ return [
     new MachineTemplate($machine_template),
     new Host($host),
     new MachineAccess($machine_access),
-    new AnsibleApi($ansible_api)
+    new Url($url)
 ];

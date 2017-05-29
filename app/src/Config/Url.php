@@ -10,7 +10,7 @@ namespace Project\Config;
 
 use ObjectivePHP\Config\SingleValueDirective;
 
-class AnsibleApi extends SingleValueDirective
+class Url extends SingleValueDirective
 {
 
 }
