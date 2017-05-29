@@ -3,7 +3,7 @@
 namespace Project\Action;
 
 use Project\Application;
-use Project\Config\AnsibleApi;
+use Project\Config\Url;
 use Project\Config\Host;
 use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
@@ -29,12 +29,12 @@ class PlayBook
 {
 
     /**
-     * @var array $ansible_api          Should contain the server address of the api
-     * @var array $openstack_auth       Should contain the openstack authentication config
-     * @var array $machine_template     Contains the type of machine which will be installed
-     * @var array $machine_access       Contains the username of the machine to connect remotely
-     * @var array $host                 FIXED, CUSTOM, RANDOM
-     * @var string $tube		Beanstalk tube	
+     * @var array $ansible_api Should contain the server address of the api
+     * @var array $openstack_auth Should contain the openstack authentication config
+     * @var array $machine_template Contains the type of machine which will be installed
+     * @var array $machine_access Contains the username of the machine to connect remotely
+     * @var array $host FIXED, CUSTOM, RANDOM
+     * @var string $tube Beanstalk tube
      */
     private $ansible_api, $openstack_auth, $machine_template, $machine_access, $host, $tube;
 
@@ -45,7 +45,7 @@ class PlayBook
     function __invoke(Application $app)
     {
 
-        $this->ansible_api = $app->getConfig()->get(AnsibleApi::class);
+        $this->ansible_api = $app->getConfig()->get(Url::class);
         $this->openstack_auth = $app->getConfig()->get(OpenStackAuth::class);
         $this->machine_template = $app->getConfig()->get(MachineTemplate::class);
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
@@ -53,50 +53,54 @@ class PlayBook
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
-	    case 'getallmachine':
-		$this->tube = 'getallmachine';
+            case 'getallmachine':
+                $this->tube = 'getallmachine';
                 $machineService = new GetAllMachineService();
                 $json = $machineService->load(
-		$this->machine_template,
-                $this->openstack_auth
+                    $this->machine_template,
+                    $this->openstack_auth
                 );
                 break;
-	    case 'deletemachine':
-		$this->tube = 'deletemachine';
+
+            case 'deletemachine':
+                $this->tube = 'deletemachine';
                 $machineService = new DeleteMachineService();
                 $json = $machineService->load(
-                $this->openstack_auth,
-                'lav.test',
-                'BHS1',
-		$app
+                    $this->openstack_auth,
+                    'lav.test',
+                    'BHS1',
+                    $app
                 );
-		break;
+                break;
+
             case 'installmachine':
-		$this->tube = 'installmachine';
+                $this->tube = 'installmachine';
                 $machineService = new InstallMachineService();
                 $json = $machineService->load(
                     $this->openstack_auth,
                     $this->machine_template,
                     $this->host,
-		    $app
+                    $app
                 );
                 break;
-	    case 'addtohostfile':
-		$this->tube = 'ansible-post';
-		$addtohotfile = new AddToHostFile();
-		$json = $addtohotfile->load($app->getRequest()->getParameters());
-		break;
+
+            case 'addtohostfile':
+                $this->tube = 'ansible-post';
+                $addtohotfile = new AddToHostFile();
+                $json = $addtohotfile->load($app);
+                break;
+
             case 'installpackage':
-		$this->tube = 'ansible-post';
+                $this->tube = 'ansible-post';
                 $packageService = new InstallPackageService();
                 $json = $packageService->load(
                     $this->machine_access,
-                    $app->getRequest()->getParameters()
+                    $app
                 );
                 break;
 
             case 'installdependencies':
-		$this->tube = 'ansible-post';
+                $this->tube = 'ansible-post';
                 $installDependencies = new InstallDependenciesService();
                 $json = $installDependencies->load(
                     $this->machine_access,
@@ -105,7 +109,7 @@ class PlayBook
                 break;
 
             case 'waitssh':
-		$this->tube = 'ansible-post';
+                $this->tube = 'ansible-post';
                 $waitService = new WaitSSHService();
                 $json = $waitService->load(
                     $app->getRequest()->getParameters()
@@ -113,7 +117,7 @@ class PlayBook
                 break;
 
             case 'clean':
-		$this->tube = 'ansible-post';
+                $this->tube = 'ansible-post';
                 $cleanService = new CleanService();
                 $json = $cleanService->load(
                     $app->getRequest()->getParameters()
@@ -124,7 +128,7 @@ class PlayBook
                 $webserverService = new WebServerService();
                 $webserverService->load(
                     $this->machine_access,
-                    $app->getRequest()->getParameters()
+                    $app
                 );
                 $json = $webserverService->apache(
                     $app->getRequest()->getParameters()
@@ -134,7 +138,7 @@ class PlayBook
                 $databaseService = new DatabaseService();
                 $databaseService->load(
                     $this->machine_access,
-                    $app->getRequest()->getParameters()
+                    $app
                 );
                 $json = $databaseService->mysql(
                     $app->getRequest()->getParameters()
@@ -145,7 +149,7 @@ class PlayBook
                 $databaseService = new DatabaseService();
                 $databaseService->load(
                     $this->machine_access,
-                    $app->getRequest()->getParameters()
+                    $app
                 );
                 $json = $databaseService->mongodb(
                     $app->getRequest()->getParameters()
@@ -155,8 +159,8 @@ class PlayBook
             default:
                 $json = json_encode(new stdClass);
         }
-	if (!empty($this->tube)) {
-        	$pheanstalk->useTube($this->tube)->put($json);
-	}
+        if (!empty($this->tube)) {
+            $pheanstalk->useTube($this->tube)->put($json);
+        }
     }
 }

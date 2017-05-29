@@ -12,7 +12,7 @@ use ObjectivePHP\Application\Action\RenderableAction;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Application\View\Helper\Vars;
 use ObjectivePHP\Html\Exception;
-use Project\Config\AnsibleApi;
+use Project\Config\Url;
 
 class ListMachine extends RenderableAction
 {
@@ -29,7 +29,7 @@ class ListMachine extends RenderableAction
         try {
             $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
             $hosts = $hosts_gateway->fetch();
-            $ansible_api = $app->getConfig()->get(AnsibleApi::class);
+            $ansible_api = $app->getConfig()->get(Url::class);
         } catch (Exception $e) {
             throw new Exception('Can not load hosts from DB');
         }
