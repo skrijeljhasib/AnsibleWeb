@@ -9,22 +9,18 @@
 namespace Project\Service;
 
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
+use Project\Application;
 use Project\Entity\JSON\LineInFile;
-use Project\Entity\JSON\OsServer;
-use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
-use Project\Entity\DB\Host;
-use Project\Entity\DB\Jobs;
 
 class AddToHostFile
 {
     /**
-     * @param $ip
+     * @param $app Application
      * @return string
      */
-    public function load($app_get)
+    public function load($app)
     {
-	$ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
         $playbook->setName('AddToHostFile');
@@ -38,7 +34,7 @@ class AddToHostFile
         $lineinfile_inventory = new LineInFile();
         $lineinfile_inventory->setPath('{{ inventory_file }}');
         $lineinfile_inventory->setCreate('yes');
-        $lineinfile_inventory->setLine($ip);
+        $lineinfile_inventory->setLine($app->getRequest()->getParameters()->get('ip'));
 
         $playbook->setTask($lineinfile_inventory->toArray());
 
