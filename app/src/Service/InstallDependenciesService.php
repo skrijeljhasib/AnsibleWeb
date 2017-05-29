@@ -22,7 +22,7 @@ class InstallDependenciesService
      */
     public function load($machine_access, $app_get)
     {
-	$ip = $app_get->get('ip');
+        $ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
         $playbook->setName('Install Dependencies');

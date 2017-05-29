@@ -9,6 +9,7 @@
 namespace Project\Service;
 
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
+use Project\Application;
 use Project\Entity\JSON\Apt;
 use Project\Entity\JSON\MongoDBUser;
 use Project\Entity\JSON\MySQLDB;
@@ -25,14 +26,14 @@ class DatabaseService
 
     /**
      * @param $machine_access array
-     * @param $app_get ParameterContainerInterface
+     * @param $app Application
      */
-    public function load($machine_access, $app_get)
+    public function load($machine_access, $app)
     {
         $this->playbook = new PlayBook();
 
         $this->playbook->setName('Install and Configure MySQL');
-        $this->playbook->setHosts('{{ lookup(\'file\', \'/tmp/'.$app_get->get('tmp_file').'\') }}');
+        $this->playbook->setHosts($app->getRequest()->getParameters()->get('ip'));
         $this->playbook->setConnection('ssh');
         $this->playbook->setRemoteUser($machine_access['remote_user']);
         $this->playbook->setBecome('true');
