@@ -104,7 +104,7 @@ class Jobs
     }
 
     /**
-     * @param string $status
+     * @param string $tube
      */
     public function setTube(string $tube)
     {

@@ -60,7 +60,7 @@ class Host
     /**
      * @return int
      */
-    public function getId():int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -68,7 +68,7 @@ class Host
     /**
      * @return string
      */
-    public function getName():string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -84,13 +84,13 @@ class Host
     /**
      * @return string
      */
-    public function getHostID():string
+    public function getHostID(): string
     {
         return $this->hostid;
     }
 
     /**
-     * @param string $hostID
+     * @param string $hostid
      */
     public function setHostID(string $hostid)
     {
@@ -100,13 +100,13 @@ class Host
     /**
      * @return string
      */
-    public function getLocation():string
+    public function getLocation(): string
     {
         return $this->location;
     }
 
     /**
-     * @param string location
+     * @param string $location
      */
     public function setLocation(string $location)
     {
@@ -116,7 +116,7 @@ class Host
     /**
      * @return string
      */
-    public function getStatus():string
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -129,16 +129,16 @@ class Host
         $this->status = $status;
     }
 
-   /**
+    /**
      * @return int
      */
-    public function getState():int
+    public function getState(): int
     {
         return $this->state;
     }
 
     /**
-     * @param string $status
+     * @param int $state
      */
     public function setState(int $state)
     {
@@ -148,7 +148,7 @@ class Host
     /**
      * @return string
      */
-    public function getIp():string
+    public function getIp(): string
     {
         return $this->ip;
     }
