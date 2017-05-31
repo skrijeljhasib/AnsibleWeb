@@ -67,8 +67,6 @@ class PlayBook
                 $machineService = new DeleteMachineService();
                 $json = $machineService->load(
                     $this->openstack_auth,
-                    'lav.test',
-                    'BHS1',
                     $app
                 );
                 break;
@@ -125,6 +123,7 @@ class PlayBook
                 break;
 
             case 'apache':
+                $this->tube = 'ansible-post';
                 $webserverService = new WebServerService();
                 $webserverService->load(
                     $this->machine_access,
@@ -135,6 +134,7 @@ class PlayBook
                 );
                 break;
             case 'mysql':
+                $this->tube = 'ansible-post';
                 $databaseService = new DatabaseService();
                 $databaseService->load(
                     $this->machine_access,
@@ -146,6 +146,7 @@ class PlayBook
                 break;
 
             case 'mongodb':
+                $this->tube = 'ansible-post';
                 $databaseService = new DatabaseService();
                 $databaseService->load(
                     $this->machine_access,
@@ -162,5 +163,6 @@ class PlayBook
         if (!empty($this->tube)) {
             $pheanstalk->useTube($this->tube)->put($json);
         }
+
     }
 }
