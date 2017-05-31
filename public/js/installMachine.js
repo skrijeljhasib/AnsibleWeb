@@ -2,8 +2,6 @@ $(document).ready(function () {
 
     let socket = null;
 
-    let progessbar_count = 0;
-
     $('#name').keyup(function () {
         let hostname = $(this).val();
 
@@ -30,7 +28,7 @@ $(document).ready(function () {
     $('#createMachine').submit(function (event) {
         event.preventDefault();
 
-        progessbar_count = 0;
+        websocket();
 
         $('#result').text('');
 
@@ -43,26 +41,19 @@ $(document).ready(function () {
 
         $('#progress').addClass("active");
 
-        let host = {};
-        $('input[name*="host"]').each(function () {
-            host[this.id] = $(this).val();
-        });
-        host = JSON.stringify(host);
 
-        progessbar_count++;
 
         $.ajax({
             type: 'GET',
             url: 'PlayBook',
             data: {
                 playbook: 'installmachine',
-                host: host
+                host: checkHost(),
+                packages: checkPackages(),
+                webserver: checkWebServer(),
+                database: checkDatabase()
             }
         }).done(function () {
-
-            checkPackages();
-            checkWebServer();
-            checkDatabase();
 
         }).fail(function (error) {
             console.log(JSON.stringify(error));
@@ -70,80 +61,70 @@ $(document).ready(function () {
     });
 
 
+    function checkHost() {
+        let host = {};
+
+        $('input[name*="host"]').each(function () {
+            host[this.id] = $(this).val();
+        });
+
+        return JSON.stringify(host);
+    }
+
     function checkWebServer() {
         if ($('#apacheCheckbox').is(':checked')) {
-            progessbar_count++;
 
-            $.ajax({
-                type: 'GET',
-                url: 'PlayBook',
-                data: {
-                    playbook: 'apache',
-                    document_root: $('#apache_document_root').val(),
-                }
-            }).done(function () {
+            let array = {};
 
-            }).fail(function (error) {
-                console.log(JSON.stringify(error));
-            });
+            array['webserver'] = 'apache';
+            array['document_root'] = $('#apache_document_root').val();
+
+            return JSON.stringify(array);
         }
 
         else if ($('#nginxCheckbox').is(':checked')) {
-            progessbar_count++;
 
-            $.ajax({
-                type: 'GET',
-                url: 'PlayBook',
-                data: {
-                    playbook: 'nginx',
-                    document_root: $('#nginx_document_root').val(),
-                }
-            }).done(function () {
+            let array = {};
 
-            }).fail(function (error) {
-                console.log(JSON.stringify(error));
-            });
+            array['webserver'] = 'nginx';
+            array['document_root'] = $('#nginx_document_root').val();
+
+            return JSON.stringify(array);
+
+        }
+        else {
+            return null;
         }
     }
 
     function checkDatabase() {
         if ($('#mysqlCheckbox').is(':checked')) {
-            progessbar_count++;
 
-            $.ajax({
-                type: 'GET',
-                url: 'PlayBook',
-                data: {
-                    playbook: 'mysql',
-                    mysql_root_password: $('#mysql_root_password').val(),
-                    mysql_new_user: $('#mysql_new_user').val(),
-                    mysql_new_user_password: $('#mysql_new_user_password').val(),
-                    mysql_database: $('#mysql_database').val(),
-                }
-            }).done(function () {
+            let array = {};
 
-            }).fail(function (error) {
-                console.log(JSON.stringify(error));
-            });
+            array['database'] = 'mysql';
+            array['mysql_root_password'] = $('#mysql_root_password').val();
+            array['mysql_new_user'] = $('#mysql_new_user').val();
+            array['mysql_new_user_password'] = $('#mysql_new_user_password').val();
+            array['mysql_database'] = $('#mysql_database').val();
+
+            return JSON.stringify(array);
         }
 
         else if ($('#mongodbCheckbox').is(':checked')) {
-            progessbar_count++;
 
-            $.ajax({
-                type: 'GET',
-                url: 'PlayBook',
-                data: {
-                    playbook: 'mongodb',
-                    mongodb_new_user: $('#mongodb_new_user').val(),
-                    mongodb_new_user_password: $('#mongodb_new_user_password').val(),
-                    mongodb_database: $('#mongodb_database').val(),
-                }
-            }).done(function () {
+            let array = {};
 
-            }).fail(function (error) {
-                console.log(JSON.stringify(error));
-            });
+            array['database'] = 'mongodb';
+            array['mongodb_new_user'] = $('#mongodb_new_user').val();
+            array['mongodb_new_user_password'] = $('#mongodb_new_user_password').val();
+            array['mongodb_database'] = $('#mongodb_database').val();
+
+            return JSON.stringify(array);
+        }
+        else
+        {
+            return null;
         }
     }
 
@@ -152,61 +133,52 @@ $(document).ready(function () {
         let packages = $('[name="packages[]"]').val();
 
         if (packages) {
-            progessbar_count++;
-
-            $.ajax({
-                type: 'GET',
-                url: 'PlayBook',
-                data: {
-                    playbook: 'installpackage',
-                    packages: packages
-                }
-            }).done(function () {
-
-            }).fail(function (error) {
-                console.log(JSON.stringify(error));
-            });
+            return JSON.stringify(packages);
+        }
+        else {
+            return null;
         }
     }
 
-    try {
-        socket = new WebSocket('ws://' + window.location.hostname + ':9000');
+    function websocket() {
 
-        socket.onerror = function () {
-            console.log('connection error');
-        };
+        try {
+            socket = new WebSocket('ws://' + window.location.hostname + ':9000');
 
-        socket.onopen = function () {
-            console.log('connection open');
-        };
+            socket.onerror = function () {
+                console.log('connection error');
+            };
 
-        socket.onmessage = function (msg) {
+            socket.onopen = function () {
+                console.log('connection open');
+            };
 
-            let progress = Math.round(100 / progessbar_count * 100) / 100;
+            socket.onmessage = function (msg) {
 
-            $(".progress-bar").animate({
-                width: progress + '%'
-            }, 1500);
-            $('.progress-bar').text(progress + '%');
+                let data = JSON.parse(msg['data']);
 
-            $('#result').append('<p>' + msg.data + '</p>');
+                $(".progress-bar").animate({
+                    width: data.progress + '%'
+                }, 2000);
+                $('.progress-bar').text(data.progress + '%');
 
-            progessbar_count--;
+                $('#result').append('<p>' + JSON.stringify(data.callback) + '</p>');
 
-            if (progessbar_count === 0) {
-                $('#progress').removeClass("active");
+                if (data.progress === '100') {
+                    $('#progress').removeClass("active");
 
-                $('#SendToAnsibleApi').removeAttr("disabled");
-            }
-        };
+                    $('#SendToAnsibleApi').removeAttr("disabled");
+                }
+            };
 
-        socket.onclose = function () {
-            console.log('connection closed');
-        };
+            socket.onclose = function () {
+                console.log('connection closed');
+            };
 
-    }
-    catch (e) {
-        console.log(e);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
 });
