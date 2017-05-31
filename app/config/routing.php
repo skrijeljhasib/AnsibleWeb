@@ -10,6 +10,5 @@ return [
         // route aliasing
         new FastRoute('home', '/', Home::class, FastRoute::GET),
         new FastRoute('createMachine', '/createMachine', CreateMachine::class, FastRoute::GET),
-        new FastRoute('deleteMachine', '/deleteMachine', DeleteMachine::class, FastRoute::GET),
         new FastRoute('listMachine', '/listMachine', ListMachine::class, FastRoute::GET),
 ];
