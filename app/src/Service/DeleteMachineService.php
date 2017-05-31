@@ -8,23 +8,20 @@
 
 namespace Project\Service;
 
-use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
-use Project\Entity\JSON\LineInFile;
+use Project\Application;
+use Project\Entity\DB\Job;
 use Project\Entity\JSON\OsServer;
 use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
-use Project\Entity\DB\Host;
-use Project\Entity\DB\Jobs;
 
 class DeleteMachineService
 {
     /**
      * @param $openstack_auth array
-     * @param $name string
-     * @param $location string
+     * @param $app Application
      * @return string
      */
-    public function load($openstack_auth, $name, $location, $app)
+    public function load($openstack_auth, $app)
     {
         $playbook = new PlayBook();
 
@@ -36,11 +33,14 @@ class DeleteMachineService
         $playbook->setHosts('localhost');
         $playbook->setGatherFacts('false');
 
+        $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
+        $host = $hosts_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
+
         $os_server = new OsServer();
         $os_server->setState('absent');
         $os_server->setWait('true');
-	$os_server->setRegionName($location);
-	$os_server->setOSName($name);
+        $os_server->setRegionName($host->getLocation());
+        $os_server->setOSName($host->getName());
         $os_server_auth = new OsServerAuth();
         $os_server_auth->setAuthFromConfigFile($openstack_auth);
         $os_server->setAuth($os_server_auth->toArray());
@@ -50,18 +50,15 @@ class DeleteMachineService
         $playbook_json = $playbook->toJSON();
 
         $jobs_gateway = $app->getServicesFactory()->get('gateway.jobs');
-        $jobs = new Jobs();
-        $jobs->setName('DeleteMachine'.$name);
+        $jobs = new Job();
+        $jobs->setName('DeleteMachine' . $host->getName());
         $jobs->setStatus(0);
         $jobs->setJson($playbook_json);
         $jobs->setTube('deletemachine');
         $jobs_gateway->put($jobs);
 
-	$hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
-	$host = $hosts_gateway->fetchByName($name);
-	$host->setStatus('DELETING');
+        $host->setStatus('DELETING');
         $hosts_gateway->put($host);
-	//$hosts_gateway->delete($host);
 
         return $playbook_json;
     }
