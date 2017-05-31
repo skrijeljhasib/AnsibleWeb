@@ -27,27 +27,24 @@ class InstallMachineService
      */
     public function load($openstack_auth, $machine_template, $host, $app)
     {
-        $env = $app->getEnv();
+        //$env = $app->getEnv();
         $app_get = $app->getRequest()->getParameters();
         switch ($host['host_config']) {
             case 'RANDOM':
-                $name = substr(md5(microtime()), rand(0, 26), 15) . '.' . $env;
+                $name = substr(md5(microtime()), rand(0, 26), 15);
                 $machine_template['name'] = $name;
-                break;
-            case 'FIXED':
-                $machine_template['name'] = $machine_template['name'] . '.' . $env;;
                 break;
             case 'CUSTOM':
                 $host = json_decode($app_get->get('host'));
                 foreach ($host as $key => $value) {
                     $machine_template[$key] = $value;
                     if ($key === 'name') {
-                        $machine_template['name'] = $value . '.' . $env;
+                        $machine_template['name'] = $value;
                     }
                 }
                 break;
             default:
-                $name = substr(md5(microtime()), rand(0, 26), 15) . '.' . $env;
+                $name = substr(md5(microtime()), rand(0, 26), 15);
                 $machine_template['name'] = $name;
         }
 
