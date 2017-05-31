@@ -30,8 +30,10 @@ class GetWorker extends AbstractCliAction
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
         $client = new \Hoa\Websocket\Client(
-            new \Hoa\Socket\Client('ws://127.0.0.1:9000')
+            new \Hoa\Socket\Client($url['websocket_client'])
         );
+
+        $progress_count = 0;
 
         while (true) {
             $job = $pheanstalk->watch('ansible-get-getallmachine')
@@ -42,12 +44,17 @@ class GetWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
+                $progress_count++;
+
                 $client->setHost(gethostname());
                 $client->connect();
-                $client->send($job->getData());
 
-                echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
-                echo 'job  : ' . $job->getData();
+                $progress_and_callback['progress'] = $progress_count;
+                $progress_and_callback['callback'] = json_decode($job->getData(), true);
+                $client->send(json_encode($progress_and_callback));
+
+                //echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
+                //echo 'job  : ' . $job->getData();
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
                         $machines = json_decode($job->getData(), true);
@@ -68,6 +75,7 @@ class GetWorker extends AbstractCliAction
                             $host->setStatus($status);
                             $hosts_gateway->put($host);
                         }
+
                         $pheanstalk->delete($job);
                         break;
                     case 'ansible-get-deletemachine' :
@@ -78,6 +86,7 @@ class GetWorker extends AbstractCliAction
                             $host = $hosts_gateway->fetchByName($name);
                             $hosts_gateway->delete($host);
                         }
+
                         $pheanstalk->delete($job);
                         break;
                     case 'ansible-get-installmachine' :
@@ -92,6 +101,7 @@ class GetWorker extends AbstractCliAction
                         $host->setHostID($hostid);
                         $host->setStatus($status);
                         $hosts_gateway->put($host);
+
                         $pheanstalk->delete($job);
 
                         $client = new Client(
@@ -100,26 +110,119 @@ class GetWorker extends AbstractCliAction
                             ]
                         );
                         try {
-                            $response = $client->request('GET', '/PlayBook?playbook=addtohostfile&ip=' . $ip);
+                            $response = $client->request('GET', '/PlayBook',
+                                [
+                                    'query' => [
+                                        'playbook' => 'addtohostfile',
+                                        'ip' => $ip
+                                    ]
+                                ]
+                            );
                             if ($response->getStatusCode() != 200) {
-                                echo 'Error';
+                                echo 'Error playbook addtohostfile';
                                 break;
                             }
-                            $response = $client->request('GET', '/PlayBook?playbook=waitssh&ip=' . $ip);
+
+                            $response = $client->request('GET', '/PlayBook',
+                                [
+                                    'query' => [
+                                        'playbook' => 'waitssh',
+                                        'ip' => $ip
+                                    ]
+                                ]
+                            );
                             if ($response->getStatusCode() != 200) {
-                                echo 'Error';
+                                echo 'Error playbook waitssh';
                                 break;
                             }
-                            $response = $client->request('GET', '/PlayBook?playbook=installdependencies&ip=' . $ip);
+
+                            $response = $client->request('GET', '/PlayBook',
+                                [
+                                    'query' => [
+                                        'playbook' => 'installdependencies',
+                                        'ip' => $ip
+                                    ]
+                                ]
+                            );
                             if ($response->getStatusCode() != 200) {
-                                echo 'Error';
+                                echo 'Error playbook installdependencies';
                                 break;
                             }
-                            /*$response = $client->request('GET', '/PlayBook?playbook=installpackage='.$ip.'&packages=&ip=' . $ip);
-                            if ($response->getStatusCode() != 200) {
-                                echo 'Error';
-                                break;
-                            }*/
+
+                            $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
+                            $order = $orders_gateway->fetchByName($name);
+
+                            if (!empty($order)) {
+
+                                if (!is_null($order->getPackages())) {
+                                    $response = $client->request('GET', '/PlayBook',
+                                        [
+                                            'query' => [
+                                                'playbook' => 'installpackage',
+                                                'packages' => implode(',', json_decode($order->getPackages(), true)),
+                                                'ip' => $ip
+                                            ]
+                                        ]
+                                    );
+                                    if ($response->getStatusCode() != 200) {
+                                        echo 'Error playbook installpackage';
+                                        break;
+                                    }
+                                }
+
+                                if (!is_null($order->getWebserver())) {
+                                    $webserver = json_decode($order->getWebserver(), true);
+                                    $response = $client->request('GET', '/PlayBook',
+                                        [
+                                            'query' => [
+                                                'playbook' => $webserver['webserver'],
+                                                'document_root' => $webserver['document_root'],
+                                                'ip' => $ip
+                                            ]
+                                        ]
+                                    );
+                                    if ($response->getStatusCode() != 200) {
+                                        echo 'Error playbook webserver';
+                                        break;
+                                    }
+                                }
+
+                                if (!is_null($order->getDatabase())) {
+                                    $database = json_decode($order->getDatabase(), true);
+                                    if ($database['database'] == 'mysql') {
+                                        $response = $client->request('GET', '/PlayBook',
+                                            [
+                                                'query' => [
+                                                    'playbook' => 'mysql',
+                                                    'mysql_root_password' => $database['mysql_root_password'],
+                                                    'mysql_new_user' => $database['mysql_new_user'],
+                                                    'mysql_new_user_password' => $database['mysql_new_user_password'],
+                                                    'mysql_database' => $database['mysql_database'],
+                                                    'ip' => $ip
+                                                ]
+                                            ]
+                                        );
+                                    }
+                                    if ($database['database'] == 'mongodb') {
+                                        $response = $client->request('GET', '/PlayBook',
+                                            [
+                                                'query' => [
+                                                    'playbook' => 'mongodb',
+                                                    'mongodb_new_user' => $database['mongodb_new_user'],
+                                                    'mongodb_new_user_password' => $database['mongodb_new_user_password'],
+                                                    'mongodb_database' => $database['mongodb_database'],
+                                                    'ip' => $ip
+                                                ]
+                                            ]
+                                        );
+                                    }
+                                    if ($response->getStatusCode() != 200) {
+                                        echo 'Error playbook database';
+                                        break;
+                                    }
+                                }
+                            }
+
                         } catch (RequestException $e) {
                             echo Psr7\str($e->getRequest());
                             if ($e->hasResponse()) {
@@ -128,11 +231,11 @@ class GetWorker extends AbstractCliAction
                         }
                         break;
                     default:
-                        $machine = json_decode($job->getData(), true);
+                        /*$machine = json_decode($job->getData(), true);
                         if ($machine['unreachable'] == "true") {
                             $pheanstalk->bury($job);
                             break;
-                        };
+                        }
                         if (($machine['state'] == "started") && ($machine['port'] == "22")) {
                             $pheanstalk->delete($job);
                             break;
@@ -141,14 +244,22 @@ class GetWorker extends AbstractCliAction
                             $pheanstalk->delete($job);
                             break;
                         }
-                        if (strpos($machine['sdtout'], 'up python-simplejson') !== false) {
+                        if (strpos($machine['stdout'], 'Setting up python-simplejson') !== false) {
                             $pheanstalk->delete($job);
                             break;
                         }
+                        if ($machine['msg'] == "All items completed") {
+                            $pheanstalk->delete($job);
+                            break;
+                        }
+                        break;*/
+                        $pheanstalk->delete($job);
                         break;
                 }
+            } else {
+                echo 'waiting...';
+                sleep(3);
             }
-
         }
     }
 }
