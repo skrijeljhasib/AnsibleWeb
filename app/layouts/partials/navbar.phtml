@@ -2,6 +2,7 @@
 <?php
 use ObjectivePHP\Application\Config\ApplicationName;
 use ObjectivePHP\Application\View\Helper\Vars;
+
 ?>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -12,7 +13,7 @@ use ObjectivePHP\Application\View\Helper\Vars;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                </button>
+            </button>
             <a class="navbar-brand" href="/"><?=
 
                 Vars::$config->get(ApplicationName::class) ?>
@@ -23,8 +24,7 @@ use ObjectivePHP\Application\View\Helper\Vars;
             <ul class="nav navbar-nav">
 
                 <li><a href="/createMachine">Create your machine</a></li>
-                <li><a href="/deleteMachine">Delete a machine</a></li>
-		<li><a href="/listMachine">List machine</a></li>
+                <li><a href="/listMachine">List machine</a></li>
 
             </ul>
         </div>
