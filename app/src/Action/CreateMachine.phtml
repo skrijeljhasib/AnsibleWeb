@@ -9,9 +9,9 @@ use Project\Entity\DB\Package;
     <div class="col-md-offset-2 col-md-8">
 
         <form id="createMachine">
-		<div class="panel panel-primary">
-                	<div class="panel-heading">Configuration</div>
-                        <div class="panel-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Configuration</div>
+                <div class="panel-body">
                     <?php
                     if (!Vars::collection('host')->isEmpty()) {
                         $host = Vars::collection('host')->toArray();
@@ -27,145 +27,157 @@ use Project\Entity\DB\Package;
                         }
                     }
                     ?>
-                	</div>
-		</div>
-
-		<div id="pkgpanel" class="panel panel-default">
-                        <div class="panel-heading"><a href="#pkgpanel" onClick="$(pkgbody).toggle();">Packages</a></div>
-                        <div class="panel-body"><div id="pkgbody" style="display: none;">
-                    <label for="selectAllorNot">All: <input type="checkbox" id="selectAllorNot"/></label><br>
-
-                    <select id="packages" name="packages[]" class="form-control" style="width: 100%" multiple="multiple">
-                        <?php
-
-                        Vars::collection('packages')->each(
-                            function (Package $package) {
-                                echo "<option value=" . $package->getName() . ">" . $package->getName() . "</option>";
-                            }
-                        );
-
-                        ?>
-                    </select>
-			</div>
-			</div>
                 </div>
+            </div>
 
-		<div d="wspanel" class="panel panel-default">
-                        <div class="panel-heading"><a href="#wspanel" onClick="$(wsbody).toggle();">Web Server</a></div>
-                        <div class="panel-body"><div id="wsbody" style="display: none;">
-                    <ul class="nav nav-tabs" role="tablist" id="webserverTabs">
-                        <li role="presentation" class="active"><a href="#apache" aria-controls="apache" role="tab"
-                                                                  data-toggle="tab">Apache</a></li>
-                        <li role="presentation"><a href="#ngnix" aria-controls="nginx" role="tab" data-toggle="tab">NginX</a>
-                        </li>
-                    </ul>
+            <div id="pkgpanel" class="panel panel-default">
+                <div class="panel-heading"><a href="#pkgpanel" onClick="$(pkgbody).toggle();">Packages</a></div>
+                <div class="panel-body">
+                    <div id="pkgbody" style="display: none;">
+                        <label for="selectAllorNot">All: <input type="checkbox" id="selectAllorNot"/></label><br>
 
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="apache">
-                            <br>
-                            <label> Install Apache:
-                                <input type="checkbox" name="webserver[]" id="apacheCheckbox" class="checkbox">
-                            </label>
-                            <br>
-                            <label> DocumentRoot:
-                                <input disabled required type="text" class="form-control" id="apache_document_root">
-                            </label>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="ngnix">
-                            <br>
-                            <label> Install Nginx:
-                                <input type="checkbox" name="webserver[]" id="nginxCheckbox" class="checkbox">
-                            </label>
-                            <br>
-                            <label> DocumentRoot:
-                                <input disabled required type="text" class="form-control" id="nginx_document_root">
-                            </label>
+                        <select id="packages" name="packages[]" class="form-control" style="width: 100%"
+                                multiple="multiple">
+                            <?php
+
+                            Vars::collection('packages')->each(
+                                function (Package $package) {
+                                    echo "<option value=" . $package->getName() . ">" . $package->getName() . "</option>";
+                                }
+                            );
+
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div d="wspanel" class="panel panel-default">
+                <div class="panel-heading"><a href="#wspanel" onClick="$(wsbody).toggle();">Web Server</a></div>
+                <div class="panel-body">
+                    <div id="wsbody" style="display: none;">
+                        <ul class="nav nav-tabs" role="tablist" id="webserverTabs">
+                            <li role="presentation" class="active"><a href="#apache" aria-controls="apache" role="tab"
+                                                                      data-toggle="tab">Apache</a></li>
+                            <li role="presentation"><a href="#ngnix" aria-controls="nginx" role="tab" data-toggle="tab">NginX</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="apache">
+                                <br>
+                                <label> Install Apache:
+                                    <input type="checkbox" name="webserver[]" id="apacheCheckbox" class="checkbox">
+                                </label>
+                                <br>
+                                <label> DocumentRoot:
+                                    <input disabled required type="text" class="form-control" id="apache_document_root">
+                                </label>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="ngnix">
+                                <br>
+                                <label> Install Nginx:
+                                    <input type="checkbox" name="webserver[]" id="nginxCheckbox" class="checkbox">
+                                </label>
+                                <br>
+                                <label> DocumentRoot:
+                                    <input disabled required type="text" class="form-control" id="nginx_document_root">
+                                </label>
+                            </div>
                         </div>
                     </div>
-			</div></div>
                 </div>
+            </div>
 
-		    <div id="dbpanel" class="panel panel-default">
-                        <div class="panel-heading"><a href="#dbpanel" onClick="$(dbbody).toggle();">Database</a></div>
-                        <div class="panel-body"><div id="dbbody" style="display: none;">
-                    <ul class="nav nav-tabs" role="tablist" id="databaseTabs">
-                        <li role="presentation" class="active"><a href="#mysql" aria-controls="mysql" role="tab"
-                                                                  data-toggle="tab">MySQL</a></li>
-                        <li role="presentation"><a href="#mongodb" aria-controls="mongodb" role="tab" data-toggle="tab">MongoDB</a>
-                        </li>
-                    </ul>
+            <div id="dbpanel" class="panel panel-default">
+                <div class="panel-heading"><a href="#dbpanel" onClick="$(dbbody).toggle();">Database</a></div>
+                <div class="panel-body">
+                    <div id="dbbody" style="display: none;">
+                        <ul class="nav nav-tabs" role="tablist" id="databaseTabs">
+                            <li role="presentation" class="active"><a href="#mysql" aria-controls="mysql" role="tab"
+                                                                      data-toggle="tab">MySQL</a></li>
+                            <li role="presentation"><a href="#mongodb" aria-controls="mongodb" role="tab"
+                                                       data-toggle="tab">MongoDB</a>
+                            </li>
+                        </ul>
 
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="mysql">
-                            <br>
-                            <label> Install MySQL:
-                                <input type="checkbox" name="database[]" id="mysqlCheckbox" class="checkbox">
-                            </label>
-                            <br>
-                            <label> Root Password:
-                                <input disabled required type="password" class="form-control" id="mysql_root_password">
-                            </label>
-                            <label> Database:
-                                <input disabled required type="text" class="form-control" id="mysql_database">
-                            </label>
-                            <label> New User:
-                                <input disabled required type="text" class="form-control" id="mysql_new_user">
-                            </label>
-                            <label> New User Password:
-                                <input disabled required type="password" class="form-control"
-                                       id="mysql_new_user_password">
-                            </label>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="mongodb">
-                            <br>
-                            <label> Install MongoDB:
-                                <input type="checkbox" name="database[]" id="mongodbCheckbox" class="checkbox">
-                            </label>
-                            <br>
-                            <label> Database:
-                                <input disabled required type="text" class="form-control" id="mongodb_database">
-                            </label>
-                            <label> New User:
-                                <input disabled required type="text" class="form-control" id="mongodb_new_user">
-                            </label>
-                            <label> New User Password:
-                                <input disabled required type="password" class="form-control"
-                                       id="mongodb_new_user_password">
-                            </label>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="mysql">
+                                <br>
+                                <label> Install MySQL:
+                                    <input type="checkbox" name="database[]" id="mysqlCheckbox" class="checkbox">
+                                </label>
+                                <br>
+                                <label> Root Password:
+                                    <input disabled required type="password" class="form-control"
+                                           id="mysql_root_password">
+                                </label>
+                                <label> Database:
+                                    <input disabled required type="text" class="form-control" id="mysql_database">
+                                </label>
+                                <label> New User:
+                                    <input disabled required type="text" class="form-control" id="mysql_new_user">
+                                </label>
+                                <label> New User Password:
+                                    <input disabled required type="password" class="form-control"
+                                           id="mysql_new_user_password">
+                                </label>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="mongodb">
+                                <br>
+                                <label> Install MongoDB:
+                                    <input type="checkbox" name="database[]" id="mongodbCheckbox" class="checkbox">
+                                </label>
+                                <br>
+                                <label> Database:
+                                    <input disabled required type="text" class="form-control" id="mongodb_database">
+                                </label>
+                                <label> New User:
+                                    <input disabled required type="text" class="form-control" id="mongodb_new_user">
+                                </label>
+                                <label> New User Password:
+                                    <input disabled required type="password" class="form-control"
+                                           id="mongodb_new_user_password">
+                                </label>
+                            </div>
                         </div>
                     </div>
-			</div>
-                </div></div>
+                </div>
+            </div>
 
-                <br>
-                <input class="btn btn-default btn-block" type="submit" id="SendToAnsibleApi"
-                       value="Create and install Machine">
+            <br>
+            <input class="btn btn-default btn-block" type="submit" id="SendToAnsibleApi"
+                   value="Create and install Machine">
         </form>
 
     </div>
 </div>
 
 <!-- <div id="outputcreation" class="row" style="display: none"> -->
-<br><br><div id="outputcreation" class="row">
+<br><br>
+<div id="outputcreation" class="row">
     <div class="col-md-offset-2 col-md-8">
 
-               <div class="panel panel-default">
-                        <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
-                        <div class="panel-body"><div id="outputbody" style="display: none;">
+        <div class="panel panel-default">
+            <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
+            <div class="panel-body">
+                <div id="outputbody" style="display: none;">
 
-        <h2>Process</h2>
-        <div id="progress" class="progress progress-striped">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
-                 aria-valuemin="0" aria-valuemax="100">
+                    <h2>Process</h2>
+                    <div id="progress" class="progress progress-striped">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
+                             aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <h2>IP-Address</h2>
+                    <div id="ipaddress" class="jumbotron text-center">
+                    </div>
+                    <h2>Log</h2>
+                    <div id="result" class="jumbotron text-center pre-scrollable">
+
+                    </div>
+                </div>
             </div>
-        </div>
-        <h2>Log</h2>
-        <div id="result" class="jumbotron text-center pre-scrollable">
-
-        </div>
-        <h2>IP-Address</h2>
-        <div id="ipaddress" class="jumbotron text-center">
-</div></div></div>
         </div>
     </div>
 </div>
