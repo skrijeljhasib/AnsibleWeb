@@ -3,9 +3,10 @@
 use ObjectivePHP\ServicesFactory\Config\Service;
 use ObjectivePHP\Matcher\Matcher;
 use ObjectivePHP\ServicesFactory\ServiceReference;
+use Project\Gateway\OrderGateway;
 use Project\Gateway\PackageGateway;
 use Project\Gateway\HostGateway;
-use Project\Gateway\JobsGateway;
+use Project\Gateway\JobGateway;
 
 /**
      * Declare your services specifications here
@@ -35,7 +36,14 @@ use Project\Gateway\JobsGateway;
         ]),
         new Service([
             'id' => 'gateway.jobs',
-            'class' => JobsGateway::class,
+            'class' => JobGateway::class,
+            'setters' => [
+                'setEntityManager' => [new ServiceReference('doctrine.em.default')],
+            ]
+        ]),
+        new Service([
+            'id' => 'gateway.orders',
+            'class' => OrderGateway::class,
             'setters' => [
                 'setEntityManager' => [new ServiceReference('doctrine.em.default')],
             ]
