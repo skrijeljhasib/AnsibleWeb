@@ -2,13 +2,13 @@
 
 namespace Project\Gateway;
 
-use Project\Entity\DB\Jobs;
+use Project\Entity\DB\Job;
 
-class JobsGateway
+class JobGateway
 {
 
     protected $entityManager;
-    protected $defaultTargetEntity = Jobs::class;
+    protected $defaultTargetEntity = Job::class;
 
     /**
      * @param null $id
@@ -25,7 +25,7 @@ class JobsGateway
     }
 
     /**
-     * @param Jobs|Jobs[] $jobs
+     * @param Job|Job[] $jobs
      *
      * @return bool
      */

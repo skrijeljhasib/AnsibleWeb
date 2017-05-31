@@ -11,7 +11,7 @@ namespace Project\Entity\DB;
 /**
  * @Entity @Table(name="jobs")
  **/
-class Jobs
+class Job
 {
     /**
      * @Id @GeneratedValue @Column(type="integer")
@@ -24,6 +24,7 @@ class Jobs
      * @var string
      **/
     protected $name;
+
     /**
      * @Column(type="json_array")
      * @var string
@@ -42,6 +43,10 @@ class Jobs
      **/
     protected $status;
 
+
+    /**
+     * @return int
+     */
     public function getId():int
     {
         return $this->id;
