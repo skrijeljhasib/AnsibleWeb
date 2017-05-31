@@ -3,74 +3,123 @@
 use ObjectivePHP\Application\View\Helper\Vars;
 
 ?>
-<script>
-function listMachine() {
-    let machines = [];
-
-    $.ajax({
-        type: 'GET',
-        url: 'PlayBook',
-        data: {
-            playbook: 'getallmachine'
-        }
-    })
-    .done(function () {
-
-    })
-    .fail(function (error) {
-        console.log(JSON.stringify(error));
-    })
-
-};
-</script>
+<script src="/js/getAllMachine.js"></script>
 <style>
-.vertical-alignment-helper {
-    display:table;
-    height: 100%;
-    margin: auto;
-}</style>
+    .vertical-alignment-helper {
+        display: table;
+        height: 100%;
+        margin: auto;
+    }</style>
 <div class="modal fade" id="confirmRefreshListModal">
-        <div class="vertical-alignment-helper">
+    <div class="vertical-alignment-helper">
         <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
-                <div class="modal-content">
-                        <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Confirm Refresh</h4>
-                        </div>
-                        <div class="modal-body">
-                                <div class="modal-group"><p class="text-center">Are you sure tou want to Refresh Machine List ?</p></div>
-                                <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="listMachine();">Yes</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button></div>
-                        </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Confirm Refresh</h4>
                 </div>
+                <div class="modal-body">
+                    <div class="modal-group"><p class="text-center">Are you sure tou want to Refresh Machine List ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="getAllMachine">Yes
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
+    </div>
 </div>
 <div class="container">
-<div align="right"><input type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmRefreshListModal" value="Refresh" /></div>
-<?php
-                    if (!Vars::collection('hosts')->isEmpty()) {
-                        $hosts = Vars::collection('hosts')->toArray(); ?>
-			<div class="table-responsive"><table class="table table-hover">
-			<thead>
-      				<tr>
-        				<th>Id</th>
-        				<th>Name</th>
-        				<th>Ip</th>
-					<th>Location</th>
-					<th>Status</th>
-      				</tr>
-    			</thead>
-    			<tbody>			
-			<?php foreach ( $hosts as $host) {
-				if ($host->getStatus() != 'ACTIVE') { 
-					$trclass = 'class="danger"';
-				 }
-				echo '<tr '. $trclass . '><td>' . $host->getid() . '</td><td><a href="#" data-toggle="tooltip" title="hostid='. $host->getHostID() . '">' . $host->getname() . '</a></td><td>' . $host->getip() . '</td><td>' . $host->getLocation() . '</td><td>' . $host->getStatus() . '</td></tr>';
-				$trclass = '';
-			} ?>
-			</tbody></table></div><?php
+    <div align="right"><input type="button" class="btn btn-default" data-toggle="modal"
+                              data-target="#confirmRefreshListModal" value="Refresh"/></div>
+    <?php
+    if (!Vars::collection('hosts')->isEmpty()) {
+        $hosts = Vars::collection('hosts')->toArray(); ?>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ip</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($hosts as $host) {
+                    $trclass = '';
+                    if ($host->getStatus() != 'ACTIVE') {
+                        $trclass = 'class="danger"';
+                        $btn = 'disabled';
                     }
- ?>
-<div>
+                    echo '<tr ' . $trclass . '><td>' . $host->getid() . '</td><td><a name="name" href="#" data-toggle="tooltip" title="hostid=' . $host->getHostID() . '">' . $host->getname() . '</a></td><td>' . $host->getip() . '</td><td>' . $host->getLocation() . '</td><td>' . $host->getStatus() . '</td><td><form method="get" action="PlayBook"><input type="hidden" name="playbook" value="deletemachine"><input type="hidden" name="name" value="' . $host->getname() . '"><button type="button" ' . $btn . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button></form></td></tr>';
+                } ?>
+                </tbody>
+            </table>
+        </div>
+        <?php
+    }
+    ?>
+    <div>
+        <div class="modal fade" id="confirmDeleteModal">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Confirm Delete</h4>
+                        </div>
+                        <form onsubmit="return check(this);">
+                            <div class="modal-body">
+                                <div class="alert alert-danger">
+                                    <span class="glyphicon glyphicon-warning-sign"></span>
+                                    Warning: This will deleted the machine permanently!
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input type="checkbox" value="0" name="confirmToDelete">
+                                        Check this
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-danger" id="confirm">Yes</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+
+            $('#confirmDeleteModal').on('show.bs.modal', function (e) {
+                // Pass form reference to modal for submission on yes/ok
+                var form = $(e.relatedTarget).closest('form');
+                $(this).find('.modal-footer #confirm').data('form', form);
+            });
+
+            function check(form) {
+                if (form.confirmToDelete.checked == false) {
+                    alert('You must check the checkbox!');
+                    return false;
+                } else {
+
+                    $('#confirm').html('Confirm Delete');
+
+                    <!-- Form confirm (yes/ok) handler, submits form -->
+                    $('#confirmDeleteModal').find('.modal-footer #confirm').on('click', function () {
+                        $(this).data('form').submit();
+                    });
+
+                    return false;
+                }
+            }
+        </script>
