@@ -38,23 +38,20 @@ class GetWorker extends AbstractCliAction
         while (true) {
             $job = $pheanstalk->watch('ansible-get-getallmachine')
                 ->watch('ansible-get-deletemachine')
-                ->watch('ansible-get-ansible-post')
                 ->watch('ansible-get-installmachine')
+                ->watch('ansible-get-ansible-post')
                 ->ignore('default')
                 ->reserve();
             if ($job !== false) {
 
-                $progress_count++;
-
                 $client->setHost(gethostname());
                 $client->connect();
 
-                $progress_and_callback['progress'] = $progress_count;
-                $progress_and_callback['callback'] = json_decode($job->getData(), true);
-                $client->send(json_encode($progress_and_callback));
+                $callback['progress'] = $progress_count;
+                $callback['callback'] = json_decode($job->getData(), true);
 
-                //echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
-                //echo 'job  : ' . $job->getData();
+                $progress_count++;
+
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
                         $machines = json_decode($job->getData(), true);
@@ -256,6 +253,8 @@ class GetWorker extends AbstractCliAction
                         $pheanstalk->delete($job);
                         break;
                 }
+
+                $client->send(json_encode($callback));
             } else {
                 echo 'waiting...';
                 sleep(3);
