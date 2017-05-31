@@ -157,6 +157,15 @@ $(document).ready(function () {
 
                 let data = JSON.parse(msg['data']);
 
+                console.log(data);
+
+                try {
+                    $('#ipaddress').text(data.callback['invocation']['module_args']['host']);
+                }
+                finally {
+
+                }
+
                 $(".progress-bar").animate({
                     width: data.progress + '%'
                 }, 2000);
