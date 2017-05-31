@@ -5,6 +5,7 @@ namespace Project\Cli;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Cli\Action\AbstractCliAction;
 use Hoa\Event\Bucket;
+use Project\Config\Url;
 
 /**
  * Class SocketWorker
@@ -17,16 +18,18 @@ class SocketWorker extends AbstractCliAction
         $this->setCommand('socket-worker');
         $this->setDescription('WebSocket Server');
     }
-    
+
     public function run(ApplicationInterface $app)
     {
+        $url = $app->getConfig()->get(Url::class);
+
         $websocket = new \Hoa\Websocket\Server(
-                new \Hoa\Socket\Server('ws://0.0.0.0:9000')
+            new \Hoa\Socket\Server($url['websocket_server'])
         );
 
         $websocket->on('open', function () {
             echo 'new connection', "\n";
-                return;
+            return;
         });
 
         $websocket->on('message', function (Bucket $bucket) {
@@ -39,8 +42,8 @@ class SocketWorker extends AbstractCliAction
         });
 
         $websocket->on('close', function () {
-                echo 'connection closed', "\n";
-                return;
+            echo 'connection closed', "\n";
+            return;
         });
 
         $websocket->run();
