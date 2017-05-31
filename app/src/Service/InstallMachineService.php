@@ -9,11 +9,12 @@
 namespace Project\Service;
 
 use Project\Application;
+use Project\Entity\DB\Order;
 use Project\Entity\JSON\OsServer;
 use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
 use Project\Entity\DB\Host;
-use Project\Entity\DB\Jobs;
+use Project\Entity\DB\Job;
 
 class InstallMachineService
 {
@@ -73,12 +74,28 @@ class InstallMachineService
         $playbook_json = $playbook->toJSON();
 
         $jobs_gateway = $app->getServicesFactory()->get('gateway.jobs');
-        $jobs = new Jobs();
+        $jobs = new Job();
         $jobs->setName('CreateMachine' . $machine_template['name']);
         $jobs->setStatus(0);
         $jobs->setJson($playbook_json);
         $jobs->setTube('installmachine');
         $jobs_gateway->put($jobs);
+
+        $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
+        $order = new Order();
+        $order->setName($machine_template['name']);
+
+        if(!is_null($app->getRequest()->getParameters()->get('packages'))) {
+            $order->setPackages($app->getRequest()->getParameters()->get('packages'));
+        }
+        if(!is_null($app->getRequest()->getParameters()->get('webserver'))) {
+            $order->setWebserver($app->getRequest()->getParameters()->get('webserver'));
+        }
+        if(!is_null($app->getRequest()->getParameters()->get('database'))) {
+            $order->setDatabase($app->getRequest()->getParameters()->get('database'));
+        }
+
+        $orders_gateway->put($order);
 
         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
         $host = new Host();
@@ -86,6 +103,7 @@ class InstallMachineService
         $host->setLocation($machine_template['region_name']);
         $host->setStatus('CREATING');
         $hosts_gateway->put($host);
+
 
         return $playbook_json;
     }
