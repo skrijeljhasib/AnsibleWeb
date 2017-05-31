@@ -35,7 +35,7 @@ class InstallPackageService
         $apt = new Apt();
         $apt->setAName(Apt::MULTIPLE_ITEMS);
         $apt->setState(Apt::PRESENT);
-        $apt->setWithItems($app->getRequest()->getParameters()->get('packages'));
+        $apt->setWithItems(explode(',', $app->getRequest()->getParameters()->get('packages')));
 
         $playbook->setTask($apt->toArray());
 

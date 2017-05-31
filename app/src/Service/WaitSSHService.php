@@ -20,7 +20,7 @@ class WaitSSHService
      */
     public function load($app_get)
     {
-	$ip = $app_get->get('ip');
+        $ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
         $playbook->setName('Wait for SSH');
