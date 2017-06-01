@@ -68,8 +68,8 @@ class GetWorker extends AbstractCliAction
                             $host->setLocation($location);
                             $host->setStatus($status);
                             $hosts_gateway->put($host);
-                            $pheanstalk->delete($job);
                         }
+                        $pheanstalk->delete($job);
                         break;
 
                     case 'ansible-get-deletemachine' :
@@ -79,8 +79,8 @@ class GetWorker extends AbstractCliAction
                             $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
                             $host = $hosts_gateway->fetchByName($name);
                             $hosts_gateway->delete($host);
-                            $pheanstalk->delete($job);
                         }
+                        $pheanstalk->delete($job);
                         break;
 
                     case 'ansible-get-installmachine' :
@@ -95,6 +95,7 @@ class GetWorker extends AbstractCliAction
                         $host->setHostID($hostid);
                         $host->setStatus($status);
                         $hosts_gateway->put($host);
+
                         $pheanstalk->delete($job);
 
                         $guzzle_client = new Client(
