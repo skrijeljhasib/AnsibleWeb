@@ -24,7 +24,7 @@ class GetAllMachine
             throw new Exception('Can not load hosts from DB');
         }
 
-        $hosts = [];
+        $hosts['data'] = [];
 
         foreach ($dbhosts as $host) {
 
