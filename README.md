@@ -95,6 +95,7 @@ stdout_logfile=/var/log/supervisor/socket-worker-stdout.log
 Run:
 ```
 sudo beanstalkd restart
+sudo service supervisor start
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo service supervisor restart
