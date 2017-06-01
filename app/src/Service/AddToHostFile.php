@@ -23,7 +23,7 @@ class AddToHostFile
     {
         $playbook = new PlayBook();
 
-        $playbook->setName('AddToHostFile');
+        $playbook->setName('Add host to inventory file');
         $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');

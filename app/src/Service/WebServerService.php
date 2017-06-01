@@ -34,7 +34,6 @@ class WebServerService
 
         $this->playbook = new PlayBook();
 
-        $this->playbook->setName('Install and Configure Apache');
         $this->playbook->setHosts($app->getRequest()->getParameters()->get('ip'));
         $this->playbook->setConnection('ssh');
         $this->playbook->setRemoteUser($machine_access['remote_user']);
@@ -50,6 +49,8 @@ class WebServerService
      */
     public function apache($app_get)
     {
+        $this->playbook->setName('Install and Configure Apache');
+
         $apt = new Apt();
         $apt->setState(Apt::PRESENT);
         $apt->setAName('apache2');
@@ -90,6 +91,13 @@ class WebServerService
     public function nginx($app_get)
     {
 
+        $this->playbook->setName('Install and Configure NginX');
+
+        $apt = new Apt();
+        $apt->setState(Apt::PRESENT);
+        $apt->setAName('nginx');
+
+        $this->playbook->setTask($apt->toArray());
 
         $playbook_json = $this->playbook->toJSON();
 

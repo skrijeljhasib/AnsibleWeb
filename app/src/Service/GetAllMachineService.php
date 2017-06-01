@@ -19,7 +19,7 @@ class GetAllMachineService
     public function load($machine_template, $openstack_auth)
     {
         $playbook = new PlayBook();
-        $playbook->setName('Get all machines');
+        $playbook->setName('Get all machines from '.$machine_template["region_name"]);
         $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');

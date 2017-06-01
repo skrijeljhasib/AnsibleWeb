@@ -50,7 +50,7 @@ class InstallMachineService
 
         $playbook = new PlayBook();
 
-        $playbook->setName('Create and install a Machine');
+        $playbook->setName('Install '.$machine_template['image']);
         $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');

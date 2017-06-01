@@ -23,7 +23,7 @@ class WaitSSHService
         $ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
-        $playbook->setName('Wait for SSH');
+        $playbook->setName('Wait for SSH Connection');
         $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');

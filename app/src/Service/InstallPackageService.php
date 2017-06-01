@@ -23,7 +23,7 @@ class InstallPackageService
     {
         $playbook = new PlayBook();
 
-        $playbook->setName('Install Package(s)');
+        $playbook->setName('Install package(s)');
         $playbook->setHosts($app->getRequest()->getParameters()->get('ip'));
         $playbook->setConnection('ssh');
         $playbook->setRemoteUser($machine_access['remote_user']);

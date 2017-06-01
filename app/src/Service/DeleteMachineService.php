@@ -23,18 +23,18 @@ class DeleteMachineService
      */
     public function load($openstack_auth, $app)
     {
+        $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
+        $host = $hosts_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
+
         $playbook = new PlayBook();
 
-        $playbook->setName('Delete a Machine');
+        $playbook->setName('Delete '. $host->getName());
         $playbook->setConnection('local');
         $playbook->setBecome('false');
         $playbook->setBecomeUser('www-data');
         $playbook->setBecomeFlags('-s /bin/sh');
         $playbook->setHosts('localhost');
         $playbook->setGatherFacts('false');
-
-        $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
-        $host = $hosts_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
 
         $os_server = new OsServer();
         $os_server->setState('absent');
@@ -59,6 +59,10 @@ class DeleteMachineService
 
         $host->setStatus('DELETING');
         $hosts_gateway->put($host);
+
+        $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
+        $order = $orders_gateway->fetchByName($host->getName());
+        $orders_gateway->delete($order);
 
         return $playbook_json;
     }

@@ -25,7 +25,7 @@ class InstallDependenciesService
         $ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
-        $playbook->setName('Install Dependencies');
+        $playbook->setName('Install dependencies');
         $playbook->setHosts($ip);
         $playbook->setConnection('ssh');
         $playbook->setRemoteUser($machine_access['remote_user']);

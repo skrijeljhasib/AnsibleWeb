@@ -32,7 +32,6 @@ class DatabaseService
     {
         $this->playbook = new PlayBook();
 
-        $this->playbook->setName('Install and Configure MySQL');
         $this->playbook->setHosts($app->getRequest()->getParameters()->get('ip'));
         $this->playbook->setConnection('ssh');
         $this->playbook->setRemoteUser($machine_access['remote_user']);
@@ -49,6 +48,9 @@ class DatabaseService
      */
     public function mysql($app_get)
     {
+
+        $this->playbook->setName('Install and Configure MySQL');
+
         $apt = new Apt();
         $apt->setState(Apt::PRESENT);
         $apt->setAName(Apt::MULTIPLE_ITEMS);
@@ -89,6 +91,8 @@ class DatabaseService
      */
     public function mongodb($app_get)
     {
+
+        $this->playbook->setName('Install and Configure MongoDB');
 
         $apt = new Apt();
         $apt->setState(Apt::PRESENT);
