@@ -31,7 +31,12 @@ class PostWorker extends AbstractCliAction
     public function run(ApplicationInterface $app)
     {
         $url = $app->getConfig()->get(Url::class);
+
         $pheanstalk = new Pheanstalk($url['beanstalk']);
+
+        $websocket_client = new \Hoa\Websocket\Client(
+            new \Hoa\Socket\Client($url['websocket_client'])
+        );
 
         while (true) {
             $job = $pheanstalk->watch('getallmachine')
@@ -42,23 +47,29 @@ class PostWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
-                $client = new Client(
+                $websocket_client->setHost(gethostname());
+                $websocket_client->connect();
+
+                $guzzle_client = new Client(
                     [
                         'base_uri' => $url["ansible_api"],
                         'headers' => ['Content-Type' => 'application/json']
                     ]
                 );
                 try {
-                    $response = $client->request('POST', '/post_data',
+                    $callback['progress'] = 60;
+                    $callback['task'] = json_decode($job->getData(), true)['name'];
+                    $websocket_client->send(json_encode($callback));
+
+                    $response = $guzzle_client->request('POST', '/post_data',
                         [
                             'json' => json_decode($job->getData())
                         ]
                     );
 
                     if ($response->getStatusCode() == 200) {
+
                         $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody());
-                        echo 'tube : ' . $pheanstalk->statsJob($job)['tube'] . '\n';
-                        echo 'job  : ' . $job->getData();
                         $pheanstalk->delete($job);
 
                     } else {
@@ -71,6 +82,7 @@ class PostWorker extends AbstractCliAction
                         echo Psr7\str($e->getResponse());
                     }
                 }
+
             } else {
                 echo 'waiting...';
                 sleep(3);
