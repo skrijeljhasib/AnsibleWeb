@@ -1,9 +1,10 @@
 $(document).ready(function () {
 
-    let socket = null;
+    var socket = null;
+    var finalName = '';
 
-    $('#name').keyup(function () {
-        let hostname = $(this).val();
+    $('#name').bind('input propertychange', function() {
+        var hostname = $(this).val();
 
         $.ajax({
             type: 'GET',
@@ -28,8 +29,6 @@ $(document).ready(function () {
     $('#createMachine').submit(function (event) {
         event.preventDefault();
 
-        websocket();
-
         $('#result').text('');
 
         $(".progress-bar").animate({
@@ -40,8 +39,6 @@ $(document).ready(function () {
         $('#SendToAnsibleApi').attr('disabled', true);
 
         $('#progress').addClass("active");
-
-
 
         $.ajax({
             type: 'GET',
@@ -55,6 +52,10 @@ $(document).ready(function () {
             }
         }).done(function () {
 
+            finalName = $('#name').val();
+
+            websocket();
+
         }).fail(function (error) {
             console.log(JSON.stringify(error));
         });
@@ -62,7 +63,7 @@ $(document).ready(function () {
 
 
     function checkHost() {
-        let host = {};
+        var host = {};
 
         $('input[name*="host"]').each(function () {
             host[this.id] = $(this).val();
@@ -74,7 +75,7 @@ $(document).ready(function () {
     function checkWebServer() {
         if ($('#apacheCheckbox').is(':checked')) {
 
-            let array = {};
+            var array = {};
 
             array['webserver'] = 'apache';
             array['document_root'] = $('#apache_document_root').val();
@@ -84,7 +85,7 @@ $(document).ready(function () {
 
         else if ($('#nginxCheckbox').is(':checked')) {
 
-            let array = {};
+            var array = {};
 
             array['webserver'] = 'nginx';
             array['document_root'] = $('#nginx_document_root').val();
@@ -100,7 +101,7 @@ $(document).ready(function () {
     function checkDatabase() {
         if ($('#mysqlCheckbox').is(':checked')) {
 
-            let array = {};
+            var array = {};
 
             array['database'] = 'mysql';
             array['mysql_root_password'] = $('#mysql_root_password').val();
@@ -113,7 +114,7 @@ $(document).ready(function () {
 
         else if ($('#mongodbCheckbox').is(':checked')) {
 
-            let array = {};
+            var array = {};
 
             array['database'] = 'mongodb';
             array['mongodb_new_user'] = $('#mongodb_new_user').val();
@@ -151,37 +152,75 @@ $(document).ready(function () {
 
             socket.onopen = function () {
                 console.log('connection open');
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'GetNewMachineData',
+                    data: {
+                        name: finalName
+                    }
+                }).done(function (data) {
+
+                    var machine = JSON.parse(data);
+
+                    $('#ipaddress').text(machine.ip);
+                    $('#status').text(machine.status);
+
+                }).fail(function (error) {
+                    console.log(JSON.stringify(error));
+                });
             };
 
             socket.onmessage = function (msg) {
 
-                let data = JSON.parse(msg['data']);
+                var data = JSON.parse(msg['data']);
 
-                console.log(data);
-
-                try {
-                    $('#ipaddress').text(data.callback['invocation']['module_args']['host']);
-                }
-                finally {
-
+                if("task" in data) {
+                    $('#task').text(data.task);
                 }
 
-                $(".progress-bar").animate({
-                    width: data.progress + '%'
-                }, 2000);
-                $('.progress-bar').text(data.progress + '%');
+                if("callback" in data) {
+                    $('#result').append('<p>' + JSON.stringify(data.callback) + '</p>');
+                }
 
-                $('#result').append('<p>' + JSON.stringify(data.callback) + '</p>');
+                if("progress" in data) {
+                    $(".progress-bar").animate({
+                        width: data.progress + '%'
+                    }, 1500);
+                    $('.progress-bar').text(data.progress + '%');
 
-                if (data.progress === '100') {
-                    $('#progress').removeClass("active");
+                    if (data.progress === '100') {
 
-                    $('#SendToAnsibleApi').removeAttr("disabled");
+                        $('#name').val('');
+
+                        $('#progress').removeClass("active");
+
+                        $('#SendToAnsibleApi').removeAttr("disabled");
+
+                        socket.close();
+                    }
                 }
             };
 
             socket.onclose = function () {
                 console.log('connection closed');
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'GetNewMachineData',
+                    data: {
+                        name: finalName
+                    }
+                }).done(function (data) {
+
+                    var machine = JSON.parse(data);
+
+                    $('#ipaddress').text(machine.ip);
+                    $('#status').text(machine.status);
+
+                }).fail(function (error) {
+                    console.log(JSON.stringify(error));
+                });
             };
 
         }
@@ -189,5 +228,4 @@ $(document).ready(function () {
             console.log(e);
         }
     }
-
 });
