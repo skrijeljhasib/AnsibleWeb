@@ -52,11 +52,13 @@ class OrderGateway
         return true;
     }
 
-
-
+    /**
+     * @param $id
+     * @return bool
+     */
     public function delete($id)
     {
-        $this->getEntityManager()->delete($id);
+        $this->getEntityManager()->remove($id);
         $this->getEntityManager()->flush();
         return true;
     }
