@@ -18,20 +18,11 @@ class ListMachine extends RenderableAction
 
     /**
      * @param ApplicationInterface $app
-     * @return array
+     * @return void
      * @throws Exception
      */
     function run(ApplicationInterface $app)
     {
         Vars::set('page.title', 'Machine List');
-
-        try {
-            $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
-            $hosts = $hosts_gateway->fetch();
-        } catch (Exception $e) {
-            throw new Exception('Can not load hosts from DB');
-        }
-
-        return compact('hosts');
     }
 }

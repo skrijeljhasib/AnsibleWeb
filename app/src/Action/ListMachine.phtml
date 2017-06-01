@@ -3,7 +3,6 @@
 use ObjectivePHP\Application\View\Helper\Vars;
 
 ?>
-<script src="/js/getAllMachine.js"></script>
 <style>
     .vertical-alignment-helper {
         display: table;
@@ -32,36 +31,28 @@ use ObjectivePHP\Application\View\Helper\Vars;
     </div>
 </div>
 <div class="container">
-    <div align="right"><input type="button" class="btn btn-default" data-toggle="modal"
-                              data-target="#confirmRefreshListModal" value="Refresh"/></div>
-    <?php
-    if (!Vars::collection('hosts')->isEmpty()) {
-        $hosts = Vars::collection('hosts')->toArray(); ?>
-            <table id="machineTable" class="display responsive nowrap" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Ip</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($hosts as $host) {
-                    $trclass = '';
-                    if ($host->getStatus() != 'ACTIVE') {
-                        $trclass = 'class="danger"';
-                        $btn = 'disabled';
-                    }
-                    echo '<tr ' . $trclass . '><td>' . $host->getid() . '</td><td><a name="name" href="#" data-toggle="tooltip" title="hostid=' . $host->getHostID() . '">' . $host->getname() . '</a></td><td>' . $host->getip() . '</td><td>' . $host->getLocation() . '</td><td>' . $host->getStatus() . '</td><td><form method="get" action="PlayBook"><input type="hidden" name="playbook" value="deletemachine"><input type="hidden" name="name" value="' . $host->getname() . '"><button type="button" ' . $btn . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button></form></td></tr>';
-                } ?>
-                </tbody>
-            </table>
-        <?php
-    }
-    ?>
+    <div align="right">
+        <button type="button" class="btn btn-default" data-toggle="modal"
+                data-target="#confirmRefreshListModal" value="Refresh"><i class="glyphicon glyphicon-refresh"
+                                                                          data-toggle="tooltip" title="Refresh"></i>
+        </button>
+    </div>
+    <br>
+    <table id="machineTable" class="display responsive nowrap" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Ip</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
     <div>
         <div class="modal fade" id="confirmDeleteModal">
             <div class="vertical-alignment-helper">
@@ -75,12 +66,13 @@ use ObjectivePHP\Application\View\Helper\Vars;
                             <div class="modal-body">
                                 <div class="alert alert-danger">
                                     <span class="glyphicon glyphicon-warning-sign"></span>
-                                    Warning: This will deleted the machine permanently!
+                                    Warning: This will delete the machine permanently!
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8">
+                                        <input type="hidden" id="machinetodelete">
                                         <input type="checkbox" value="0" name="confirmToDelete">
-                                        Check this
+                                        Check
                                     </div>
                                 </div>
                                 <br>
@@ -94,36 +86,4 @@ use ObjectivePHP\Application\View\Helper\Vars;
                 </div>
             </div>
         </div>
-
-
-        <script>
-
-            $('#confirmDeleteModal').on('show.bs.modal', function (e) {
-                // Pass form reference to modal for submission on yes/ok
-                var form = $(e.relatedTarget).closest('form');
-                $(this).find('.modal-footer #confirm').data('form', form);
-            });
-
-            function check(form) {
-                if (form.confirmToDelete.checked == false) {
-                    alert('You must check the checkbox!');
-                    return false;
-                } else {
-
-                    $('#confirm').html('Confirm Delete');
-
-                    <!-- Form confirm (yes/ok) handler, submits form -->
-                    $('#confirmDeleteModal').find('.modal-footer #confirm').on('click', function () {
-                        $(this).data('form').submit();
-                    });
-
-                    return false;
-                }
-            }
-
-            $(document).ready(function(){
-                $('#machineTable').DataTable({
-                    responsive: true
-                });
-            });
-        </script>
+        <script src="/js/getAllMachine.js"></script>
