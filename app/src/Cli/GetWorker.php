@@ -29,11 +29,9 @@ class GetWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
-        $client = new \Hoa\Websocket\Client(
+        $websocket_client = new \Hoa\Websocket\Client(
             new \Hoa\Socket\Client($url['websocket_client'])
         );
-
-        $progress_count = 0;
 
         while (true) {
             $job = $pheanstalk->watch('ansible-get-getallmachine')
@@ -44,13 +42,12 @@ class GetWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
-                $client->setHost(gethostname());
-                $client->connect();
+                $websocket_client->setHost(gethostname());
+                $websocket_client->connect();
 
-                $callback['progress'] = $progress_count;
+                $callback['progress'] = 50;
                 $callback['callback'] = json_decode($job->getData(), true);
-
-                $progress_count++;
+                $websocket_client->send(json_encode($callback));
 
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
@@ -71,10 +68,10 @@ class GetWorker extends AbstractCliAction
                             $host->setLocation($location);
                             $host->setStatus($status);
                             $hosts_gateway->put($host);
+                            $pheanstalk->delete($job);
                         }
-
-                        $pheanstalk->delete($job);
                         break;
+
                     case 'ansible-get-deletemachine' :
                         $machine = json_decode($job->getData(), true);
                         $name = $machine['invocation']['module_args']['name'];
@@ -82,10 +79,10 @@ class GetWorker extends AbstractCliAction
                             $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
                             $host = $hosts_gateway->fetchByName($name);
                             $hosts_gateway->delete($host);
+                            $pheanstalk->delete($job);
                         }
-
-                        $pheanstalk->delete($job);
                         break;
+
                     case 'ansible-get-installmachine' :
                         $machine = json_decode($job->getData(), true);
                         $name = $machine['server']['name'];
@@ -98,16 +95,15 @@ class GetWorker extends AbstractCliAction
                         $host->setHostID($hostid);
                         $host->setStatus($status);
                         $hosts_gateway->put($host);
-
                         $pheanstalk->delete($job);
 
-                        $client = new Client(
+                        $guzzle_client = new Client(
                             [
                                 'base_uri' => $url['ansible_playbook'],
                             ]
                         );
                         try {
-                            $response = $client->request('GET', '/PlayBook',
+                            $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'addtohostfile',
@@ -120,7 +116,7 @@ class GetWorker extends AbstractCliAction
                                 break;
                             }
 
-                            $response = $client->request('GET', '/PlayBook',
+                            $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'waitssh',
@@ -133,7 +129,7 @@ class GetWorker extends AbstractCliAction
                                 break;
                             }
 
-                            $response = $client->request('GET', '/PlayBook',
+                            $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'installdependencies',
@@ -152,7 +148,7 @@ class GetWorker extends AbstractCliAction
                             if (!empty($order)) {
 
                                 if (!is_null($order->getPackages())) {
-                                    $response = $client->request('GET', '/PlayBook',
+                                    $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
                                             'query' => [
                                                 'playbook' => 'installpackage',
@@ -169,7 +165,7 @@ class GetWorker extends AbstractCliAction
 
                                 if (!is_null($order->getWebserver())) {
                                     $webserver = json_decode($order->getWebserver(), true);
-                                    $response = $client->request('GET', '/PlayBook',
+                                    $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
                                             'query' => [
                                                 'playbook' => $webserver['webserver'],
@@ -187,7 +183,7 @@ class GetWorker extends AbstractCliAction
                                 if (!is_null($order->getDatabase())) {
                                     $database = json_decode($order->getDatabase(), true);
                                     if ($database['database'] == 'mysql') {
-                                        $response = $client->request('GET', '/PlayBook',
+                                        $response = $guzzle_client->request('GET', '/PlayBook',
                                             [
                                                 'query' => [
                                                     'playbook' => 'mysql',
@@ -201,7 +197,7 @@ class GetWorker extends AbstractCliAction
                                         );
                                     }
                                     if ($database['database'] == 'mongodb') {
-                                        $response = $client->request('GET', '/PlayBook',
+                                        $response = $guzzle_client->request('GET', '/PlayBook',
                                             [
                                                 'query' => [
                                                     'playbook' => 'mongodb',
@@ -227,8 +223,10 @@ class GetWorker extends AbstractCliAction
                             }
                         }
                         break;
+
                     default:
-                        /*$machine = json_decode($job->getData(), true);
+                        /*
+                        $machine = json_decode($job->getData(), true);
                         if ($machine['unreachable'] == "true") {
                             $pheanstalk->bury($job);
                             break;
@@ -248,13 +246,10 @@ class GetWorker extends AbstractCliAction
                         if ($machine['msg'] == "All items completed") {
                             $pheanstalk->delete($job);
                             break;
-                        }
-                        break;*/
+                        }*/
                         $pheanstalk->delete($job);
                         break;
                 }
-
-                $client->send(json_encode($callback));
             } else {
                 echo 'waiting...';
                 sleep(3);
