@@ -10,6 +10,7 @@ $('#confirmDeleteModal').on('show.bs.modal', function (e) {
 });
 
 machineTable = $('#machineTable').DataTable({
+    iDisplayLength: 25,
     responsive: true,
     ajax: {
         url: 'GetAllMachine',
