@@ -42,6 +42,11 @@ abstract class Task
     private $retries;
 
     /**
+     * @var string
+     */
+    private $yamltask;
+
+    /**
      * @return string
      */
     public function getUntil()
@@ -96,13 +101,28 @@ abstract class Task
         return $this->name;
     }
 
-
     /**
      * @param String $name
      */
     public function setTName(String $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return String
+     */
+    public function getYamlTask():String
+    {
+        return $this->yamltask;
+    }
+
+    /**
+     * @param String $name
+     */
+    public function setYamlTask(String $yamltask)
+    {
+        $this->yamltask = $yamltask;
     }
 
 
