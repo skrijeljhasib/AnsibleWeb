@@ -36,6 +36,9 @@ $(document).ready(function () {
     $('input[type="checkbox"]').on('change', function() {
         $('input[name="' + this.name + '"]').not(this).prop('checked', false);
 
+        let dns_domain_name = $('#dns_domain_name')[0];
+        let dns_type = $('#dns_type')[0];
+
         let nginx_document_root = $('#nginx_document_root')[0];
         let apache_document_root = $('#apache_document_root')[0];
 
@@ -51,6 +54,17 @@ $(document).ready(function () {
         nginx_document_root.disabled = !$('#nginxCheckbox').is(":checked");
 
         apache_document_root.disabled = !$('#apacheCheckbox').is(":checked");
+
+        if($('#dnsCheckbox').is(":checked"))
+        {
+            dns_domain_name.disabled = false;
+            dns_type.disabled = false;
+        }
+        else
+        {
+            dns_domain_name.disabled = true;
+            dns_type.disabled = true;
+        }
 
         if($('#mongodbCheckbox').is(":checked"))
         {
