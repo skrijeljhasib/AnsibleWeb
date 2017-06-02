@@ -44,8 +44,6 @@ class GetWorker extends AbstractCliAction
 
                 $websocket_client->setHost(gethostname());
                 $websocket_client->connect();
-
-                $callback['progress'] = 50;
                 $callback['callback'] = json_decode($job->getData(), true);
                 $websocket_client->send(json_encode($callback));
 
@@ -147,6 +145,25 @@ class GetWorker extends AbstractCliAction
                             $order = $orders_gateway->fetchByName($name);
 
                             if (!empty($order)) {
+
+                                if(!is_null($order->getDns())) {
+                                    $dns = json_decode($order->getDns(), true);
+                                    $response = $guzzle_client->request('GET', '/PlayBook',
+                                        [
+                                            'query' => [
+                                                'playbook' => 'addDnsEntryToOvh',
+                                                'host_name' => $name,
+                                                'type' => $dns['dns_type'],
+                                                'domain_name' => $dns['dns_domain_name'],
+                                                'ip' => $ip
+                                            ]
+                                        ]
+                                    );
+                                    if ($response->getStatusCode() != 200) {
+                                        echo 'Error playbook addDnsEntryToOvh';
+                                        break;
+                                    }
+                                }
 
                                 if (!is_null($order->getPackages())) {
                                     $response = $guzzle_client->request('GET', '/PlayBook',
