@@ -22,6 +22,7 @@ use Project\Config\Url;
  */
 class PostWorker extends AbstractCliAction
 {
+
     public function __construct()
     {
         $this->setCommand('post-worker');
@@ -57,7 +58,7 @@ class PostWorker extends AbstractCliAction
                     ]
                 );
                 try {
-                    $callback['progress'] = 60;
+
                     $callback['task'] = json_decode($job->getData(), true)['name'];
                     $websocket_client->send(json_encode($callback));
 
@@ -68,10 +69,10 @@ class PostWorker extends AbstractCliAction
                     );
 
                     if ($response->getStatusCode() == 200) {
-
+                        $callback['progress'] = 100;
+                        $websocket_client->send(json_encode($callback));
                         $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody());
                         $pheanstalk->delete($job);
-
                     } else {
                         echo 'Request failed: HTTP status code: ' . $response->getStatusCode();
                         $pheanstalk->bury($job);
