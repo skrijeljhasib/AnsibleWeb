@@ -72,6 +72,10 @@ function check(form) {
 
             machineTable.ajax.reload();
 
+            setTimeout(function(){
+                machineTable.ajax.reload();
+            }, 60000);
+
         }).fail(function (error) {
             console.log(JSON.stringify(error));
         });
