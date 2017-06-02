@@ -27,7 +27,6 @@ class InstallMachineService
      */
     public function load($openstack_auth, $machine_template, $host, $app)
     {
-        //$env = $app->getEnv();
         $app_get = $app->getRequest()->getParameters();
         switch ($host['host_config']) {
             case 'RANDOM':
@@ -91,6 +90,9 @@ class InstallMachineService
         if(!is_null($app->getRequest()->getParameters()->get('database'))) {
             $order->setDatabase($app->getRequest()->getParameters()->get('database'));
         }
+        if(!is_null($app->getRequest()->getParameters()->get('dns'))) {
+            $order->setDns($app->getRequest()->getParameters()->get('dns'));
+        }
 
         $orders_gateway->put($order);
 
@@ -100,7 +102,6 @@ class InstallMachineService
         $host->setLocation($machine_template['region_name']);
         $host->setStatus('CREATING');
         $hosts_gateway->put($host);
-
 
         return $playbook_json;
     }

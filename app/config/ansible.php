@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use Project\Config\OvhDnsAuth;
 use Project\Config\Url;
 use Project\Config\Host;
 use Project\Config\MachineAccess;
@@ -24,10 +25,10 @@ $openstack_auth = [
 ];
 
 $ovh_dns_auth = [
-    "end_point" => "ovh-eu",
-    "application_key" => "key",
-    "application_secret" => "secret_key",
-    "cosumer_key" => "key"
+    "OVH_ENDPOINT" => "ovh-eu",
+    "OVH_APPLICATION_KEY" => "key",
+    "OVH_APPLICATION_SECRET" => "secret_key",
+    "OVH_CONSUMER_KEY" => "key"
 ];
 
 $host = [
@@ -55,5 +56,6 @@ return [
     new MachineTemplate($machine_template),
     new Host($host),
     new MachineAccess($machine_access),
-    new Url($url)
+    new Url($url),
+    new OvhDnsAuth($ovh_dns_auth)
 ];

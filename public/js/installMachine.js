@@ -3,7 +3,7 @@ $(document).ready(function () {
     var socket = null;
     var finalName = '';
 
-    $('#name').bind('input propertychange', function() {
+    $('#name').bind('input propertychange', function () {
         var hostname = $(this).val();
 
         $.ajax({
@@ -48,7 +48,8 @@ $(document).ready(function () {
                 host: checkHost(),
                 packages: checkPackages(),
                 webserver: checkWebServer(),
-                database: checkDatabase()
+                database: checkDatabase(),
+                dns: checkDns()
             }
         }).done(function () {
 
@@ -73,9 +74,9 @@ $(document).ready(function () {
     }
 
     function checkWebServer() {
-        if ($('#apacheCheckbox').is(':checked')) {
+        var array = {};
 
-            var array = {};
+        if ($('#apacheCheckbox').is(':checked')) {
 
             array['webserver'] = 'apache';
             array['document_root'] = $('#apache_document_root').val();
@@ -84,8 +85,6 @@ $(document).ready(function () {
         }
 
         else if ($('#nginxCheckbox').is(':checked')) {
-
-            var array = {};
 
             array['webserver'] = 'nginx';
             array['document_root'] = $('#nginx_document_root').val();
@@ -99,9 +98,9 @@ $(document).ready(function () {
     }
 
     function checkDatabase() {
-        if ($('#mysqlCheckbox').is(':checked')) {
+        var array = {};
 
-            var array = {};
+        if ($('#mysqlCheckbox').is(':checked')) {
 
             array['database'] = 'mysql';
             array['mysql_root_password'] = $('#mysql_root_password').val();
@@ -114,8 +113,6 @@ $(document).ready(function () {
 
         else if ($('#mongodbCheckbox').is(':checked')) {
 
-            var array = {};
-
             array['database'] = 'mongodb';
             array['mongodb_new_user'] = $('#mongodb_new_user').val();
             array['mongodb_new_user_password'] = $('#mongodb_new_user_password').val();
@@ -123,8 +120,7 @@ $(document).ready(function () {
 
             return JSON.stringify(array);
         }
-        else
-        {
+        else {
             return null;
         }
     }
@@ -139,6 +135,24 @@ $(document).ready(function () {
         else {
             return null;
         }
+    }
+
+    function checkDns() {
+
+        var array = {};
+
+        if ($('#dnsCheckbox').is(':checked')) {
+
+            array['dns_domain_name'] = $('#dns_domain_name').val();
+            array['dns_type'] = $('#dns_type').val();
+
+            return JSON.stringify(array);
+
+        }
+        else {
+            return null;
+        }
+
     }
 
     function websocket() {
@@ -173,37 +187,51 @@ $(document).ready(function () {
 
             socket.onmessage = function (msg) {
 
+                $.ajax({
+                    type: 'GET',
+                    url: 'GetNewMachineData',
+                    data: {
+                        name: finalName
+                    }
+                }).done(function (data) {
+
+                    var machine = JSON.parse(data);
+
+                    $('#ipaddress').text(machine.ip);
+                    $('#status').text(machine.status);
+
+                }).fail(function (error) {
+                    console.log(JSON.stringify(error));
+                });
+
                 var data = JSON.parse(msg['data']);
 
-                if("task" in data) {
+                if ("task" in data) {
                     $('#task').text(data.task);
                 }
 
-                if("callback" in data) {
+                if ("callback" in data) {
                     $('#result').append('<p>' + JSON.stringify(data.callback) + '</p>');
                 }
 
-                if("progress" in data) {
+                if ("progress" in data) {
+
                     $(".progress-bar").animate({
                         width: data.progress + '%'
                     }, 1500);
                     $('.progress-bar').text(data.progress + '%');
 
-                    if (data.progress === '100') {
-
-                        $('#name').val('');
-
-                        $('#progress').removeClass("active");
-
-                        $('#SendToAnsibleApi').removeAttr("disabled");
-
-                        socket.close();
-                    }
                 }
             };
 
             socket.onclose = function () {
                 console.log('connection closed');
+
+                $('#name').val('');
+
+                $('#progress').removeClass("active");
+
+                $('#SendToAnsibleApi').removeAttr("disabled");
 
                 $.ajax({
                     type: 'GET',
@@ -222,7 +250,6 @@ $(document).ready(function () {
                     console.log(JSON.stringify(error));
                 });
             };
-
         }
         catch (e) {
             console.log(e);

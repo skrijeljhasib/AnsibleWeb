@@ -3,11 +3,13 @@
 namespace Project\Action;
 
 use Project\Application;
+use Project\Config\OvhDnsAuth;
 use Project\Config\Url;
 use Project\Config\Host;
 use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
+use Project\Service\AddDnsEntryToOvh;
 use Project\Service\DatabaseService;
 use Project\Service\InstallDependenciesService;
 use Project\Service\WebServerService;
@@ -36,7 +38,8 @@ class PlayBook
      * @var array $host FIXED, CUSTOM, RANDOM
      * @var string $tube Beanstalk tube
      */
-    private $ansible_api, $openstack_auth, $machine_template, $machine_access, $host, $tube;
+    private $ansible_api, $openstack_auth, $machine_template,
+        $machine_access, $host, $tube, $ovh_dns_auth;
 
     /**
      * Check the playbook get parameter and return a json string of the playbook to the client
@@ -50,6 +53,7 @@ class PlayBook
         $this->machine_template = $app->getConfig()->get(MachineTemplate::class);
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
+        $this->ovh_dns_auth = $app->getConfig()->get(OvhDnsAuth::class);
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
@@ -86,6 +90,15 @@ class PlayBook
                 $this->tube = 'ansible-post';
                 $addtohotfile = new AddToHostFile();
                 $json = $addtohotfile->load($app);
+                break;
+
+            case 'addDnsEntryToOvh':
+                $this->tube = 'ansible-post';
+                $addDnsEntryToOvh = new AddDnsEntryToOvh();
+                $json = $addDnsEntryToOvh->load(
+                    $app,
+                    $this->ovh_dns_auth
+                );
                 break;
 
             case 'installpackage':

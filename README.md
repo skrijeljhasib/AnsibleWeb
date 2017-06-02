@@ -13,6 +13,7 @@ sudo apt-get install libapache2-mod-php
 sudo apt-get install php-mysql
 sudo apt-get install beanstalkd
 sudo apt-get install supervisor
+sudo pip install ovh
 sudo a2enmod rewrite
 ```
 
@@ -99,6 +100,13 @@ sudo service supervisor start
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo service supervisor restart
+```
+
+### Ovh
+Download https://github.com/gheesh/ansible-ovh-dns/blob/master/ovh_dns.py
+and the move it to the directory below:
+```
+sudo mv ovh_dns.py /usr/lib/python2.7/dist-packages/ansible/modules/cloud/ovh/ovh_dns.py
 ```
 
 ## Contributors

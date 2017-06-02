@@ -54,6 +54,10 @@ class PlayBook
     /**
      * @var array
      */
+    protected $environment;
+    /**
+     * @var array
+     */
     protected $pre_tasks;
     /**
      * @var array
@@ -273,6 +277,22 @@ class PlayBook
     public function getPostTasks():array
     {
         return $this->post_tasks;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnvironment(): array
+    {
+        return $this->environment;
+    }
+
+    /**
+     * @param array $environment
+     */
+    public function setEnvironment(array $environment)
+    {
+        $this->environment = $environment;
     }
 
 
