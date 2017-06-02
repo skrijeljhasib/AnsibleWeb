@@ -23,6 +23,13 @@ $openstack_auth = [
     "project_name" => "project_name"
 ];
 
+$ovh_dns_auth = [
+    "end_point" => "ovh-eu",
+    "application_key" => "key",
+    "application_secret" => "secret_key",
+    "cosumer_key" => "key"
+];
+
 $host = [
     "host_config" => "CUSTOM", // FIXED, CUSTOM, RANDOM
 ];
