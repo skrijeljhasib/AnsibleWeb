@@ -295,7 +295,26 @@ class PlayBook
         $this->environment = $environment;
     }
 
-
+   /**
+     * @param string $name
+     * @param string $connection
+     * @param string $become
+     * @param string $becomeuser
+     * @param string $becomeflags
+     * @param string $hosts
+     * @param string $facts
+     */
+    public function init(string $name, string $connection, string $become, string $becomeuser, string $becomeflags, 
+				string $hosts, string $facts)
+    {
+        $this->setName($name);
+        $this->setConnection($connection);
+        $this->setBecome($become);
+        $this->setBecomeUser($becomeuser);
+        $this->setBecomeFlags($becomeflags);
+        $this->setHosts($hosts);
+        $this->setGatherFacts($facts);
+    }
     /**
      * @return string
      */

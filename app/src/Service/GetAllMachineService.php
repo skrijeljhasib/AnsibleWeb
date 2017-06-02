@@ -19,13 +19,8 @@ class GetAllMachineService
     public function load($machine_template, $openstack_auth)
     {
         $playbook = new PlayBook();
-        $playbook->setName('Get all machines from '.$machine_template["region_name"]);
-        $playbook->setConnection('local');
-        $playbook->setBecome('false');
-        $playbook->setBecomeUser('www-data');
-        $playbook->setBecomeFlags('-s /bin/sh');
-        $playbook->setHosts('localhost');
-        $playbook->setGatherFacts('true');
+	$playbook->init('Get all machines from '.$machine_template["region_name"], 'local', 'false', 'www-data', 
+					'-s /bin/sh', 'localhost', 'true');
         $os_server_facts = new OsServerFacts();
         $os_server_auth = new OsServerAuth();
         $os_server_auth->setAuthFromConfigFile($openstack_auth);
