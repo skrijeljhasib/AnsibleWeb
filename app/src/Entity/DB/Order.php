@@ -44,6 +44,13 @@ class Order
      **/
     protected $webserver;
 
+
+    /**
+     * @Column(type="string",nullable=true)
+     * @var string
+     */
+    protected $dns;
+
     /**
      * @return int
      */
@@ -58,6 +65,22 @@ class Order
     public function setId(int $id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDns()
+    {
+        return $this->dns;
+    }
+
+    /**
+     * @param mixed $dns
+     */
+    public function setDns($dns)
+    {
+        $this->dns = $dns;
     }
 
     /**
