@@ -7,12 +7,14 @@ use Project\Config\Monitoring;
 
 $monitoring = [
     	"enabled" => "true",
-    	"munin" => "true",
-	"munin_server" => "localhost",
-	"munin_ansible" => "repo/munin.json",
-	"nagios" => "true",
-	"nagios_server" => "localhost",
-	"nagios_ansible" => "repo/nagios.json"
+    	"monitoring" => "true",
+	"monitoring_type" => "Munin",
+	"monitoring_server" => "localhost",
+	"monitoring_ansible" => "repo/munitoring.json",
+	"alerting" => "true",
+	"alerting_type" => "Nagios",
+	"alerting_server" => "localhost",
+	"alerting_ansible" => "repo/alerting.json"
 ];
 
 return [

@@ -102,30 +102,30 @@ use Project\Entity\DB\Package;
                     <div id="monbody" style="display: none;">
                         <ul class="nav nav-tabs" role="tablist" id="monitoringTabs">
 			<?php $mon_active = 0; ?>
-			<?php if (Vars::collection('monitoring')["nagios"] == "true") { ?>
-                            <li role="presentation" class="active"><a href="#nagios" aria-controls="nagios" role="tab"
-                                                                      data-toggle="tab">Nagios</a></li>
+			<?php if (Vars::collection('monitoring')["alerting"] == "true") { ?>
+                            <li role="presentation" class="active"><a href="#alerting" aria-controls="alerting" role="tab"
+                                                                      data-toggle="tab"><?php echo Vars::collection('monitoring')["alerting_type"]; ?></a></li>
 			<?php $mon_active = 1;} ?>
-			<?php if (Vars::collection('monitoring')["munin"] == "true") { ?>
-                            <li role="presentation" <?php if (!$mon_active) { echo 'class="active"'; $mon_active = 1;} ?>><a href="#munin" aria-controls="munin" role="tab" data-toggle="tab">Munin</a>
+			<?php if (Vars::collection('monitoring')["monitoring"] == "true") { ?>
+                            <li role="presentation" <?php if (!$mon_active) { echo 'class="active"'; $mon_active = 1;} ?>><a href="#monitoring" aria-controls="monitoring" role="tab" data-toggle="tab"><?php echo Vars::collection('monitoring')["monitoring_type"]; ?></a>
                             </li>
 			<?php } ?>
                         </ul>
                         <div class="tab-content">
 			<?php $mon_active = 0; ?>
-			<?php if (Vars::collection('monitoring')["nagios"] == "true") { ?>
-                            <div role="tabpanel" class="tab-pane active" id="nagios">
+			<?php if (Vars::collection('monitoring')["alerting"] == "true") { ?>
+                            <div role="tabpanel" class="tab-pane active" id="alerting">
                                 <br>
-                                <label> Install Nagios:
-                                    <input type="checkbox" name="nagios" id="nagiosCheckbox" class="checkbox" checked>
+                                <label> Install <?php echo Vars::collection('monitoring')["alerting_type"]; ?>:
+                                    <input type="checkbox" name="alerting" id="alertingCheckbox" class="checkbox" checked>
                                 </label>
                             </div>
 			<?php $mon_active = 1;} ?>
-			<?php if (Vars::collection('monitoring')["munin"] == "true") { ?>
-                            <div role="tabpanel" class="tab-pane <?php if (!$mon_active) { echo 'active'; $mon_active = 1;} ?>" id="munin">
+			<?php if (Vars::collection('monitoring')["monitoring"] == "true") { ?>
+                            <div role="tabpanel" class="tab-pane <?php if (!$mon_active) { echo 'active'; $mon_active = 1;} ?>" id="monitoring">
                                 <br>
-                                <label> Install Munin:
-                                    <input type="checkbox" name="munin" id="muninCheckbox" class="checkbox" checked>
+                                <label> Install <?php echo Vars::collection('monitoring')["monitoring_type"]; ?>:
+                                    <input type="checkbox" name="monitoring" id="monitoringCheckbox" class="checkbox" checked>
                                 </label>
                             </div>
 			<?php } ?>
