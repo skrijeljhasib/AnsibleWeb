@@ -44,8 +44,8 @@ class GetWorker extends AbstractCliAction
 
                 $websocket_client->setHost(gethostname());
                 $websocket_client->connect();
-                $callback['callback'] = json_decode($job->getData(), true);
-                $websocket_client->send(json_encode($callback));
+                $callback['callback'] = json_decode($job->getData(), true)['name'];
+                if (!is_null($callback['callback'])) { $websocket_client->send(json_encode($callback)); }
 
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
@@ -165,7 +165,7 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
 
-                                if (!is_null($order->getPackages())) {
+                                if (!is_null($order->getPackages()) && $order->getPackages()) {
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
                                             'query' => [

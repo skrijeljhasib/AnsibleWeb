@@ -30,7 +30,7 @@ class Order
      * @Column(type="string",nullable=true)
      * @var string
      **/
-    protected $packages;
+    protected $packages = "";
 
     /**
      * @Column(type="string",nullable=true)
