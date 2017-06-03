@@ -12,6 +12,7 @@ use ObjectivePHP\Application\Action\RenderableAction;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Application\View\Helper\Vars;
 use ObjectivePHP\Html\Exception;
+use Project\Config\Monitoring;
 use Project\Config\Host;
 use Project\Config\MachineTemplate;
 
@@ -29,6 +30,7 @@ class CreateMachine extends RenderableAction
 
         $host = $app->getConfig()->get(Host::class);
         $machine_template = $app->getConfig()->get(MachineTemplate::class);
+	$monitoring = $app->getConfig()->get(Monitoring::class);
 
         try {
             $package_gateway = $app->getServicesFactory()->get('gateway.packages');
@@ -37,6 +39,6 @@ class CreateMachine extends RenderableAction
             throw new Exception('Can not load packages from DB');
         }
 
-        return compact('packages', 'host', 'machine_template');
+        return compact('packages', 'host', 'machine_template','monitoring');
     }
 }
