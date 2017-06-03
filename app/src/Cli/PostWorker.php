@@ -38,6 +38,8 @@ class PostWorker extends AbstractCliAction
         $websocket_client = new \Hoa\Websocket\Client(
             new \Hoa\Socket\Client($url['websocket_client'])
         );
+	$websocket_client->setHost(gethostname());
+        $websocket_client->connect();
 
         while (true) {
             $job = $pheanstalk->watch('getallmachine')
@@ -47,9 +49,6 @@ class PostWorker extends AbstractCliAction
                 ->ignore('default')
                 ->reserve();
             if ($job !== false) {
-
-                $websocket_client->setHost(gethostname());
-                $websocket_client->connect();
 
                 $guzzle_client = new Client(
                     [

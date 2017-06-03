@@ -32,6 +32,8 @@ class GetWorker extends AbstractCliAction
         $websocket_client = new \Hoa\Websocket\Client(
             new \Hoa\Socket\Client($url['websocket_client'])
         );
+	$websocket_client->setHost(gethostname());
+        $websocket_client->connect();
 
         while (true) {
             $job = $pheanstalk->watch('ansible-get-getallmachine')
@@ -42,8 +44,6 @@ class GetWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
-                $websocket_client->setHost(gethostname());
-                $websocket_client->connect();
                 $callback['callback'] = json_decode($job->getData(), true)['name'];
                 if (!is_null($callback['callback'])) { $websocket_client->send(json_encode($callback)); }
 
