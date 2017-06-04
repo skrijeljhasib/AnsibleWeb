@@ -35,11 +35,11 @@ class PostWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
-        $websocket_client = new \Hoa\Websocket\Client(
+        /*$websocket_client = new \Hoa\Websocket\Client(
             new \Hoa\Socket\Client($url['websocket_client'])
         );
 	$websocket_client->setHost(gethostname());
-        $websocket_client->connect();
+        $websocket_client->connect();*/
 
         while (true) {
             $job = $pheanstalk->watch('getallmachine')
@@ -49,6 +49,12 @@ class PostWorker extends AbstractCliAction
                 ->ignore('default')
                 ->reserve();
             if ($job !== false) {
+
+		$websocket_client = new \Hoa\Websocket\Client(
+            		new \Hoa\Socket\Client($url['websocket_client'])
+        	);
+        	$websocket_client->setHost(gethostname());
+        	$websocket_client->connect();
 
                 $guzzle_client = new Client(
                     [
@@ -82,6 +88,7 @@ class PostWorker extends AbstractCliAction
                         echo Psr7\str($e->getResponse());
                     }
                 }
+			$websocket_client->close();
 
             } else {
                 echo 'waiting...';

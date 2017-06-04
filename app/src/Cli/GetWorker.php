@@ -29,11 +29,11 @@ class GetWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
-        $websocket_client = new \Hoa\Websocket\Client(
+        /*$websocket_client = new \Hoa\Websocket\Client(
             new \Hoa\Socket\Client($url['websocket_client'])
         );
 	$websocket_client->setHost(gethostname());
-        $websocket_client->connect();
+        $websocket_client->connect();*/
 
         while (true) {
             $job = $pheanstalk->watch('ansible-get-getallmachine')
@@ -44,8 +44,15 @@ class GetWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
+		$websocket_client = new \Hoa\Websocket\Client(
+            			new \Hoa\Socket\Client($url['websocket_client'])
+       		);
+        	$websocket_client->setHost(gethostname());
+        	$websocket_client->connect();
+
                 $callback['callback'] = json_decode($job->getData(), true)['name'];
                 if (!is_null($callback['callback'])) { $websocket_client->send(json_encode($callback)); }
+		$websocket_client->close();
 
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
