@@ -3,8 +3,6 @@ $( document ).ready(function() {
   var socket = null;
   var output = document.getElementById('status');
   var print  = function (message) {
-      var samp       = document.createElement('samp');
-      samp.innerHTML = message + '\n';
         output.innerHTML = message;
       return;
   };
@@ -84,7 +82,8 @@ function check() {
 	document.getElementById("checkBtnMsg").className = 'alert alert-warning';
 	return false;
     } else {
-	return false;
+	var output = document.getElementById('status');
+        output.innerHTML = 'Deleting';
         $.ajax({
             type: 'GET',
             url: 'PlayBook',
