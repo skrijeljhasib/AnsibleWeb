@@ -4,6 +4,7 @@
         height: 100%;
         margin: auto;
     }</style>
+
 <div class="modal fade" id="confirmRefreshListModal">
     <div class="vertical-alignment-helper">
         <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
@@ -57,26 +58,28 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">Confirm Delete</h4>
                     </div>
-                    <form onsubmit="return check(this);">
                         <div class="modal-body">
                             <div class="alert alert-danger">
                                 <span class="glyphicon glyphicon-warning-sign"></span>
                                 Warning: This will delete the machine permanently!
                             </div>
-                            <div class="row">
-                                <div class="col-md-8">
+                            <div class="alert alert-info" id="checkBtnMsg">
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                Do not forget to Check button !
+                            </div>
+			    <div class="row">
+                                <div class="col-md-8" align="center">
                                     <input type="hidden" id="machinetodelete">
-                                    <label><input type="checkbox" value="0" name="confirmToDelete">
+                                    <label><input type="checkbox" value="0" name="confirmToDelete" id="confirmToDeleteCheckBox">
                                         Check to confirm</label>
                                 </div>
                             </div>
-                            <br>
+
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" id="confirm">Yes</button>
+                            <button type="button" class="btn btn-danger" id="confirm" onclick="check();">Yes</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>

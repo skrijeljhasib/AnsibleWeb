@@ -29,12 +29,6 @@ class GetWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
-        /*$websocket_client = new \Hoa\Websocket\Client(
-            new \Hoa\Socket\Client($url['websocket_client'])
-        );
-	$websocket_client->setHost(gethostname());
-        $websocket_client->connect();*/
-
         while (true) {
             $job = $pheanstalk->watch('ansible-get-getallmachine')
                 ->watch('ansible-get-deletemachine')
@@ -153,7 +147,7 @@ class GetWorker extends AbstractCliAction
 
                             if (!empty($order)) {
 
-                                if(!is_null($order->getDns())) {
+                                if(!is_null($order->getDns()) && $order->getDns()) {
                                     $dns = json_decode($order->getDns(), true);
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
@@ -188,7 +182,7 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
 
-                                if (!is_null($order->getWebserver())) {
+                                if (!is_null($order->getWebserver()) && $order->getWebserver()) {
                                     $webserver = json_decode($order->getWebserver(), true);
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
@@ -205,7 +199,7 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
 
-                                if (!is_null($order->getDatabase())) {
+                                if (!is_null($order->getDatabase()) && $order->getDatabase()) {
                                     $database = json_decode($order->getDatabase(), true);
                                     if ($database['database'] == 'mysql') {
                                         $response = $guzzle_client->request('GET', '/PlayBook',

@@ -35,12 +35,6 @@ class PostWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
-        /*$websocket_client = new \Hoa\Websocket\Client(
-            new \Hoa\Socket\Client($url['websocket_client'])
-        );
-	$websocket_client->setHost(gethostname());
-        $websocket_client->connect();*/
-
         while (true) {
             $job = $pheanstalk->watch('getallmachine')
                 ->watch('deletemachine')
