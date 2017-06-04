@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-  var host   = 'ws://stackstorm.test.flash-global.net:9000';
+  var host   = 'ws://' + window.location.hostname + ':9000';
   var socket = null;
   var output = document.getElementById('status');
   var print  = function (message) {
