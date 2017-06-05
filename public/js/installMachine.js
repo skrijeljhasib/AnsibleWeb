@@ -32,8 +32,9 @@ $(document).ready(function () {
         $(".progress-bar").animate({width: '5%'}, 250);
         $('.progress-bar').text('5%');
         $('#SendToAnsibleApi').attr('disabled', true);
-	$('#expert').attr('disabled', true);
+	$('#expertbtn').attr('disabled', true);
 	$('#name').attr('disabled', true);
+	$('#ProgressName').text($('#name').val());
         $('#progress').addClass("active");
 	$('#task').text('Install Ubuntu 16.04');
 	$('#result').append('Start : Install Ubuntu 16.04' + '<br>');
@@ -166,12 +167,12 @@ $(document).ready(function () {
 			$('#result').append('Start : ' + data.task + '<br>');
 		    }
 
-                if ((data.progress == "100") && (data.task == "Install dependencies")) {
+                if ((data.progress == "100") && (data.task == "Install Machine Notification")) {
 			
                         $('#name').val('');
                         $('#progress').removeClass("active");
                         $('#SendToAnsibleApi').removeAttr("disabled");
-                        $('#expert').removeAttr("disabled");
+                        $('#expertbtn').removeAttr("disabled");
                         $('#name').removeAttr("disabled");
                         $('#task').text('Installation Completed');
                         $('#result').append('Installation Completed<br>');
@@ -190,7 +191,7 @@ $(document).ready(function () {
                 $('#name').val('');
                 $('#progress').removeClass("active");
                 $('#SendToAnsibleApi').removeAttr("disabled");
-		$('#expert').removeAttr("disabled");
+		$('#expertbtn').removeAttr("disabled");
 		$('#name').removeAttr("disabled");
                 $.ajax({
                     type: 'GET',

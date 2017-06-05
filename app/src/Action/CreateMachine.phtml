@@ -13,7 +13,7 @@ use Project\Entity\DB\Package;
 		<div class="panel-heading clearfix">
       <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Configuration</h4>
       <div class="btn-group pull-right">
-        <a href="#expert" id="expert" class="btn btn-default btn-sm" data-toggle="collapse">Expert</a>
+        <a href="#expert" id="expertbtn" class="btn btn-default btn-sm" data-toggle="collapse">Expert</a>
       </div>
     </div>
                 <div class="panel-body">
@@ -252,12 +252,16 @@ use Project\Entity\DB\Package;
                              aria-valuemin="0" aria-valuemax="100" style="width:100%">READY
                         </div>
                 </div>
+		<div>
 		<pre>Progress: <div id="task" align="center">Ready</div></pre>
-		<pre><div align="center">IP:     <span id="ipaddress">0.0.0.0</span>
-		<div align="center">Status: <span id="status">Not Available</span></div></pre>
+		<pre>
+		Name:   <span id="ProgressName">Not Available</span>
+		IP:     <span id="ipaddress">0.0.0.0</span>
+		Status: <span id="status">Not Available</span></div></pre>
                 <pre>Log:
 			<div id="result"></div>
 		</pre>
+			</div>
                     </div>
                 </div>
             </div>

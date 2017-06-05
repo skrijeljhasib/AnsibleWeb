@@ -115,7 +115,7 @@ class GetWorker extends AbstractCliAction
                                 echo 'Error playbook addtohostfile';
                                 break;
                             }
-
+
                             $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
@@ -234,6 +234,20 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
                             }
+
+			    $response = $guzzle_client->request('GET', '/PlayBook',
+                                [
+                                    'query' => [
+                                        'playbook' => 'notify',
+                                        'ip' => $ip
+                                    ]
+                                ]
+                            );
+                            if ($response->getStatusCode() != 200) {
+                                echo 'Error playbook notification';
+                                break;
+                            }
+			
 
                         } catch (RequestException $e) {
                             echo Psr7\str($e->getRequest());

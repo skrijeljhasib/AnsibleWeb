@@ -20,6 +20,7 @@ use Project\Service\DeleteMachineService;
 use Project\Service\GetAllMachineService;
 use Project\Service\InstallPackageService;
 use Project\Service\AddToHostFile;
+use Project\Service\NotifyService;
 use stdClass;
 use Pheanstalk\Pheanstalk;
 
@@ -131,6 +132,14 @@ class PlayBook
                 $this->tube = 'ansible-post';
                 $cleanService = new CleanService();
                 $json = $cleanService->load(
+                    $app->getRequest()->getParameters()
+                );
+                break;
+
+            case 'notify':
+                $this->tube = 'ansible-post';
+                $notifyService = new NotifyService();
+                $json = $notifyService->load(
                     $app->getRequest()->getParameters()
                 );
                 break;
