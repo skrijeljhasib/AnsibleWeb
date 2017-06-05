@@ -32,6 +32,8 @@ $(document).ready(function () {
         $(".progress-bar").animate({width: '5%'}, 250);
         $('.progress-bar').text('5%');
         $('#SendToAnsibleApi').attr('disabled', true);
+	$('#expert').attr('disabled', true);
+	$('#name').attr('disabled', true);
         $('#progress').addClass("active");
 	$('#task').text('Install Ubuntu 16.04');
 	$('#result').append('Start : Install Ubuntu 16.04' + '<br>');
@@ -157,13 +159,24 @@ $(document).ready(function () {
                     		console.log(JSON.stringify(error));
                 	});
 		}
-
                     $('#task').text(data.task);
 		    if (data.progress == "100") {
                     	$('#result').append('Stop : ' + data.task + '<br>');
         	    } else if (data.progress == "0") {
 			$('#result').append('Start : ' + data.task + '<br>');
 		    }
+
+                if ((data.progress == "100") && (data.task == "Install dependencies")) {
+			
+                        $('#name').val('');
+                        $('#progress').removeClass("active");
+                        $('#SendToAnsibleApi').removeAttr("disabled");
+                        $('#expert').removeAttr("disabled");
+                        $('#name').removeAttr("disabled");
+                        $('#task').text('Installation Completed');
+                        $('#result').append('Installation Completed<br>');
+                }
+
              }
 
              if ("progress" in data) {
@@ -177,6 +190,8 @@ $(document).ready(function () {
                 $('#name').val('');
                 $('#progress').removeClass("active");
                 $('#SendToAnsibleApi').removeAttr("disabled");
+		$('#expert').removeAttr("disabled");
+		$('#name').removeAttr("disabled");
                 $.ajax({
                     type: 'GET',
                     url: 'GetNewMachineData',

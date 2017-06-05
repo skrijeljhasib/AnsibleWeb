@@ -13,7 +13,7 @@ use Project\Entity\DB\Package;
 		<div class="panel-heading clearfix">
       <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Configuration</h4>
       <div class="btn-group pull-right">
-        <a href="#expert" class="btn btn-default btn-sm" data-toggle="collapse">Expert</a>
+        <a href="#expert" id="expert" class="btn btn-default btn-sm" data-toggle="collapse">Expert</a>
       </div>
     </div>
                 <div class="panel-body">
@@ -191,18 +191,19 @@ use Project\Entity\DB\Package;
                 </div>
             </div>
 
+	    <?php if (Vars::collection('dns_config')["enabled"] == "true") { ?>
             <div id="dnspanel" class="panel panel-default">
                 <div class="panel-heading"><a href="#dnspanel" onClick="$(dnsbody).toggle();">Dns</a></div>
                 <div class="panel-body">
                     <div id="dnsbody" style="display: none;">
 
                         <label> Add Dns Entry to Ovh:
-                            <input type="checkbox" name="dns[]" id="dnsCheckbox" class="checkbox">
+                            <input type="checkbox" name="dns[]" id="dnsCheckbox" class="checkbox" checked>
                         </label>
                         <br>
                         <label>Type:
-                            <select required disabled id="dns_type" class="form-control">
-                                <option value="A">A</option>
+                            <select required id="dns_type" class="form-control">
+                                <option value="A" selected>A</option>
                                 <option value="AAAA">AAAA</option>
                                 <option value="CNAME">CNAME</option>
                                 <option value="DKIM">DKIM</option>
@@ -218,10 +219,16 @@ use Project\Entity\DB\Package;
                             </select>
                         </label>
                         <br>
-                        <label>Domain Name: <input disabled required type="text" id="dns_domain_name" class="form-control"></label>
+                        <label>Domain Name: <select required id="dns_domain_name" class="form-control">
+						<?php   $selected = "selected";
+							foreach (Vars::collection('dns_config')["domain"] as $domain) { ?>
+						<option value="<?php echo $domain . " " . $selected; ?>"><?php echo $domain; $selected=""; ?></option>
+						<?php } ?>
+						</select></label>
                     </div>
                 </div>
             </div>
+		<?php } ?>
 </div>
 
             <br>
