@@ -14,6 +14,7 @@ $monitoring = [
 	"alerting" => "true",
 	"alerting_type" => "Nagios",
 	"alerting_server" => "localhost",
+	"alerting_link_server" => "/vshell2/#/hosts/",
 	"alerting_ansible" => "repo/alerting.json"
 ];
 
