@@ -1,35 +1,35 @@
-$( document ).ready(function() {
-  var host   = 'ws://' + window.location.hostname + ':9000';
-  var socket = null;
-  var output = document.getElementById('status');
-  var print  = function (message) {
+$(document).ready(function () {
+    var host = 'ws://' + window.location.hostname + ':9000';
+    var socket = null;
+    var output = document.getElementById('status');
+    var print = function (message) {
         output.innerHTML = message;
-      return;
-  };
-
-  try {
-      socket = new WebSocket(host);
-      socket.onopen = function () {
-          print('ready');
-          return;
-      };
-      socket.onmessage = function (msg) {
-	var jsonObject = JSON.parse(msg.data);
-	console.log(jsonObject);
-	if (jsonObject.progress == "100") {
-        	output.innerHTML = 'Done';
-		machineTable.ajax.reload();
-		$('#refresh').attr('disabled', false);
-	}
         return;
-      };
-      socket.onclose = function () {
-          print('connection is closed');
-          return;
-      };
-  } catch (e) {
-      console.log(e);
-  }
+    };
+
+    try {
+        socket = new WebSocket(host);
+        socket.onopen = function () {
+            print('ready');
+            return;
+        };
+        socket.onmessage = function (msg) {
+            var jsonObject = JSON.parse(msg.data);
+            console.log(jsonObject);
+            if (jsonObject.progress == "100") {
+                output.innerHTML = 'Done';
+                machineTable.ajax.reload();
+                $('#refresh').attr('disabled', false);
+            }
+            return;
+        };
+        socket.onclose = function () {
+            print('connection is closed');
+            return;
+        };
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 var machineTable;
@@ -79,10 +79,10 @@ $('#getAllMachine').click(function (event) {
 
 function check() {
     if (document.getElementById("confirmToDeleteCheckBox").checked === false) {
-	document.getElementById("checkBtnMsg").className = 'alert alert-warning';
-	return false;
+        document.getElementById("checkBtnMsg").className = 'alert alert-warning';
+        return false;
     } else {
-	var output = document.getElementById('status');
+        var output = document.getElementById('status');
         output.innerHTML = 'Deleting';
         $.ajax({
             type: 'GET',
