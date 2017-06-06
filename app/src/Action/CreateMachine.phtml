@@ -4,6 +4,12 @@ use ObjectivePHP\Application\View\Helper\Vars;
 use Project\Entity\DB\Package;
 
 ?>
+<style>
+    .progress.active .progress-bar {
+        -webkit-transition: none !important;
+        transition: none !important;
+    }
+</style>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
 
@@ -99,7 +105,7 @@ use Project\Entity\DB\Package;
                     </div>
                 </div>
 
-                <? if (Vars::collection('monitoring')["enabled"] == "true") { ?>
+                <?php if (Vars::collection('monitoring')["enabled"] == "true") { ?>
                     <div id="monpanel" class="panel panel-default">
                         <div class="panel-heading"><a href="#monpanel" onClick="$(monbody).toggle();">Monitoring</a>
                         </div>
@@ -154,7 +160,7 @@ use Project\Entity\DB\Package;
                             </div>
                         </div>
                     </div>
-                <? } ?>
+                <?php } ?>
 
                 <div id="dbpanel" class="panel panel-default">
                     <div class="panel-heading"><a href="#dbpanel" onClick="$(dbbody).toggle();">Database</a></div>
@@ -219,24 +225,24 @@ use Project\Entity\DB\Package;
                             <div id="dnsbody" style="display: none;">
 
                                 <label> Add Dns Entry to Ovh:
-                                    <input type="checkbox" name="dns[]" id="dnsCheckbox" class="checkbox" checked>
+                                    <input type="checkbox" name="dns[]" id="dnsCheckbox" class="checkbox" <?php if (Vars::collection('dns_config')["checked"] == "true") { echo "checked"; } ?>>
                                 </label>
                                 <br>
                                 <label>Type:
                                     <select required id="dns_type" class="form-control">
-                                        <option value="A" selected>A</option>
-                                        <option value="AAAA">AAAA</option>
-                                        <option value="CNAME">CNAME</option>
-                                        <option value="DKIM">DKIM</option>
-                                        <option value="LOC">LOC</option>
-                                        <option value="MX">MX</option>
-                                        <option value="NAPTR">NAPTR</option>
-                                        <option value="NS">NS</option>
-                                        <option value="PTR">PTR</option>
-                                        <option value="SPF">SPF</option>
-                                        <option value="SRV">SRV</option>
-                                        <option value="SSHFP">SSHFP</option>
-                                        <option value="TXT">TXT</option>
+                                        <option value="A" <?php if (Vars::collection('dns_config')["type"] == "A") { echo "selected"; } ?>>A</option>
+                                        <option value="AAAA" <?php if (Vars::collection('dns_config')["type"] == "AAAA") { echo "selected"; } ?>>AAAA</option>
+                                        <option value="CNAME" <?php if (Vars::collection('dns_config')["type"] == "CNAME") { echo "selected"; } ?>>CNAME</option>
+                                        <option value="DKIM" <?php if (Vars::collection('dns_config')["type"] == "DKIM") { echo "selected"; } ?>>DKIM</option>
+                                        <option value="LOC" <?php if (Vars::collection('dns_config')["type"] == "LOC") { echo "selected"; } ?>>LOC</option>
+                                        <option value="MX" <?php if (Vars::collection('dns_config')["type"] == "MX") { echo "selected"; } ?>>MX</option>
+                                        <option value="NAPTR" <?php if (Vars::collection('dns_config')["type"] == "NAPTR") { echo "selected"; } ?>>NAPTR</option>
+                                        <option value="NS" <?php if (Vars::collection('dns_config')["type"] == "NS") { echo "selected"; } ?>>NS</option>
+                                        <option value="PTR" <?php if (Vars::collection('dns_config')["type"] == "PTR") { echo "selected"; } ?>>PTR</option>
+                                        <option value="SPF" <?php if (Vars::collection('dns_config')["type"] == "SPF") { echo "selected"; } ?>>SPF</option>
+                                        <option value="SRV" <?php if (Vars::collection('dns_config')["type"] == "SRV") { echo "selected"; } ?>>SRV</option>
+                                        <option value="SSHFP" <?php if (Vars::collection('dns_config')["type"] == "SSHFP") { echo "selected"; } ?>>SSHFP</option>
+                                        <option value="TXT" <?php if (Vars::collection('dns_config')["type"] == "TXT") { echo "selected"; } ?>>TXT</option>
                                     </select>
                                 </label>
                                 <br>
@@ -246,7 +252,8 @@ use Project\Entity\DB\Package;
                                         foreach (Vars::collection('dns_config')["domain"] as $domain) { ?>
                                             <option value="<?php echo $domain . " " . $selected; ?>">
                                                 <?php echo $domain;
-                                                $selected = ""; ?></option>
+                                                $selected = ""; ?>
+                                            </option>
                                         <?php } ?>
                                     </select>
                                 </label>
@@ -267,7 +274,6 @@ use Project\Entity\DB\Package;
 <br><br>
 <div id="outputcreation" class="row">
     <div class="col-md-offset-2 col-md-8">
-
         <div class="panel panel-default">
             <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
             <div class="panel-body">
@@ -285,8 +291,8 @@ use Project\Entity\DB\Package;
                             Status: <span id="status">Not Available</span>
                     </div>
                     <pre>Log:
-			<div id="result"></div>
-		</pre>
+			            <div id="result"></div>
+		            </pre>
                 </div>
             </div>
         </div>
