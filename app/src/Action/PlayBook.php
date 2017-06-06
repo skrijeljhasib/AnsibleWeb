@@ -128,14 +128,6 @@ class PlayBook
                 );
                 break;
 
-            case 'clean':
-                $this->tube = 'ansible-post';
-                $cleanService = new CleanService();
-                $json = $cleanService->load(
-                    $app->getRequest()->getParameters()
-                );
-                break;
-
             case 'notify':
                 $this->tube = 'ansible-post';
                 $notifyService = new NotifyService();
