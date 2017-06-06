@@ -25,13 +25,8 @@ class AddDnsEntryToOvh
     {
         $playbook = new PlayBook();
 
-        $playbook->setName('Add Dns Entry to Ovh');
-        $playbook->setConnection('local');
-        $playbook->setBecome('false');
-        $playbook->setBecomeUser('www-data');
-        $playbook->setBecomeFlags('-s /bin/sh');
-        $playbook->setHosts('localhost');
-        $playbook->setGatherFacts('false');
+	$playbook->init('Add Dns Entry to Ovh', 'local', 'false', 'www-data',
+                                        '-s /bin/sh', 'localhost', 'false');
         $playbook->setEnvironment($ovh_dns_auth);
 
         $ovhdns = new OvhDns();

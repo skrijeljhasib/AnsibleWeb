@@ -35,10 +35,6 @@ class PostWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
-        $websocket_client = new \Hoa\Websocket\Client(
-            new \Hoa\Socket\Client($url['websocket_client'])
-        );
-
         while (true) {
             $job = $pheanstalk->watch('getallmachine')
                 ->watch('deletemachine')
@@ -48,8 +44,11 @@ class PostWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
-                $websocket_client->setHost(gethostname());
-                $websocket_client->connect();
+		$websocket_client = new \Hoa\Websocket\Client(
+            		new \Hoa\Socket\Client($url['websocket_client'])
+        	);
+        	$websocket_client->setHost(gethostname());
+        	$websocket_client->connect();
 
                 $guzzle_client = new Client(
                     [
@@ -58,7 +57,7 @@ class PostWorker extends AbstractCliAction
                     ]
                 );
                 try {
-
+		    $callback['progress'] = "0";
                     $callback['task'] = json_decode($job->getData(), true)['name'];
                     $websocket_client->send(json_encode($callback));
 
@@ -69,7 +68,7 @@ class PostWorker extends AbstractCliAction
                     );
 
                     if ($response->getStatusCode() == 200) {
-                        $callback['progress'] = 100;
+                        $callback['progress'] = "100";
                         $websocket_client->send(json_encode($callback));
                         $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody());
                         $pheanstalk->delete($job);
@@ -83,6 +82,7 @@ class PostWorker extends AbstractCliAction
                         echo Psr7\str($e->getResponse());
                     }
                 }
+			$websocket_client->close();
 
             } else {
                 echo 'waiting...';

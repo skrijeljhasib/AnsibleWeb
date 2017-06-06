@@ -3,13 +3,19 @@
 use ObjectivePHP\Application\View\Helper\Vars;
 use Project\Entity\DB\Package;
 
+
 ?>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
 
         <form id="createMachine">
             <div class="panel panel-primary">
-                <div class="panel-heading">Configuration</div>
+		<div class="panel-heading clearfix">
+      <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Configuration</h4>
+      <div class="btn-group pull-right">
+        <a href="#expert" id="expertbtn" class="btn btn-default btn-sm" data-toggle="collapse">Expert</a>
+      </div>
+    </div>
                 <div class="panel-body">
                     <?php
                     if (!Vars::collection('host')->isEmpty()) {
@@ -29,6 +35,7 @@ use Project\Entity\DB\Package;
                 </div>
             </div>
 
+<div id="expert" class="collapse">
             <div id="pkgpanel" class="panel panel-default">
                 <div class="panel-heading"><a href="#pkgpanel" onClick="$(pkgbody).toggle();">Packages</a></div>
                 <div class="panel-body">
@@ -88,6 +95,46 @@ use Project\Entity\DB\Package;
                 </div>
             </div>
 
+	    <? if (Vars::collection('monitoring')["enabled"] == "true") { ?>
+	    <div id="monpanel" class="panel panel-default">
+                <div class="panel-heading"><a href="#monpanel" onClick="$(monbody).toggle();">Monitoring</a></div>
+                <div class="panel-body">
+                    <div id="monbody" style="display: none;">
+                        <ul class="nav nav-tabs" role="tablist" id="monitoringTabs">
+			<?php $mon_active = 0; ?>
+			<?php if (Vars::collection('monitoring')["alerting"] == "true") { ?>
+                            <li role="presentation" class="active"><a href="#alerting" aria-controls="alerting" role="tab"
+                                                                      data-toggle="tab"><?php echo Vars::collection('monitoring')["alerting_type"]; ?></a></li>
+			<?php $mon_active = 1;} ?>
+			<?php if (Vars::collection('monitoring')["monitoring"] == "true") { ?>
+                            <li role="presentation" <?php if (!$mon_active) { echo 'class="active"'; $mon_active = 1;} ?>><a href="#monitoring" aria-controls="monitoring" role="tab" data-toggle="tab"><?php echo Vars::collection('monitoring')["monitoring_type"]; ?></a>
+                            </li>
+			<?php } ?>
+                        </ul>
+                        <div class="tab-content">
+			<?php $mon_active = 0; ?>
+			<?php if (Vars::collection('monitoring')["alerting"] == "true") { ?>
+                            <div role="tabpanel" class="tab-pane active" id="alerting">
+                                <br>
+                                <label> Install <?php echo Vars::collection('monitoring')["alerting_type"]; ?>:
+                                    <input type="checkbox" name="alerting" id="alertingCheckbox" class="checkbox" checked>
+                                </label>
+                            </div>
+			<?php $mon_active = 1;} ?>
+			<?php if (Vars::collection('monitoring')["monitoring"] == "true") { ?>
+                            <div role="tabpanel" class="tab-pane <?php if (!$mon_active) { echo 'active'; $mon_active = 1;} ?>" id="monitoring">
+                                <br>
+                                <label> Install <?php echo Vars::collection('monitoring')["monitoring_type"]; ?>:
+                                    <input type="checkbox" name="monitoring" id="monitoringCheckbox" class="checkbox" checked>
+                                </label>
+                            </div>
+			<?php } ?>
+                        </div>
+                    </div>
+                </div>
+		</div>
+	    <? } ?>
+
             <div id="dbpanel" class="panel panel-default">
                 <div class="panel-heading"><a href="#dbpanel" onClick="$(dbbody).toggle();">Database</a></div>
                 <div class="panel-body">
@@ -144,18 +191,19 @@ use Project\Entity\DB\Package;
                 </div>
             </div>
 
+	    <?php if (Vars::collection('dns_config')["enabled"] == "true") { ?>
             <div id="dnspanel" class="panel panel-default">
                 <div class="panel-heading"><a href="#dnspanel" onClick="$(dnsbody).toggle();">Dns</a></div>
                 <div class="panel-body">
                     <div id="dnsbody" style="display: none;">
 
                         <label> Add Dns Entry to Ovh:
-                            <input type="checkbox" name="dns[]" id="dnsCheckbox" class="checkbox">
+                            <input type="checkbox" name="dns[]" id="dnsCheckbox" class="checkbox" checked>
                         </label>
                         <br>
                         <label>Type:
-                            <select required disabled id="dns_type" class="form-control">
-                                <option value="A">A</option>
+                            <select required id="dns_type" class="form-control">
+                                <option value="A" selected>A</option>
                                 <option value="AAAA">AAAA</option>
                                 <option value="CNAME">CNAME</option>
                                 <option value="DKIM">DKIM</option>
@@ -171,13 +219,20 @@ use Project\Entity\DB\Package;
                             </select>
                         </label>
                         <br>
-                        <label>Domain Name: <input disabled required type="text" id="dns_domain_name" class="form-control"></label>
+                        <label>Domain Name: <select required id="dns_domain_name" class="form-control">
+						<?php   $selected = "selected";
+							foreach (Vars::collection('dns_config')["domain"] as $domain) { ?>
+						<option value="<?php echo $domain . " " . $selected; ?>"><?php echo $domain; $selected=""; ?></option>
+						<?php } ?>
+						</select></label>
                     </div>
                 </div>
             </div>
+		<?php } ?>
+</div>
 
             <br>
-            <input class="btn btn-default btn-block" type="submit" id="SendToAnsibleApi"
+            <input class="btn btn-danger btn-block" type="submit" id="SendToAnsibleApi"
                    value="Create and install Machine">
         </form>
 
@@ -192,29 +247,21 @@ use Project\Entity\DB\Package;
             <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
             <div class="panel-body">
                 <div id="outputbody" style="display: none;">
-
-                    <h3>Progress:</h3>
-                    <p id="task">/</p>
-                    <div id="progress" class="progress progress-striped">
-                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
-                             aria-valuemin="0" aria-valuemax="100">
+                <div id="progress" class="progress progress-striped">
+                        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="100"
+                             aria-valuemin="0" aria-valuemax="100" style="width:100%">READY
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3>IP Address:</h3>
-                                <h4 id="ipaddress">/</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <h3>Status:</h3>
-                                <h4 id="status">/</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <h3>Log:</h3>
-                    <div id="result" class="jumbotron text-center pre-scrollable">
-
+                </div>
+		<div>
+		<pre>Progress: <div id="task" align="center">Ready</div></pre>
+		<pre>
+		Name:   <span id="ProgressName">Not Available</span>
+		IP:     <span id="ipaddress">0.0.0.0</span>
+		Status: <span id="status">Not Available</span></div></pre>
+                <pre>Log:
+			<div id="result"></div>
+		</pre>
+			</div>
                     </div>
                 </div>
             </div>

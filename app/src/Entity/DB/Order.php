@@ -30,26 +30,26 @@ class Order
      * @Column(type="string",nullable=true)
      * @var string
      **/
-    protected $packages;
+    protected $packages = "";
 
     /**
      * @Column(type="string",nullable=true)
      * @var string
      **/
-    protected $db;
+    protected $db = "";
 
     /**
      * @Column(type="string",nullable=true)
      * @var string
      **/
-    protected $webserver;
+    protected $webserver = "";
 
 
     /**
      * @Column(type="string",nullable=true)
      * @var string
      */
-    protected $dns;
+    protected $dns = "";
 
     /**
      * @return int

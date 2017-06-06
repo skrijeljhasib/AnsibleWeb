@@ -29,10 +29,6 @@ class GetWorker extends AbstractCliAction
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
-        $websocket_client = new \Hoa\Websocket\Client(
-            new \Hoa\Socket\Client($url['websocket_client'])
-        );
-
         while (true) {
             $job = $pheanstalk->watch('ansible-get-getallmachine')
                 ->watch('ansible-get-deletemachine')
@@ -42,10 +38,15 @@ class GetWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
-                $websocket_client->setHost(gethostname());
-                $websocket_client->connect();
-                $callback['callback'] = json_decode($job->getData(), true);
-                $websocket_client->send(json_encode($callback));
+		$websocket_client = new \Hoa\Websocket\Client(
+            			new \Hoa\Socket\Client($url['websocket_client'])
+       		);
+        	$websocket_client->setHost(gethostname());
+        	$websocket_client->connect();
+
+                $callback['callback'] = json_decode($job->getData(), true)['name'];
+                if (!is_null($callback['callback'])) { $websocket_client->send(json_encode($callback)); }
+		$websocket_client->close();
 
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
@@ -114,7 +115,7 @@ class GetWorker extends AbstractCliAction
                                 echo 'Error playbook addtohostfile';
                                 break;
                             }
-
+
                             $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
@@ -146,7 +147,7 @@ class GetWorker extends AbstractCliAction
 
                             if (!empty($order)) {
 
-                                if(!is_null($order->getDns())) {
+                                if(!is_null($order->getDns()) && $order->getDns()) {
                                     $dns = json_decode($order->getDns(), true);
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
@@ -165,7 +166,7 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
 
-                                if (!is_null($order->getPackages())) {
+                                if (!is_null($order->getPackages()) && $order->getPackages()) {
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
                                             'query' => [
@@ -181,7 +182,7 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
 
-                                if (!is_null($order->getWebserver())) {
+                                if (!is_null($order->getWebserver()) && $order->getWebserver()) {
                                     $webserver = json_decode($order->getWebserver(), true);
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
@@ -198,7 +199,7 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
 
-                                if (!is_null($order->getDatabase())) {
+                                if (!is_null($order->getDatabase()) && $order->getDatabase()) {
                                     $database = json_decode($order->getDatabase(), true);
                                     if ($database['database'] == 'mysql') {
                                         $response = $guzzle_client->request('GET', '/PlayBook',
@@ -233,6 +234,20 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
                             }
+
+			    $response = $guzzle_client->request('GET', '/PlayBook',
+                                [
+                                    'query' => [
+                                        'playbook' => 'notify',
+                                        'ip' => $ip
+                                    ]
+                                ]
+                            );
+                            if ($response->getStatusCode() != 200) {
+                                echo 'Error playbook notification';
+                                break;
+                            }
+			
 
                         } catch (RequestException $e) {
                             echo Psr7\str($e->getRequest());

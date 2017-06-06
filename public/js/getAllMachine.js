@@ -1,15 +1,47 @@
+$( document ).ready(function() {
+  var host   = 'ws://' + window.location.hostname + ':9000';
+  var socket = null;
+  var output = document.getElementById('status');
+  var print  = function (message) {
+        output.innerHTML = message;
+      return;
+  };
+
+  try {
+      socket = new WebSocket(host);
+      socket.onopen = function () {
+          print('ready');
+          return;
+      };
+      socket.onmessage = function (msg) {
+	var jsonObject = JSON.parse(msg.data);
+	console.log(jsonObject);
+	if (jsonObject.progress == "100") {
+        	output.innerHTML = 'Done';
+		machineTable.ajax.reload();
+		$('#refresh').attr('disabled', false);
+	}
+        return;
+      };
+      socket.onclose = function () {
+          print('connection is closed');
+          return;
+      };
+  } catch (e) {
+      console.log(e);
+  }
+});
+
 var machineTable;
 
-
 $('#confirmDeleteModal').on('show.bs.modal', function (e) {
-
     var form = $(e.relatedTarget).closest('form');
-
     $('#machinetodelete').val(form[0].name.value);
 
 });
 
 machineTable = $('#machineTable').DataTable({
+    iDisplayLength: 25,
     responsive: true,
     ajax: {
         url: 'GetAllMachine',
@@ -37,15 +69,7 @@ $('#getAllMachine').click(function (event) {
     }).done(function () {
 
         $('#refresh').attr('disabled', true);
-
         $('#status').text('Please wait ...');
-
-        setTimeout(function(){
-            machineTable.ajax.reload();
-            $('#status').text('Done');
-            $('#refresh').attr('disabled', false);
-
-        }, 60000);
 
     }).fail(function (error) {
         console.log(JSON.stringify(error));
@@ -53,14 +77,13 @@ $('#getAllMachine').click(function (event) {
 });
 
 
-function check(form) {
-    if (form.confirmToDelete.checked === false) {
-
-        alert('You must confirm at first!');
-        return false;
-
+function check() {
+    if (document.getElementById("confirmToDeleteCheckBox").checked === false) {
+	document.getElementById("checkBtnMsg").className = 'alert alert-warning';
+	return false;
     } else {
-
+	var output = document.getElementById('status');
+        output.innerHTML = 'Deleting';
         $.ajax({
             type: 'GET',
             url: 'PlayBook',
@@ -71,10 +94,6 @@ function check(form) {
         }).done(function () {
 
             machineTable.ajax.reload();
-
-            setTimeout(function(){
-                machineTable.ajax.reload();
-            }, 60000);
 
         }).fail(function (error) {
             console.log(JSON.stringify(error));
