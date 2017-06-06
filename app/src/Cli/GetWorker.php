@@ -30,12 +30,14 @@ class GetWorker extends AbstractCliAction
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
         while (true) {
-            $job = $pheanstalk->watch('ansible-get-getallmachine')
+            $job = $pheanstalk
+                ->watch('ansible-get-getallmachine')
                 ->watch('ansible-get-deletemachine')
                 ->watch('ansible-get-installmachine')
                 ->watch('ansible-get-ansible-post')
                 ->ignore('default')
                 ->reserve();
+
             if ($job !== false) {
 
                 $websocket_client = new \Hoa\Websocket\Client(

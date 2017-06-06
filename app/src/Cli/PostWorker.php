@@ -36,12 +36,14 @@ class PostWorker extends AbstractCliAction
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
         while (true) {
-            $job = $pheanstalk->watch('getallmachine')
+            $job = $pheanstalk
+                ->watch('getallmachine')
                 ->watch('deletemachine')
                 ->watch('ansible-post')
                 ->watch('installmachine')
                 ->ignore('default')
                 ->reserve();
+
             if ($job !== false) {
 
                 $websocket_client = new \Hoa\Websocket\Client(
