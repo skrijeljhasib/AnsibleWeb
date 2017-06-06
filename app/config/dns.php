@@ -13,13 +13,12 @@ $ovh_dns_auth = [
 ];
 
 $dns_config = [
-	"enabled" => "true",
+	"enabled" => "false",
     "domain" => [
-        "flash-global.net",
-        "vehbo.ovh"
+
     ],
 	"type" => "A",
-	"checked" => "true",
+	"checked" => "false",
 ];
 
 return [
