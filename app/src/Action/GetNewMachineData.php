@@ -11,6 +11,7 @@ namespace Project\Action;
 
 use ObjectivePHP\Html\Exception;
 use Project\Application;
+use stdClass;
 
 class GetNewMachineData
 {
@@ -24,7 +25,12 @@ class GetNewMachineData
             throw new Exception('Can not load host from DB');
         }
 
-        echo json_encode($host->toArray());
+        if($host != null) {
+            echo json_encode($host->toArray());
+        } else {
+            echo json_encode(new stdClass());
+        }
+
     }
 
 }

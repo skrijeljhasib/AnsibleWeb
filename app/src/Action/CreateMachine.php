@@ -31,8 +31,8 @@ class CreateMachine extends RenderableAction
 
         $host = $app->getConfig()->get(Host::class);
         $machine_template = $app->getConfig()->get(MachineTemplate::class);
-	$monitoring = $app->getConfig()->get(Monitoring::class);
-	$dns_config = $app->getConfig()->get(DnsConfig::class);
+        $monitoring = $app->getConfig()->get(Monitoring::class);
+        $dns_config = $app->getConfig()->get(DnsConfig::class);
 
         try {
             $package_gateway = $app->getServicesFactory()->get('gateway.packages');
@@ -41,6 +41,6 @@ class CreateMachine extends RenderableAction
             throw new Exception('Can not load packages from DB');
         }
 
-        return compact('packages', 'host', 'machine_template','monitoring','dns_config');
+        return compact('packages', 'host', 'machine_template', 'monitoring', 'dns_config');
     }
 }
