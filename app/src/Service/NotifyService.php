@@ -8,12 +8,11 @@ use Project\Entity\JSON\PlayBook;
 class NotifyService
 {
     /**
-     * @param $app_get ParameterContainerInterface
      * @return string
      */
-    public function load($app_get)
+    public function load()
     {
-	$playbook_json = file_get_contents('http://stackstorm.test.flash-global.net:8888/repo/notification.json');
+	    $playbook_json = file_get_contents('http://stackstorm.test.flash-global.net:8888/repo/notification.json');
         return $playbook_json;
     }
 }
