@@ -28,33 +28,17 @@ $(document).ready(function () {
 
     $('#createMachine').submit(function (event) {
         event.preventDefault();
+        finalName = $('#name').val();
         $('#result').text('');
         $(".progress-bar").animate({width: '5%'}, 250);
         $('.progress-bar').text('5%');
         $('#SendToAnsibleApi').attr('disabled', true);
-	$('#expertbtn').attr('disabled', true);
-	$('#name').attr('disabled', true);
-	$('#ProgressName').text($('#name').val());
+        $('#expertbtn').removeAttr("data-toggle");
+        $('#expertbtn').attr('disabled', true);
+        $('#name').attr('disabled', true);
+        $('#ProgressName').text($('#name').val());
         $('#progress').addClass("active");
-	$('#task').text('Install Ubuntu 16.04');
-	$('#result').append('Start : Install Ubuntu 16.04' + '<br>');
-        $.ajax({
-            type: 'GET',
-            url: 'PlayBook',
-            data: {
-                playbook: 'installmachine',
-                host: checkHost(),
-                packages: checkPackages(),
-                webserver: checkWebServer(),
-                database: checkDatabase(),
-                dns: checkDns()
-            }
-        }).done(function () {
-            finalName = $('#name').val();
-            websocket();
-        }).fail(function (error) {
-            console.log(JSON.stringify(error));
-        });
+        websocket();
     });
 
     function checkHost() {
@@ -130,60 +114,67 @@ $(document).ready(function () {
                 console.log('connection open');
                 $.ajax({
                     type: 'GET',
-                    url: 'GetNewMachineData',
+                    url: 'PlayBook',
                     data: {
-                        name: finalName
+                        playbook: 'installmachine',
+                        host: checkHost(),
+                        packages: checkPackages(),
+                        webserver: checkWebServer(),
+                        database: checkDatabase(),
+                        dns: checkDns()
                     }
-                }).done(function (data) {
-                    var machine = JSON.parse(data);
-                    $('#ipaddress').text(machine.ip);
-                    $('#status').text(machine.status);
+                }).done(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'GetNewMachineData',
+                        data: {
+                            name: finalName
+                        }
+                    }).done(function (data) {
+                        var machine = JSON.parse(data);
+                        $('#ipaddress').text(machine.ip);
+                        $('#status').text(machine.status);
+                    }).fail(function (error) {
+                        console.log(JSON.stringify(error));
+                    });
                 }).fail(function (error) {
                     console.log(JSON.stringify(error));
                 });
+
             };
 
             socket.onmessage = function (msg) {
-            var data = JSON.parse(msg.data);
-	    console.log(data);
-            if ("task" in data) {
-		if ((data.progress == "100") && (data.task == "Install Ubuntu 16.04")) {
-                	$.ajax({
-                    		type: 'GET',
-                    		url: 'GetNewMachineData',
-                    		data: { name: finalName }
-                	}).done(function (data) {
-                    		var machine = JSON.parse(data);
-                    		$('#ipaddress').text(machine.ip);
-                    		$('#status').text(machine.status);
-                	}).fail(function (error) {
-                    		console.log(JSON.stringify(error));
-                	});
-		}
-                    $('#task').text(data.task);
-		    if (data.progress == "100") {
-                    	$('#result').append('Stop : ' + data.task + '<br>');
-        	    } else if (data.progress == "0") {
-			$('#result').append('Start : ' + data.task + '<br>');
-		    }
+                var data = JSON.parse(msg.data);
+                console.log(data);
+                if ("task" in data) {
 
-                if ((data.progress == "100") && (data.task == "Install Machine Notification")) {
-			
+                    $('#task').text(data.task);
+
+                    if ((data.progress == "0") && (data.task != "Install Machine Notification")) {
+                        $('#result').append('Start : ' + data.task + '<br>');
+                    }
+                    if ((data.progress == "100") && (data.task != "Install Machine Notification")) {
+                        $('#result').append('Stop : ' + data.task + '<br>');
+                    }
+                    if ((data.progress == "100") && (data.task == "Install Machine Notification")) {
+
                         $('#name').val('');
                         $('#progress').removeClass("active");
                         $('#SendToAnsibleApi').removeAttr("disabled");
                         $('#expertbtn').removeAttr("disabled");
+                        $('#expertbtn').attr('data-toggle', 'collapse');
                         $('#name').removeAttr("disabled");
                         $('#task').text('Installation Completed');
                         $('#result').append('Installation Completed<br>');
+                        socket.close();
+                    }
+
                 }
 
-             }
-
-             if ("progress" in data) {
-                    $(".progress-bar").animate({width: data.progress + '%'}, 1500);
+                if ("progress" in data) {
+                    $(".progress-bar").animate({width: data.progress + '%'}, 1000);
                     $('.progress-bar').text(data.progress + '%');
-             }
+                }
             };
 
             socket.onclose = function () {
@@ -191,8 +182,8 @@ $(document).ready(function () {
                 $('#name').val('');
                 $('#progress').removeClass("active");
                 $('#SendToAnsibleApi').removeAttr("disabled");
-		$('#expertbtn').removeAttr("disabled");
-		$('#name').removeAttr("disabled");
+                $('#expertbtn').removeAttr("disabled");
+                $('#name').removeAttr("disabled");
                 $.ajax({
                     type: 'GET',
                     url: 'GetNewMachineData',
