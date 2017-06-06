@@ -1,7 +1,6 @@
 <?php
 
 use ObjectivePHP\Package\FastRoute\Config\FastRoute;
-use Project\Action\DeleteMachine;
 use Project\Action\Home;
 use Project\Action\CreateMachine;
 use Project\Action\ListMachine;
