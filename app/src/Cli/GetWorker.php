@@ -38,15 +38,17 @@ class GetWorker extends AbstractCliAction
                 ->reserve();
             if ($job !== false) {
 
-		$websocket_client = new \Hoa\Websocket\Client(
-            			new \Hoa\Socket\Client($url['websocket_client'])
-       		);
-        	$websocket_client->setHost(gethostname());
-        	$websocket_client->connect();
+                $websocket_client = new \Hoa\Websocket\Client(
+                    new \Hoa\Socket\Client($url['websocket_client'])
+                );
+                $websocket_client->setHost(gethostname());
+                $websocket_client->connect();
 
                 $callback['callback'] = json_decode($job->getData(), true)['name'];
-                if (!is_null($callback['callback'])) { $websocket_client->send(json_encode($callback)); }
-		$websocket_client->close();
+                if (!is_null($callback['callback'])) {
+                    $websocket_client->send(json_encode($callback));
+                }
+                $websocket_client->close();
 
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
@@ -115,7 +117,7 @@ class GetWorker extends AbstractCliAction
                                 echo 'Error playbook addtohostfile';
                                 break;
                             }
-
+
                             $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
@@ -147,7 +149,7 @@ class GetWorker extends AbstractCliAction
 
                             if (!empty($order)) {
 
-                                if(!is_null($order->getDns()) && $order->getDns()) {
+                                if (!is_null($order->getDns()) && $order->getDns()) {
                                     $dns = json_decode($order->getDns(), true);
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
@@ -235,7 +237,7 @@ class GetWorker extends AbstractCliAction
                                 }
                             }
 
-			    $response = $guzzle_client->request('GET', '/PlayBook',
+                            $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'notify',
@@ -247,7 +249,7 @@ class GetWorker extends AbstractCliAction
                                 echo 'Error playbook notification';
                                 break;
                             }
-			
+
 
                         } catch (RequestException $e) {
                             echo Psr7\str($e->getRequest());
