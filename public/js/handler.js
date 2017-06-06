@@ -55,43 +55,50 @@ $(document).ready(function () {
 
         apache_document_root.disabled = !$('#apacheCheckbox').is(":checked");
 
-        if($('#dnsCheckbox').is(":checked"))
-        {
-            dns_domain_name.disabled = false;
-            dns_type.disabled = false;
-        }
-        else
-        {
-            dns_domain_name.disabled = true;
-            dns_type.disabled = true;
-        }
-
-        if($('#mongodbCheckbox').is(":checked"))
-        {
-            mongodb_new_user.disabled = false;
-            mongodb_new_user_password.disabled = false;
-            mongodb_database.disabled = false;
-        }
-        else
-        {
-            mongodb_new_user.disabled = true;
-            mongodb_new_user_password.disabled = true;
-            mongodb_database.disabled = true;
+        if($('#dnsCheckbox').length != 0) {
+            if($('#dnsCheckbox').is(":checked"))
+            {
+                dns_domain_name.disabled = false;
+                dns_type.disabled = false;
+            }
+            else
+            {
+                dns_domain_name.disabled = true;
+                dns_type.disabled = true;
+            }
         }
 
-        if($('#mysqlCheckbox').is(":checked"))
-        {
-            mysql_new_user.disabled = false;
-            mysql_new_user_password.disabled = false;
-            mysql_root_password.disabled = false;
-            mysql_database.disabled = false;
+        if($('#mongodbCheckbox').length != 0) {
+            if($('#mongodbCheckbox').is(":checked"))
+            {
+                mongodb_new_user.disabled = false;
+                mongodb_new_user_password.disabled = false;
+                mongodb_database.disabled = false;
+            }
+            else
+            {
+                mongodb_new_user.disabled = true;
+                mongodb_new_user_password.disabled = true;
+                mongodb_database.disabled = true;
+            }
         }
-        else
-        {
-            mysql_new_user.disabled = true;
-            mysql_new_user_password.disabled = true;
-            mysql_root_password.disabled = true;
-            mysql_database.disabled = true;
+
+
+        if($('#mysqlCheckbox').length != 0) {
+            if($('#mysqlCheckbox').is(":checked"))
+            {
+                mysql_new_user.disabled = false;
+                mysql_new_user_password.disabled = false;
+                mysql_root_password.disabled = false;
+                mysql_database.disabled = false;
+            }
+            else
+            {
+                mysql_new_user.disabled = true;
+                mysql_new_user_password.disabled = true;
+                mysql_root_password.disabled = true;
+                mysql_database.disabled = true;
+            }
         }
     });
 });
