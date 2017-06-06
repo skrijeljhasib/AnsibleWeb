@@ -1,10 +1,16 @@
 # AnsibleWeb
 
+The purpose of this open-source project is to have a frontend application which allows
+us to send ansible playbooks in JSON format to [AnsibleApi](http://https://github.com/skrijeljhasib/AnsibleApi).
+At the moment you can install a virtual server with packages and other services in openstack cloud.
 
 ## Getting started
 
+AnsibleWeb has been tested with php7.0, apache2, mysql 5.7. It may work with alternative versions but is not currently documented.
 
 ### Prerequisites
+
+Look at: https://github.com/skrijeljhasib/AnsibleApi
 
 ```
 sudo apt-get install apache2
@@ -26,26 +32,60 @@ Run composer inside the AnsibleWeb Folder:
 composer install
 ```
 
-### Apache Configuration file example :
+### Configuration
 
-```
-DocumentRoot /var/www/html/ansibleweb/public/index.php
-```
-
-### Ansible and Database Configuration
-
+* Set Apache DocumentRoot example: /var/www/html/AnsibleWeb/public/index.php
 * Copy app/config/ansible.php to app/config/local/ansible.local.php and add your values
 * Copy app/config/doctrine.php to app/config/local/doctrine.local.php and add your values
+
 * AnsibleWeb folder execute this:
 ```
 vendor/bin/doctrine orm:schema-tool:create
 ```
 
 
-#### SQL
+#### Default Packages
 
 ```
-
+INSERT INTO packages(name) VALUES
+  ("munin-node"),
+  ("postfix"),
+  ("ghostscript"),
+  ("gocr"),
+  ("ocrad"),
+  ("mailutils"),
+  ("ntp"),
+  ("cifs-utils"),
+  ("pdftk"),
+  ("libwww-perl"),
+  ("libcache-cache-perl"),
+  ("php7.0"),
+  ("php-mcrypt"),
+  ("php-mysqlnd"),
+  ("php-curl"),
+  ("php-gd"),
+  ("a2ps"),
+  ("ccrypt"),
+  ("poppler-utils"),
+  ("zbar-tools"),
+  ("imagemagick"),
+  ("nfs-common"),
+  ("php-dom"),
+  ("php-soap"),
+  ("beanstalkd"),
+  ("binutils"),
+  ("dirmngr"),
+  ("fonts-lato"),
+  ("freeipmi-common"),
+  ("freeipmi-tools"),
+  ("gnupg-agent"),
+  ("gnupg2"),
+  ("ldap-utils"),
+  ("php7.0-mbstring"),
+  ("php7.0-zip"),
+  ("mutt"),
+  ("zip"),
+  ("unzip")
 ```
 
 
@@ -91,8 +131,11 @@ autostart=true
 autorestart=true
 stderr_logfile=/var/log/supervisor/socket-worker-stderr.log
 stdout_logfile=/var/log/supervisor/socket-worker-stdout.log
-
 ```
+
+Info:
+* You must probably change the **directory** attribute 
+
 Run:
 ```
 sudo beanstalkd restart
@@ -102,9 +145,11 @@ sudo supervisorctl update
 sudo service supervisor restart
 ```
 
-### Ovh
+### OVH DNS
+Look at: https://github.com/gheesh/ansible-ovh-dns
+
 Download https://github.com/gheesh/ansible-ovh-dns/blob/master/ovh_dns.py
-and the move it to the directory below:
+and move it to the directory below:
 ```
 sudo mv ovh_dns.py /usr/lib/python2.7/dist-packages/ansible/modules/cloud/ovh/ovh_dns.py
 ```
