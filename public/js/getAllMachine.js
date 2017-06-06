@@ -1,5 +1,7 @@
+var machineTable;
+
 $(document).ready(function () {
-    var host = 'ws://' + window.location.hostname + ':9000';
+    var websocket_server = 'ws://' + window.location.hostname + ':9000';
     var socket = null;
     var output = document.getElementById('status');
     var print = function (message) {
@@ -7,15 +9,31 @@ $(document).ready(function () {
         return;
     };
 
+    machineTable = $('#machineTable').DataTable({
+        iDisplayLength: 25,
+        responsive: true,
+        ajax: {
+            url: 'GetAllMachine',
+            type: 'GET'
+        },
+        columns: [
+            {"data": "id"},
+            {"data": "name"},
+            {"data": "ip"},
+            {"data": "location"},
+            {"data": "status"},
+            {"data": "action"}
+        ]
+    });
+
     try {
-        socket = new WebSocket(host);
+        socket = new WebSocket(websocket_server);
         socket.onopen = function () {
             print('ready');
             return;
         };
         socket.onmessage = function (msg) {
             var jsonObject = JSON.parse(msg.data);
-            console.log(jsonObject);
             if (jsonObject.progress == "100") {
                 output.innerHTML = 'Done';
                 machineTable.ajax.reload();
@@ -30,52 +48,33 @@ $(document).ready(function () {
     } catch (e) {
         console.log(e);
     }
+
+    $('#confirmDeleteModal').on('show.bs.modal', function (e) {
+        var form = $(e.relatedTarget).closest('form');
+        $('#machinetodelete').val(form[0].name.value);
+
+    });
+
+    $('#getAllMachine').click(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'GET',
+            url: 'PlayBook',
+            data: {
+                playbook: 'getallmachine'
+            }
+        }).done(function () {
+
+            $('#refresh').attr('disabled', true);
+            $('#status').text('Please wait ...');
+
+        }).fail(function (error) {
+            console.log(JSON.stringify(error));
+        })
+    });
+
 });
-
-var machineTable;
-
-$('#confirmDeleteModal').on('show.bs.modal', function (e) {
-    var form = $(e.relatedTarget).closest('form');
-    $('#machinetodelete').val(form[0].name.value);
-
-});
-
-machineTable = $('#machineTable').DataTable({
-    iDisplayLength: 25,
-    responsive: true,
-    ajax: {
-        url: 'GetAllMachine',
-        type: 'GET'
-    },
-    columns: [
-        {"data": "id"},
-        {"data": "name"},
-        {"data": "ip"},
-        {"data": "location"},
-        {"data": "status"},
-        {"data": "action"}
-    ]
-});
-
-$('#getAllMachine').click(function (event) {
-    event.preventDefault();
-
-    $.ajax({
-        type: 'GET',
-        url: 'PlayBook',
-        data: {
-            playbook: 'getallmachine'
-        }
-    }).done(function () {
-
-        $('#refresh').attr('disabled', true);
-        $('#status').text('Please wait ...');
-
-    }).fail(function (error) {
-        console.log(JSON.stringify(error));
-    })
-});
-
 
 function check() {
     if (document.getElementById("confirmToDeleteCheckBox").checked === false) {

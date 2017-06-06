@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    var websocket_server = 'ws://' + window.location.hostname + ':9000';
     var socket = null;
     var finalName = '';
 
@@ -30,7 +31,11 @@ $(document).ready(function () {
         event.preventDefault();
         finalName = $('#name').val();
         $('#result').text('');
-        $(".progress-bar").animate({width: '5%'}, 250);
+        $(".progress-bar").animate(
+            {
+                width: '5%'
+            }, 1000
+        );
         $('.progress-bar').text('5%');
         $('#SendToAnsibleApi').attr('disabled', true);
         $('#expertbtn').removeAttr("data-toggle");
@@ -106,7 +111,7 @@ $(document).ready(function () {
 
     function websocket() {
         try {
-            socket = new WebSocket('ws://' + window.location.hostname + ':9000');
+            socket = new WebSocket(websocket_server);
             socket.onerror = function () {
                 console.log('connection error');
             };
@@ -145,7 +150,6 @@ $(document).ready(function () {
 
             socket.onmessage = function (msg) {
                 var data = JSON.parse(msg.data);
-                console.log(data);
                 if ("task" in data) {
 
                     $('#task').text(data.task);
@@ -172,7 +176,11 @@ $(document).ready(function () {
                 }
 
                 if ("progress" in data) {
-                    $(".progress-bar").animate({width: data.progress + '%'}, 1000);
+                    $(".progress-bar").animate(
+                        {
+                            width: data.progress + '%'
+                        }, 1000
+                    );
                     $('.progress-bar').text(data.progress + '%');
                 }
             };
