@@ -89,8 +89,7 @@ class WebServerService
      */
     public function nginx()
     {
-
-        $this->playbook->setName('Install and Configure NginX');
+        $this->playbook->setName('Install NginX');
 
         $apt = new Apt();
         $apt->setState(Apt::PRESENT);
