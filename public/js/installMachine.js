@@ -29,6 +29,7 @@ $(document).ready(function () {
 
     $('#createMachine').submit(function (event) {
         event.preventDefault();
+        $('#outputbody').toggle();
         finalName = $('#name').val();
         $('#result').text('');
         $(".progress-bar").animate(
@@ -163,6 +164,7 @@ $(document).ready(function () {
                     if ((data.progress == "100") && (data.task == "Install Machine Notification")) {
 
                         $('#name').val('');
+                        $('#name').css('border-color', '');
                         $('#progress').removeClass("active");
                         $('#SendToAnsibleApi').removeAttr("disabled");
                         $('#expertbtn').removeAttr("disabled");
