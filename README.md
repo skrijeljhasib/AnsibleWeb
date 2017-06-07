@@ -85,7 +85,7 @@ INSERT INTO packages(name) VALUES
   ("php7.0-zip"),
   ("mutt"),
   ("zip"),
-  ("unzip")
+  ("unzip");
 ```
 
 
