@@ -29,15 +29,12 @@ $(document).ready(function () {
 
     $('#createMachine').submit(function (event) {
         event.preventDefault();
-        $('#outputbody').toggle();
+        var isHidden = $( "#outputbody" ).is( ":hidden" );
+        if(isHidden) {
+            $('#outputbody').toggle();
+        }
         finalName = $('#name').val();
         $('#result').text('');
-        $(".progress-bar").animate(
-            {
-                width: '5%'
-            }, 1000
-        );
-        $('.progress-bar').text('5%');
         $('#SendToAnsibleApi').attr('disabled', true);
         $('#expertbtn').removeAttr("data-toggle");
         $('#expertbtn').attr('disabled', true);
@@ -63,7 +60,6 @@ $(document).ready(function () {
             return JSON.stringify(array);
         } else if ($('#nginxCheckbox').is(':checked')) {
             array['webserver'] = 'nginx';
-            array['document_root'] = $('#nginx_document_root').val();
             return JSON.stringify(array);
         } else {
             return null;
@@ -151,6 +147,15 @@ $(document).ready(function () {
 
             socket.onmessage = function (msg) {
                 var data = JSON.parse(msg.data);
+
+                if ("progress" in data) {
+                    $(".progress-bar").animate(
+                        {
+                            width: data.progress + '%'
+                        }, 1500
+                    );
+                }
+
                 if ("task" in data) {
 
                     $('#task').text(data.task);
@@ -175,15 +180,6 @@ $(document).ready(function () {
                         socket.close();
                     }
 
-                }
-
-                if ("progress" in data) {
-                    $(".progress-bar").animate(
-                        {
-                            width: data.progress + '%'
-                        }, 1000
-                    );
-                    $('.progress-bar').text(data.progress + '%');
                 }
             };
 
