@@ -103,7 +103,14 @@ class GetWorker extends AbstractCliAction
 
                         $guzzle_client = new Client(
                             [
-                                'base_uri' => $url['ansible_playbook'],
+                                'base_uri' => $url["ansible_playbook"],
+                                'headers' => [
+                                    'Content-Type' => 'application/json'
+                                ],
+                                'auth' => [
+                                    $url["ansible_playbook_auth"]['username'],
+                                    $url["ansible_playbook_auth"]['password']
+                                ]
                             ]
                         );
                         try {
