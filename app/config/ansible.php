@@ -10,9 +10,7 @@ use Project\Config\MachineTemplate;
 
 $url = [
     "ansible_api" => "http://localhost:8080",
-    "ansible_api_auth" => ['username' => '','password' => ''],
     "ansible_playbook" => "http://127.0.0.1",
-    "ansible_playbook_auth" => ['username' => '','password' => ''],
     "beanstalk" => "127.0.0.1",
     "websocket_server" => "ws://0.0.0.0:9000",
     "websocket_client" => "ws://127.0.0.1:9000"
