@@ -94,11 +94,6 @@ use Project\Entity\DB\Package;
                                     <label> Install Nginx:
                                         <input type="checkbox" name="webserver[]" id="nginxCheckbox" class="checkbox">
                                     </label>
-                                    <br>
-                                    <label> DocumentRoot:
-                                        <input disabled required type="text" class="form-control"
-                                               id="nginx_document_root">
-                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -201,17 +196,6 @@ use Project\Entity\DB\Package;
                                     <label> Install MongoDB:
                                         <input type="checkbox" name="database[]" id="mongodbCheckbox" class="checkbox">
                                     </label>
-                                    <br>
-                                    <label> Database:
-                                        <input disabled required type="text" class="form-control" id="mongodb_database">
-                                    </label>
-                                    <label> New User:
-                                        <input disabled required type="text" class="form-control" id="mongodb_new_user">
-                                    </label>
-                                    <label> New User Password:
-                                        <input disabled required type="password" class="form-control"
-                                               id="mongodb_new_user_password">
-                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -225,24 +209,66 @@ use Project\Entity\DB\Package;
                             <div id="dnsbody" style="display: none;">
 
                                 <label> Add Dns Entry to Ovh:
-                                    <input type="checkbox" name="dns[]" id="dnsCheckbox" class="checkbox" <?php if (Vars::collection('dns_config')["checked"] == "true") { echo "checked"; } ?>>
+                                    <input type="checkbox" name="dns[]" id="dnsCheckbox"
+                                           class="checkbox" <?php if (Vars::collection('dns_config')["checked"] == "true") {
+                                        echo "checked";
+                                    } ?>>
                                 </label>
                                 <br>
                                 <label>Type:
                                     <select required id="dns_type" class="form-control">
-                                        <option value="A" <?php if (Vars::collection('dns_config')["type"] == "A") { echo "selected"; } ?>>A</option>
-                                        <option value="AAAA" <?php if (Vars::collection('dns_config')["type"] == "AAAA") { echo "selected"; } ?>>AAAA</option>
-                                        <option value="CNAME" <?php if (Vars::collection('dns_config')["type"] == "CNAME") { echo "selected"; } ?>>CNAME</option>
-                                        <option value="DKIM" <?php if (Vars::collection('dns_config')["type"] == "DKIM") { echo "selected"; } ?>>DKIM</option>
-                                        <option value="LOC" <?php if (Vars::collection('dns_config')["type"] == "LOC") { echo "selected"; } ?>>LOC</option>
-                                        <option value="MX" <?php if (Vars::collection('dns_config')["type"] == "MX") { echo "selected"; } ?>>MX</option>
-                                        <option value="NAPTR" <?php if (Vars::collection('dns_config')["type"] == "NAPTR") { echo "selected"; } ?>>NAPTR</option>
-                                        <option value="NS" <?php if (Vars::collection('dns_config')["type"] == "NS") { echo "selected"; } ?>>NS</option>
-                                        <option value="PTR" <?php if (Vars::collection('dns_config')["type"] == "PTR") { echo "selected"; } ?>>PTR</option>
-                                        <option value="SPF" <?php if (Vars::collection('dns_config')["type"] == "SPF") { echo "selected"; } ?>>SPF</option>
-                                        <option value="SRV" <?php if (Vars::collection('dns_config')["type"] == "SRV") { echo "selected"; } ?>>SRV</option>
-                                        <option value="SSHFP" <?php if (Vars::collection('dns_config')["type"] == "SSHFP") { echo "selected"; } ?>>SSHFP</option>
-                                        <option value="TXT" <?php if (Vars::collection('dns_config')["type"] == "TXT") { echo "selected"; } ?>>TXT</option>
+                                        <option value="A" <?php if (Vars::collection('dns_config')["type"] == "A") {
+                                            echo "selected";
+                                        } ?>>A
+                                        </option>
+                                        <option value="AAAA" <?php if (Vars::collection('dns_config')["type"] == "AAAA") {
+                                            echo "selected";
+                                        } ?>>AAAA
+                                        </option>
+                                        <option value="CNAME" <?php if (Vars::collection('dns_config')["type"] == "CNAME") {
+                                            echo "selected";
+                                        } ?>>CNAME
+                                        </option>
+                                        <option value="DKIM" <?php if (Vars::collection('dns_config')["type"] == "DKIM") {
+                                            echo "selected";
+                                        } ?>>DKIM
+                                        </option>
+                                        <option value="LOC" <?php if (Vars::collection('dns_config')["type"] == "LOC") {
+                                            echo "selected";
+                                        } ?>>LOC
+                                        </option>
+                                        <option value="MX" <?php if (Vars::collection('dns_config')["type"] == "MX") {
+                                            echo "selected";
+                                        } ?>>MX
+                                        </option>
+                                        <option value="NAPTR" <?php if (Vars::collection('dns_config')["type"] == "NAPTR") {
+                                            echo "selected";
+                                        } ?>>NAPTR
+                                        </option>
+                                        <option value="NS" <?php if (Vars::collection('dns_config')["type"] == "NS") {
+                                            echo "selected";
+                                        } ?>>NS
+                                        </option>
+                                        <option value="PTR" <?php if (Vars::collection('dns_config')["type"] == "PTR") {
+                                            echo "selected";
+                                        } ?>>PTR
+                                        </option>
+                                        <option value="SPF" <?php if (Vars::collection('dns_config')["type"] == "SPF") {
+                                            echo "selected";
+                                        } ?>>SPF
+                                        </option>
+                                        <option value="SRV" <?php if (Vars::collection('dns_config')["type"] == "SRV") {
+                                            echo "selected";
+                                        } ?>>SRV
+                                        </option>
+                                        <option value="SSHFP" <?php if (Vars::collection('dns_config')["type"] == "SSHFP") {
+                                            echo "selected";
+                                        } ?>>SSHFP
+                                        </option>
+                                        <option value="TXT" <?php if (Vars::collection('dns_config')["type"] == "TXT") {
+                                            echo "selected";
+                                        } ?>>TXT
+                                        </option>
                                     </select>
                                 </label>
                                 <br>
@@ -278,19 +304,21 @@ use Project\Entity\DB\Package;
             <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
             <div class="panel-body">
                 <div id="outputbody" style="display: none;">
+
                     <div id="progress" class="progress progress-striped">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="100"
-                             aria-valuemin="0" aria-valuemax="100" style="width:100%">READY
+                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                                     aria-valuenow="0"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:0%;">
                         </div>
+                        <div id="task" class="text-center" style="position:absolute; color: black; right: 0; left: 0;">Ready</div>
                     </div>
-                    <div>
-                        <pre>Progress: <div id="task" align="center">Ready</div></pre>
-                        <pre>
+                    <pre><strong>Info:</strong>
                             Name:   <span id="ProgressName">Not Available</span>
                             IP:     <span id="ipaddress">0.0.0.0</span>
                             Status: <span id="status">Not Available</span>
-                    </div>
-                    <pre>Log:
+                    </pre>
+
+                    <pre><strong>Log:</strong>
 			            <div id="result"></div>
 		            </pre>
                 </div>
