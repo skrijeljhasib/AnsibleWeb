@@ -85,10 +85,9 @@ class WebServerService
     }
 
     /**
-     * @param $app_get ParameterContainerInterface
      * @return string
      */
-    public function nginx($app_get)
+    public function nginx()
     {
 
         $this->playbook->setName('Install and Configure NginX');

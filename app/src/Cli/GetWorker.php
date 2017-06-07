@@ -195,15 +195,27 @@ class GetWorker extends AbstractCliAction
 
                                 if (!is_null($order->getWebserver()) && $order->getWebserver()) {
                                     $webserver = json_decode($order->getWebserver(), true);
-                                    $response = $guzzle_client->request('GET', '/PlayBook',
-                                        [
-                                            'query' => [
-                                                'playbook' => $webserver['webserver'],
-                                                'document_root' => $webserver['document_root'],
-                                                'ip' => $ip
+                                    if ($webserver['webserver'] == 'apache') {
+                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                            [
+                                                'query' => [
+                                                    'playbook' => $webserver['webserver'],
+                                                    'document_root' => $webserver['document_root'],
+                                                    'ip' => $ip
+                                                ]
                                             ]
-                                        ]
-                                    );
+                                        );
+                                    }
+                                    if ($webserver['webserver'] == 'nginx') {
+                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                            [
+                                                'query' => [
+                                                    'playbook' => $webserver['webserver'],
+                                                    'ip' => $ip
+                                                ]
+                                            ]
+                                        );
+                                    }
                                     if ($response->getStatusCode() != 200) {
                                         echo 'Error playbook webserver';
                                         break;
@@ -231,9 +243,6 @@ class GetWorker extends AbstractCliAction
                                             [
                                                 'query' => [
                                                     'playbook' => 'mongodb',
-                                                    'mongodb_new_user' => $database['mongodb_new_user'],
-                                                    'mongodb_new_user_password' => $database['mongodb_new_user_password'],
-                                                    'mongodb_database' => $database['mongodb_database'],
                                                     'ip' => $ip
                                                 ]
                                             ]

@@ -93,15 +93,6 @@ class PlayBook
                 $json = $addtohotfile->load($app);
                 break;
 
-            case 'addDnsEntryToOvh':
-                $this->tube = 'ansible-post';
-                $addDnsEntryToOvh = new AddDnsEntryToOvh();
-                $json = $addDnsEntryToOvh->load(
-                    $app,
-                    $this->ovh_dns_auth
-                );
-                break;
-
             case 'installpackage':
                 $this->tube = 'ansible-post';
                 $packageService = new InstallPackageService();
@@ -131,9 +122,7 @@ class PlayBook
             case 'notify':
                 $this->tube = 'ansible-post';
                 $notifyService = new NotifyService();
-                $json = $notifyService->load(
-                    $app->getRequest()->getParameters()
-                );
+                $json = $notifyService->load();
                 break;
 
             case 'apache':
@@ -147,6 +136,17 @@ class PlayBook
                     $app->getRequest()->getParameters()
                 );
                 break;
+
+            case 'nginx':
+                $this->tube = 'ansible-post';
+                $webserverService = new WebServerService();
+                $webserverService->load(
+                    $this->machine_access,
+                    $app
+                );
+                $json = $webserverService->nginx();
+                break;
+
             case 'mysql':
                 $this->tube = 'ansible-post';
                 $databaseService = new DatabaseService();
@@ -166,8 +166,15 @@ class PlayBook
                     $this->machine_access,
                     $app
                 );
-                $json = $databaseService->mongodb(
-                    $app->getRequest()->getParameters()
+                $json = $databaseService->mongodb();
+                break;
+
+            case 'addDnsEntryToOvh':
+                $this->tube = 'ansible-post';
+                $addDnsEntryToOvh = new AddDnsEntryToOvh();
+                $json = $addDnsEntryToOvh->load(
+                    $app,
+                    $this->ovh_dns_auth
                 );
                 break;
 

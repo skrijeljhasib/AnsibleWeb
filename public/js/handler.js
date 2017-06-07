@@ -4,7 +4,8 @@ $(document).ready(function () {
         {
             placeholder: "Choose ...",
             closeOnSelect: false,
-        });
+        }
+    );
 
     let scrollTop;
     $('select').on("select2:selecting", function( event ){
@@ -39,7 +40,6 @@ $(document).ready(function () {
         let dns_domain_name = $('#dns_domain_name')[0];
         let dns_type = $('#dns_type')[0];
 
-        let nginx_document_root = $('#nginx_document_root')[0];
         let apache_document_root = $('#apache_document_root')[0];
 
         let mysql_database = $('#mysql_database')[0];
@@ -50,8 +50,6 @@ $(document).ready(function () {
         let mongodb_database = $('#mongodb_database')[0];
         let mongodb_new_user = $('#mongodb_new_user')[0];
         let mongodb_new_user_password = $('#mongodb_new_user_password')[0];
-
-        nginx_document_root.disabled = !$('#nginxCheckbox').is(":checked");
 
         apache_document_root.disabled = !$('#apacheCheckbox').is(":checked");
 
@@ -65,21 +63,6 @@ $(document).ready(function () {
             {
                 dns_domain_name.disabled = true;
                 dns_type.disabled = true;
-            }
-        }
-
-        if($('#mongodbCheckbox').length != 0) {
-            if($('#mongodbCheckbox').is(":checked"))
-            {
-                mongodb_new_user.disabled = false;
-                mongodb_new_user_password.disabled = false;
-                mongodb_database.disabled = false;
-            }
-            else
-            {
-                mongodb_new_user.disabled = true;
-                mongodb_new_user_password.disabled = true;
-                mongodb_database.disabled = true;
             }
         }
 

@@ -86,27 +86,18 @@ class DatabaseService
     }
 
     /**
-     * @param $app_get ParameterContainerInterface
      * @return string
      */
-    public function mongodb($app_get)
+    public function mongodb()
     {
-
-        $this->playbook->setName('Install and Configure MongoDB');
+        $this->playbook->setName('Install MongoDB');
 
         $apt = new Apt();
         $apt->setState(Apt::PRESENT);
         $apt->setAName(Apt::MULTIPLE_ITEMS);
         $apt->setWithItems(['mongodb','python-pymongo']);
 
-        $mongodb = new MongoDBUser();
-        $mongodb->setUName($app_get->get('mongodb_new_user'));
-        $mongodb->setPassword($app_get->get('mongodb_new_user_password'));
-        $mongodb->setDatabase($app_get->get('mongodb_database'));
-        $mongodb->setState('present');
-
         $this->playbook->setTask($apt->toArray());
-        $this->playbook->setTask($mongodb->toArray());
 
         $playbook_json = $this->playbook->toJSON();
 
