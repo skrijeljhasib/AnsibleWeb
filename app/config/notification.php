@@ -6,7 +6,7 @@ use Project\Config\Notification;
 
 
 $notification = [
-    "enabled" => "true",
+    "enabled" => "false",
     "type" => "email",
     "email" => "no-reply@flash-global.net"
 ];
