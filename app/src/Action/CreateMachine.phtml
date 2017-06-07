@@ -100,6 +100,36 @@ use Project\Entity\DB\Package;
                     </div>
                 </div>
 
+                <div d="wspanel" class="panel panel-default">
+                    <div class="panel-heading"><a href="#wspanel" onClick="$(languagesbody).toggle();">Languages</a></div>
+                    <div class="panel-body">
+                        <div id="languagesbody" style="display: none;">
+                            <ul class="nav nav-tabs" role="tablist" id="languagesTabs">
+                                <li role="presentation" class="active"><a href="#php" aria-controls="php"
+                                                                          role="tab"
+                                                                          data-toggle="tab">PHP</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="php">
+                                    <br>
+                                    <label> Install PHP:
+                                        <input type="checkbox" name="php[]" id="phpCheckbox" class="checkbox">
+                                    </label>
+                                    <br>
+                                    <label> Select your version:
+                                        <select required disabled name="php_version" id="php_version">
+                                            <option value="php7.0" selected>7.0</option>
+                                            <option value="php5.6">5.6</option>
+                                            <option value="php5.5">5.5</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <?php if (Vars::collection('monitoring')["enabled"] == "true") { ?>
                     <div id="monpanel" class="panel panel-default">
                         <div class="panel-heading"><a href="#monpanel" onClick="$(monbody).toggle();">Monitoring</a>

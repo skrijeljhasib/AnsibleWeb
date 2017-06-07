@@ -173,6 +173,24 @@ class GetWorker extends AbstractCliAction
                                     }
                                 }
 
+                                if (!is_null($order->getLanguage()) && $order->getLanguage()) {
+                                    $language = json_decode($order->getLanguage(), true);
+                                    $response = $guzzle_client->request('GET', '/PlayBook',
+                                        [
+                                            'query' => [
+                                                'playbook' => 'php',
+                                                'language' => $language['language'],
+                                                'php_version' => $language['php_version'],
+                                                'ip' => $ip
+                                            ]
+                                        ]
+                                    );
+                                    if ($response->getStatusCode() != 200) {
+                                        echo 'Error playbook php';
+                                        break;
+                                    }
+                                }
+
                                 if (!is_null($order->getPackages()) && $order->getPackages()) {
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [

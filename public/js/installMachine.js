@@ -95,6 +95,17 @@ $(document).ready(function () {
         }
     }
 
+    function checkLanguage() {
+        var array = {};
+        if ($('#phpCheckbox').is(':checked')) {
+            array['language'] = 'php';
+            array['php_version'] = $('#php_version option:selected').val();
+            return JSON.stringify(array);
+        } else {
+            return null;
+        }
+    }
+
     function checkDns() {
         var array = {};
         if ($('#dnsCheckbox').is(':checked')) {
@@ -123,6 +134,7 @@ $(document).ready(function () {
                         packages: checkPackages(),
                         webserver: checkWebServer(),
                         database: checkDatabase(),
+                        language: checkLanguage(),
                         dns: checkDns()
                     }
                 }).done(function () {
@@ -158,12 +170,12 @@ $(document).ready(function () {
 
                 if ("task" in data) {
 
-                    $('#task').text(data.task);
-
                     if ((data.progress == "0") && (data.task != "Install Machine Notification")) {
+                        $('#task').text(data.task);
                         $('#result').append('Start : ' + data.task + '<br>');
                     }
                     if ((data.progress == "100") && (data.task != "Install Machine Notification")) {
+                        $('#task').text(data.task);
                         $('#result').append('Stop : ' + data.task + '<br>');
                     }
                     if ((data.progress == "100") && (data.task == "Install Machine Notification")) {

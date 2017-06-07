@@ -90,6 +90,9 @@ class InstallMachineService
         if(!is_null($app->getRequest()->getParameters()->get('database'))) {
             $order->setDatabase($app->getRequest()->getParameters()->get('database'));
         }
+        if(!is_null($app->getRequest()->getParameters()->get('language'))) {
+            $order->setLanguage($app->getRequest()->getParameters()->get('language'));
+        }
         if(!is_null($app->getRequest()->getParameters()->get('dns'))) {
             $order->setDns($app->getRequest()->getParameters()->get('dns'));
         }

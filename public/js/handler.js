@@ -37,6 +37,8 @@ $(document).ready(function () {
     $('input[type="checkbox"]').on('change', function() {
         $('input[name="' + this.name + '"]').not(this).prop('checked', false);
 
+        let php_version = $('#php_version')[0];
+
         let dns_domain_name = $('#dns_domain_name')[0];
         let dns_type = $('#dns_type')[0];
 
@@ -63,6 +65,17 @@ $(document).ready(function () {
             {
                 dns_domain_name.disabled = true;
                 dns_type.disabled = true;
+            }
+        }
+
+        if($('#phpCheckbox').length != 0) {
+            if($('#phpCheckbox').is(":checked"))
+            {
+                php_version.disabled = false;
+            }
+            else
+            {
+                php_version.disabled = true;
             }
         }
 

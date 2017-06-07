@@ -49,6 +49,13 @@ class Order
      * @Column(type="string",nullable=true)
      * @var string
      */
+    protected $language = "";
+
+
+    /**
+     * @Column(type="string",nullable=true)
+     * @var string
+     */
     protected $dns = "";
 
     /**
@@ -81,6 +88,22 @@ class Order
     public function setDns($dns)
     {
         $this->dns = $dns;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage(string $language)
+    {
+        $this->language = $language;
     }
 
     /**

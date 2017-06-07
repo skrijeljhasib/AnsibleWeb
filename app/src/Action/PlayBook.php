@@ -12,6 +12,7 @@ use Project\Config\OpenStackAuth;
 use Project\Service\AddDnsEntryToOvh;
 use Project\Service\DatabaseService;
 use Project\Service\InstallDependenciesService;
+use Project\Service\LanguageService;
 use Project\Service\WebServerService;
 use Project\Service\CleanService;
 use Project\Service\WaitSSHService;
@@ -167,6 +168,16 @@ class PlayBook
                     $app
                 );
                 $json = $databaseService->mongodb();
+                break;
+
+            case 'php':
+                $this->tube = 'ansible-post';
+                $languageService = new LanguageService();
+                $languageService->load(
+                    $this->machine_access,
+                    $app
+                );
+                $json = $languageService->php($app);
                 break;
 
             case 'addDnsEntryToOvh':
