@@ -27,14 +27,15 @@
     </div>
 </div>
 <div class="row">
-<div class="container">
-	<div class="alert alert-success col-md-8 text-center" id="status" align="center">ready</div>
+    <div class="container">
+        <div class="alert alert-info col-md-8 text-center" id="status" align="center"></div>
         <button type="button" class="btn btn-primary pull-right" data-toggle="modal"
-                data-target="#confirmRefreshListModal" id="refresh" value="Refresh"><i class="glyphicon glyphicon-refresh"
-                                                                          data-toggle="tooltip" title="Refresh"></i>
+                data-target="#confirmRefreshListModal" id="refresh" value="Refresh"><i
+                    class="glyphicon glyphicon-refresh"
+                    data-toggle="tooltip" title="Refresh"></i>
         </button>
-    <br>
-</div>
+        <br>
+    </div>
 </div>
 <div class="container">
     <table id="machineTable" class="table table-hover display responsive nowrap" cellspacing="0" width="100%">
@@ -56,32 +57,28 @@
         <div class="vertical-alignment-helper">
             <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-danger">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">Confirm Delete</h4>
                     </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger">
-                                <span class="glyphicon glyphicon-warning-sign"></span>
-                                Warning: This will delete the machine permanently!
-                            </div>
-                            <div class="alert alert-info" id="checkBtnMsg">
-                                <span class="glyphicon glyphicon-warning-sign"></span>
-                                Do not forget to Check button !
-                            </div>
-			    <div class="row">
-                                <div class="col-md-8">
-                                    <input type="hidden" id="machinetodelete">
-                                    <label><input type="checkbox" value="0" name="confirmToDelete" id="confirmToDeleteCheckBox">
-                                        Check to confirm</label>
-                                </div>
-                            </div>
-
+                    <div class="modal-body">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            Warning: This will delete the machine permanently!
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" id="confirm" onclick="check();">Yes</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="hidden" id="machinetodelete">
+                                <label><input type="checkbox" value="0" name="confirmToDelete"
+                                              id="confirmToDeleteCheckBox">
+                                    Check to confirm</label>
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="confirm" onclick="check();">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
                 </div>
             </div>
         </div>

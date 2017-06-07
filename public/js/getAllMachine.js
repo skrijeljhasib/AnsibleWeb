@@ -29,7 +29,7 @@ $(document).ready(function () {
     try {
         socket = new WebSocket(websocket_server);
         socket.onopen = function () {
-            print('ready');
+            print('Ready');
             return;
         };
         socket.onmessage = function (msg) {
@@ -78,7 +78,6 @@ $(document).ready(function () {
 
 function check() {
     if (document.getElementById("confirmToDeleteCheckBox").checked === false) {
-        document.getElementById("checkBtnMsg").className = 'alert alert-warning';
         return false;
     } else {
         var output = document.getElementById('status');
