@@ -101,15 +101,13 @@ class GetWorker extends AbstractCliAction
 
                         $pheanstalk->delete($job);
 
+                        $credentials = base64_encode($url["ansible_playbook_auth"]['username'].':'.$url["ansible_playbook_auth"]['password']);
                         $guzzle_client = new Client(
                             [
                                 'base_uri' => $url["ansible_playbook"],
                                 'headers' => [
-                                    'Content-Type' => 'application/json'
-                                ],
-                                'auth' => [
-                                    $url["ansible_playbook_auth"]['username'],
-                                    $url["ansible_playbook_auth"]['password']
+                                    'Content-Type' => 'application/json',
+                                    'Authorization' => 'Basic ' . $credentials,
                                 ]
                             ]
                         );

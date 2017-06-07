@@ -52,15 +52,13 @@ class PostWorker extends AbstractCliAction
                 $websocket_client->setHost(gethostname());
                 $websocket_client->connect();
 
+                $credentials = base64_encode($url["ansible_api_auth"]['username'].':'.$url["ansible_api_auth"]['password']);
                 $guzzle_client = new Client(
                     [
                         'base_uri' => $url["ansible_api"],
                         'headers' => [
-                            'Content-Type' => 'application/json'
-                        ],
-                        'auth' => [
-                            $url["ansible_api_auth"]['username'],
-                            $url["ansible_api_auth"]['password']
+                            'Content-Type' => 'application/json',
+                            'Authorization' => 'Basic ' . $credentials,
                         ]
                     ]
                 );
