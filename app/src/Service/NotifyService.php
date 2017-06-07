@@ -2,8 +2,8 @@
 
 namespace Project\Service;
 
-use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\PlayBook;
+use Project\Entity\JSON\Shell;
 
 class NotifyService
 {
@@ -12,7 +12,22 @@ class NotifyService
      */
     public function load()
     {
-	    $playbook_json = file_get_contents('http://stackstorm.test.flash-global.net:8888/repo/notification.json');
+        $playbook = new PlayBook();
+
+        $playbook->setName('Install Machine Notification');
+        $playbook->setConnection('local');
+        $playbook->setBecome('false');
+        $playbook->setBecomeUser('www-data');
+        $playbook->setBecomeFlags('-s /bin/sh');
+        $playbook->setHosts('localhost');
+        $playbook->setGatherFacts('false');
+
+        $shell = new Shell();
+        $shell->setShell("echo 'Machine Installed'");
+
+        $playbook->setTask($shell->toArray());
+
+        $playbook_json = $playbook->toJSON();
         return $playbook_json;
     }
 }
