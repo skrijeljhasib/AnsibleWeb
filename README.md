@@ -13,10 +13,12 @@ AnsibleWeb has been tested with php7.0, apache2, mysql 5.7. It may work with alt
 Look at: https://github.com/skrijeljhasib/AnsibleApi
 
 ```
+sudo apt-get update
+sudo apt-get upgrade
 sudo apt-get install apache2
 sudo apt-get install mysql-server
+sudo apt-get install php7.0 php7.0-mysql php7.0-xml
 sudo apt-get install libapache2-mod-php
-sudo apt-get install php-mysql
 sudo apt-get install beanstalkd
 sudo apt-get install supervisor
 sudo a2enmod rewrite
@@ -26,21 +28,24 @@ sudo a2enmod rewrite
 
 Download the project and place it in your Apache2 DocumentRoot folder.
 
-Run composer inside the AnsibleWeb Folder:
+Look for composer: https://getcomposer.org/
+
+Run composer inside the AnsibleWeb-x.y.z folder:
 ```
-composer install
+sudo --user=www-data composer install
 ```
 
 ### Configuration
 
-* Set Apache DocumentRoot example: /var/www/html/AnsibleWeb/public/index.php
-* Copy app/config/ansible.php to app/config/local/ansible.local.php and add your values
+* Set Apache DocumentRoot example: /var/www/html/AnsibleWeb-x.y.z/public
+* Set Apache Rewrite rule
+* Create a database and grant user access to the database
 * Copy app/config/doctrine.php to app/config/local/doctrine.local.php and add your values
-
 * AnsibleWeb folder execute this:
 ```
 vendor/bin/doctrine orm:schema-tool:create
 ```
+* Copy app/config/ansible.php to app/config/local/ansible.local.php and add your values
 
 
 #### Default Packages
@@ -88,7 +93,7 @@ Add:
 ```
 [program:get-worker]
 command=php vendor/bin/op get-worker
-directory=/var/www/html/AnsibleWeb/
+directory=/var/www/html/AnsibleWeb-x.y.z/
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/supervisor/get-worker-stderr.log
@@ -102,7 +107,7 @@ Add:
 ```
 [program:post-worker]
 command=php vendor/bin/op post-worker
-directory=/var/www/html/AnsibleWeb/
+directory=/var/www/html/AnsibleWeb-x.y.z/
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/supervisor/post-worker-stderr.log
@@ -116,7 +121,7 @@ Add:
 ```
 [program:socket-worker]
 command=php vendor/bin/op socket-worker
-directory=/var/www/html/AnsibleWeb/
+directory=/var/www/html/AnsibleWeb-x.y.z/
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/supervisor/socket-worker-stderr.log
@@ -138,6 +143,10 @@ sudo service supervisor restart
 ## Optional 
 ### OVH DNS
 Look at: https://github.com/gheesh/ansible-ovh-dns
+
+## Finally
+
+* You must at first reload the machine list by clicking on the refresh button in the **List machine** page. After this you can create machines in the **Create your machine** page.
 
 ## Contributors
 
