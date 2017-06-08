@@ -22,6 +22,7 @@ use Project\Service\GetAllMachineService;
 use Project\Service\InstallPackageService;
 use Project\Service\AddToHostFile;
 use Project\Service\NotifyService;
+use Project\Service\TemplateService;
 use stdClass;
 use Pheanstalk\Pheanstalk;
 
@@ -118,6 +119,12 @@ class PlayBook
                 $json = $waitService->load(
                     $app->getRequest()->getParameters()
                 );
+                break;
+
+	    case 'notify':
+                $this->tube = 'ansible-post';
+                $templateService = new TemplateService();
+                $json = $templateService->load();
                 break;
 
             case 'notify':

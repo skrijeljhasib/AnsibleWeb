@@ -149,6 +149,19 @@ class GetWorker extends AbstractCliAction
                                 break;
                             }
 
+			    $response = $guzzle_client->request('GET', '/PlayBook',
+                                [   
+                                    'query' => [
+                                        'playbook' => 'installtemplate',
+                                        'ip' => $ip
+                                    ]
+                                ]
+                            );
+                            if ($response->getStatusCode() != 200) {
+                                echo 'Error playbook installtemplate';
+                                break;
+                            }
+
                             $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
                             $order = $orders_gateway->fetchByName($name);
 
