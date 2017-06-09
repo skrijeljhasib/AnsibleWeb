@@ -46,7 +46,8 @@ class GetWorker extends AbstractCliAction
                 $websocket_client->setHost(gethostname());
                 $websocket_client->connect();
 
-                $callback['callback'] = json_decode($job->getData(), true)['name'];
+		$json = json_decode($job->getData(), true);
+                $callback['callback'] = $json['name'];
                 if (!is_null($callback['callback'])) {
                     $websocket_client->send(json_encode($callback));
                 }

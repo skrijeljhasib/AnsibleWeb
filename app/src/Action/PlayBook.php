@@ -132,7 +132,9 @@ class PlayBook
             case 'notify':
                 $this->tube = 'ansible-post';
                 $notifyService = new NotifyService();
-                $json = $notifyService->load();
+                $json = $notifyService->load(
+			$app->getRequest()->getParameters()
+		);
                 break;
 
             case 'apache':
