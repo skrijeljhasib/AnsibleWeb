@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    $('.dropdown-menu a').click(function(){
+    	$('#selected').text($(this).text());
+    });
+
     var websocket_server = 'ws://' + window.location.hostname + ':9000';
     var socket = null;
     var finalName = '';
