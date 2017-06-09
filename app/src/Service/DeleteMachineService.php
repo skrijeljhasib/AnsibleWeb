@@ -62,7 +62,7 @@ class DeleteMachineService
 
         $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
         $order = $orders_gateway->fetchByName($host->getName());
-        $orders_gateway->delete($order);
+        if ($order) { $orders_gateway->delete($order); }
 
         return $playbook_json;
     }
