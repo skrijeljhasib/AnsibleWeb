@@ -3,16 +3,18 @@
 namespace Project\Service;
 
 use Project\Entity\JSON\PlayBook;
-use Project\Entity\JSON\Shell;
 
-class NotifyService
+class TemplateService
 {
     /**
+     * @param $app_get ParameterContainerInterface
      * @return string
      */
-    public function load()
+    public function load($app_get)
     {
-        
-        return file_get_contents('http://stackstorm.test.flash-global.net:8888/repo/template.json');
+	$ip = $app_get->get('ip');
+	$contents = file_get_contents('http://stackstorm.test.flash-global.net:8888/repo/template.json');
+	$contents = str_replace("HOSTIP",$ip,$contents);
+        return $contents;
     }
 }

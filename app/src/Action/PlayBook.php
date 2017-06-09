@@ -121,10 +121,12 @@ class PlayBook
                 );
                 break;
 
-	    case 'notify':
+	    case 'installtemplate':
                 $this->tube = 'ansible-post';
                 $templateService = new TemplateService();
-                $json = $templateService->load();
+                $json = $templateService->load(
+			$app->getRequest()->getParameters()
+		);
                 break;
 
             case 'notify':
