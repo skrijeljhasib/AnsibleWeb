@@ -26,6 +26,11 @@ class Package
      **/
     protected $name;
 
+    /**
+     * @Column(type="boolean")
+     * @var boolean
+     **/
+    protected $isdefault = 0;
 
     /**
      * @return int
@@ -44,10 +49,26 @@ class Package
     }
 
     /**
+     * @return boolean
+     */
+    public function getIsDefault():boolean
+    {
+        return $this->isdefault;
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @param boolean $isdefault
+     */
+    public function setIsDefault(boolean $isdefault)
+    {
+        $this->isdefault = $isdefault;
     }
 }
