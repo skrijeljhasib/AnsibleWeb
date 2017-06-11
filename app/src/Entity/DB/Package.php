@@ -49,9 +49,9 @@ class Package
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function getIsDefault():boolean
+    public function getIsDefault():bool
     {
         return $this->isdefault;
     }

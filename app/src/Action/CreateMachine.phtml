@@ -59,7 +59,11 @@ use Project\Entity\DB\Package;
 
                                 Vars::collection('packages')->each(
                                     function (Package $package) {
-                                        echo "<option value=" . $package->getName() . ">" . $package->getName() . "</option>";
+                                        echo "<option value=" . $package->getName();
+					if ($package->getIsDefault()) { 
+						echo  " selected>";
+					} else { echo " >"; }
+					echo $package->getName() . "</option>";
                                     }
                                 );
 
