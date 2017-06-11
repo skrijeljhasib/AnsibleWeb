@@ -60,9 +60,9 @@ class DeleteMachineService
         $host->setStatus('DELETING');
         $hosts_gateway->put($host);
 
-        $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
+/*        $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
         $order = $orders_gateway->fetchByName($host->getName());
-        if ($order) { $orders_gateway->delete($order); }
+        if ($order) { $orders_gateway->delete($order); }*/
 
         return $playbook_json;
     }

@@ -10,6 +10,7 @@ use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
 use Project\Service\AddDnsEntryToOvh;
+use Project\Service\DelDnsEntryToOvh;
 use Project\Service\DatabaseService;
 use Project\Service\InstallDependenciesService;
 use Project\Service\LanguageService;
@@ -194,6 +195,15 @@ class PlayBook
             case 'addDnsEntryToOvh':
                 $this->tube = 'ansible-post';
                 $addDnsEntryToOvh = new AddDnsEntryToOvh();
+                $json = $addDnsEntryToOvh->load(
+                    $app,
+                    $this->ovh_dns_auth
+                );
+                break;
+
+            case 'delDnsEntryToOvh':
+                $this->tube = 'ansible-post';
+                $addDnsEntryToOvh = new DelDnsEntryToOvh();
                 $json = $addDnsEntryToOvh->load(
                     $app,
                     $this->ovh_dns_auth

@@ -82,6 +82,45 @@ class GetWorker extends AbstractCliAction
                         if ($machine['result'] == "deleted") {
                             $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
                             $host = $hosts_gateway->fetchByName($name);
+
+			    $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
+        		    $order = $orders_gateway->fetchByName($host->getName());
+        		    if (!empty($order)) { 
+				if (!is_null($order->getDns()) && $order->getDns()) {
+                                	$dns = json_decode($order->getDns(), true);
+					$guzzle_client = new Client(
+                            [
+                                'base_uri' => $url["ansible_playbook"],
+                                'headers' => [
+                                    'Content-Type' => 'application/json'
+                                ]
+                            ]
+                        		);
+                        		try {
+                                   	$response = $guzzle_client->request('GET', '/PlayBook',
+                                        [
+                                            'query' => [
+                                                'playbook' => 'delDnsEntryToOvh',
+                                                'host_name' => $name,
+                                                'type' => $dns['dns_type'],
+                                                'domain_name' => $dns['dns_domain_name'],
+                                                'ip' => $host->getIp()
+                                            		]
+                                        ]	
+                                    	);
+                                    	if ($response->getStatusCode() != 200) {
+                                        	echo 'Error playbook delDnsEntryToOvh';
+                                        	break;
+                                    	}
+					} catch (RequestException $e) {
+                            			echo Psr7\str($e->getRequest());
+                            			if ($e->hasResponse()) {
+                                			echo Psr7\str($e->getResponse());
+                            			}
+                        		}
+                                }
+				$orders_gateway->delete($order); 
+			    }
                             $hosts_gateway->delete($host);
                         }
                         $pheanstalk->delete($job);
