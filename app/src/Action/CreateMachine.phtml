@@ -313,13 +313,12 @@ use Project\Entity\DB\Package;
                                 <br>
                                 <label>Domain Name:
                                     <select required id="dns_domain_name" class="form-control">
-                                        <?php $selected = "selected";
-                                        foreach (Vars::collection('dns_config')["domain"] as $domain) { ?>
-                                            <option value="<?php echo $domain . " " . $selected; ?>">
-                                                <?php echo $domain;
-                                                $selected = ""; ?>
-                                            </option>
-                                        <?php } ?>
+					<?php $selected = "selected";
+                                        foreach (Vars::collection('dns_config')["domain"] as $domain) { 
+                                            	echo '<option value="' . $domain . '" ' . $selected . '>' . $domain; 
+						$selected = "";
+                                        	echo '</option>';
+					} ?>
                                     </select>
                                 </label>
                             </div>
