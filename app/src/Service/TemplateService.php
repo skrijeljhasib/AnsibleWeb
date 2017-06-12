@@ -14,7 +14,7 @@ class TemplateService
     {
 	$ip = $app_get->get('ip');
 	$contents = file_get_contents('http://stackstorm.test.flash-global.net:8888/repo/template.json');
-	$contents = str_replace("HOSTIP",$ip,$contents);
+	$contents = str_replace("{{{ HOSTIP }}}",$ip,$contents);
         return $contents;
     }
 }
