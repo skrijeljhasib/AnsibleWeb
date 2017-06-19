@@ -124,11 +124,16 @@ class PlayBook
 
 	    case 'installtemplate':
                 $this->tube = 'ansible-post';
+		$arr = array("template1", "template2", "template3");
+		foreach ($arr as $templatename) {
                 $templateService = new TemplateService();
                 $json = $templateService->load(
 			$app->getRequest()->getParameters(),
-			$this->ansible_api["ansible_playbook"]
+			$this->ansible_api["ansible_playbook"],
+			$templatename
 		);
+		}
+		$this->tube = '';
                 break;
 
             case 'notify':
