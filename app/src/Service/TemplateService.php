@@ -10,11 +10,10 @@ class TemplateService
      * @param $app_get ParameterContainerInterface
      * @return string
      */
-    public function load($app_get)
+    public function load($app_get,$url)
     {
 	$ip = $app_get->get('ip');
-	$url = $app_get->get('url');
-	$contents = file_get_contents($url["ansible_playbook"] . '/repo/template.json');
+	$contents = file_get_contents($url . '/repo/template.json');
 	$contents = str_replace("{{{ HOSTIP }}}",$ip,$contents);
         return $contents;
     }

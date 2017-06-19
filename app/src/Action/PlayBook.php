@@ -126,7 +126,8 @@ class PlayBook
                 $this->tube = 'ansible-post';
                 $templateService = new TemplateService();
                 $json = $templateService->load(
-			$app->getRequest()->getParameters()
+			$app->getRequest()->getParameters(),
+			$this->ansible_api["ansible_playbook"]
 		);
                 break;
 
