@@ -126,12 +126,13 @@ class PlayBook
                 $this->tube = 'ansible-post';
 		$arr = array("template1", "template2", "template3");
 		foreach ($arr as $templatename) {
-                $templateService = new TemplateService();
-                $json = $templateService->load(
-			$app->getRequest()->getParameters(),
-			$this->ansible_api["ansible_playbook"],
-			$templatename
-		);
+                	$templateService = new TemplateService();
+                	$json = $templateService->load(
+				$app->getRequest()->getParameters(),
+				$this->ansible_api["ansible_playbook"],
+				$templatename
+			);
+			$pheanstalk->useTube($this->tube)->put($json);
 		}
 		$this->tube = '';
                 break;
