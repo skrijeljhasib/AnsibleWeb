@@ -2,31 +2,31 @@
 
 namespace Project\Action;
 
+use Pheanstalk\Pheanstalk;
 use Project\Application;
-use Project\Config\OvhDnsAuth;
-use Project\Config\Url;
 use Project\Config\Host;
-use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
+use Project\Config\MachineTemplate;
 use Project\Config\OpenStackAuth;
+use Project\Config\OvhDnsAuth;
 use Project\Config\TemplateJson;
+use Project\Config\Url;
 use Project\Service\AddDnsEntryToOvh;
-use Project\Service\DelDnsEntryToOvh;
-use Project\Service\DatabaseService;
-use Project\Service\InstallDependenciesService;
-use Project\Service\LanguageService;
-use Project\Service\WebServerService;
+use Project\Service\AddToHostFile;
 use Project\Service\CleanService;
-use Project\Service\WaitSSHService;
-use Project\Service\InstallMachineService;
+use Project\Service\DatabaseService;
+use Project\Service\DelDnsEntryToOvh;
 use Project\Service\DeleteMachineService;
 use Project\Service\GetAllMachineService;
+use Project\Service\InstallDependenciesService;
+use Project\Service\InstallMachineService;
 use Project\Service\InstallPackageService;
-use Project\Service\AddToHostFile;
+use Project\Service\LanguageService;
 use Project\Service\NotifyService;
 use Project\Service\TemplateService;
+use Project\Service\WaitSSHService;
+use Project\Service\WebServerService;
 use stdClass;
-use Pheanstalk\Pheanstalk;
 
 /**
  * Class PlayBook
@@ -44,7 +44,7 @@ class PlayBook
      * @var string $tube Beanstalk tube
      */
     private $ansible_api, $openstack_auth, $machine_template,
-        $machine_access, $host, $tube, $ovh_dns_auth, $templatejson;
+        $machine_access, $host, $tube, $ovh_dns_auth, $templateJson;
 
     /**
      * Check the playbook get parameter and return a json string of the playbook to the client
@@ -59,7 +59,7 @@ class PlayBook
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
         $this->ovh_dns_auth = $app->getConfig()->get(OvhDnsAuth::class);
-	$this->templatejson = $app->getConfig()->get(TemplateJson::class);
+        $this->templateJson = $app->getConfig()->get(TemplateJson::class);
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
@@ -124,26 +124,26 @@ class PlayBook
                 );
                 break;
 
-	    case 'installtemplate':
+            case 'installtemplate':
                 $this->tube = 'ansible-post';
-		foreach ($templatejson as $templatename) {
-                	$templateService = new TemplateService();
-                	$json = $templateService->load(
-				$app->getRequest()->getParameters(),
-				$this->ansible_api["ansible_playbook"],
-				$templatename
-			);
-			$pheanstalk->useTube($this->tube)->put($json);
-		}
-		$this->tube = '';
+                foreach ($this->templateJson as $templatename) {
+                    $templateService = new TemplateService();
+                    $json = $templateService->load(
+                        $app->getRequest()->getParameters(),
+                        $this->ansible_api["ansible_playbook"],
+                        $templatename
+                    );
+                    $pheanstalk->useTube($this->tube)->put($json);
+                }
+                $this->tube = '';
                 break;
 
             case 'notify':
                 $this->tube = 'ansible-post';
                 $notifyService = new NotifyService();
                 $json = $notifyService->load(
-			$app->getRequest()->getParameters()
-		);
+                    $app->getRequest()->getParameters()
+                );
                 break;
 
             case 'apache':

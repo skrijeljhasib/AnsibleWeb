@@ -17,7 +17,7 @@ $url = [
     "websocket_client" => "ws://127.0.0.1:9000"
 ];
 
-$templatejson = [
+$templateJson = [
 	"template1", 
 	"template2", 
 	"template3"
@@ -56,5 +56,5 @@ return [
     new Host($host),
     new MachineAccess($machine_access),
     new Url($url),
-    new TemplateJson($templatejson)
+    new TemplateJson($templateJson)
 ];
