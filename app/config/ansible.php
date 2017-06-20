@@ -7,6 +7,7 @@ use Project\Config\Host;
 use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
 use Project\Config\MachineTemplate;
+use Project\Config\TemplateJson;
 
 $url = [
     "ansible_api" => "http://localhost:8080",
@@ -55,4 +56,5 @@ return [
     new Host($host),
     new MachineAccess($machine_access),
     new Url($url),
+    new TemplateJson($templatejson)
 ];
