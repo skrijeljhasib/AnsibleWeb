@@ -16,6 +16,12 @@ $url = [
     "websocket_client" => "ws://127.0.0.1:9000"
 ];
 
+$templatejson = [
+	"template1", 
+	"template2", 
+	"template3"
+);
+
 $openstack_auth = [
     "auth_url" => "auth_url",
     "username" => "username",

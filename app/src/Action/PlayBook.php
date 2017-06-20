@@ -9,6 +9,7 @@ use Project\Config\Host;
 use Project\Config\MachineTemplate;
 use Project\Config\MachineAccess;
 use Project\Config\OpenStackAuth;
+use Project\Config\TemplateJson;
 use Project\Service\AddDnsEntryToOvh;
 use Project\Service\DelDnsEntryToOvh;
 use Project\Service\DatabaseService;
@@ -58,6 +59,7 @@ class PlayBook
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
         $this->ovh_dns_auth = $app->getConfig()->get(OvhDnsAuth::class);
+	$this->templatejson = $app->getConfig()-get(TemplateJson::class);
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
@@ -124,8 +126,7 @@ class PlayBook
 
 	    case 'installtemplate':
                 $this->tube = 'ansible-post';
-		$arr = array("template1", "template2", "template3");
-		foreach ($arr as $templatename) {
+		foreach ($templatejson as $templatename) {
                 	$templateService = new TemplateService();
                 	$json = $templateService->load(
 				$app->getRequest()->getParameters(),
