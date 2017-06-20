@@ -44,7 +44,7 @@ class PlayBook
      * @var string $tube Beanstalk tube
      */
     private $ansible_api, $openstack_auth, $machine_template,
-        $machine_access, $host, $tube, $ovh_dns_auth;
+        $machine_access, $host, $tube, $ovh_dns_auth, $templatejson;
 
     /**
      * Check the playbook get parameter and return a json string of the playbook to the client
@@ -59,7 +59,7 @@ class PlayBook
         $this->machine_access = $app->getConfig()->get(MachineAccess::class);
         $this->host = $app->getConfig()->get(Host::class);
         $this->ovh_dns_auth = $app->getConfig()->get(OvhDnsAuth::class);
-	$this->templatejson = $app->getConfig()-get(TemplateJson::class);
+	$this->templatejson = $app->getConfig()->get(TemplateJson::class);
         $pheanstalk = new Pheanstalk($this->ansible_api["beanstalk"]);
 
         switch ($app->getRequest()->getParameters()->get('playbook')) {
