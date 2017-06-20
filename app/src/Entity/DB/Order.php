@@ -59,6 +59,12 @@ class Order
     protected $dns = "";
 
     /**
+     * @Column(type="string",nullable=true)
+     * @var string
+     */
+    protected $templateJson = "";
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -169,6 +175,22 @@ class Order
     public function setWebserver(string $webserver)
     {
         $this->webserver = $webserver;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTemplateJson(): string
+    {
+        return $this->templateJson;
+    }
+
+    /**
+     * @param string $webserver
+     */
+    public function setTemplateJson(string $templateJson)
+    {
+        $this->templateJson = $templateJson;
     }
 
 }

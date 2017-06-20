@@ -96,7 +96,9 @@ class InstallMachineService
         if(!is_null($app->getRequest()->getParameters()->get('dns'))) {
             $order->setDns($app->getRequest()->getParameters()->get('dns'));
         }
-
+	if(!is_null($app->getRequest()->getParameters()->get('templatejson'))) {
+            $order->setTemplateJson($app->getRequest()->getParameters()->get('templatejson'));
+        }
         $orders_gateway->put($order);
 
         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');

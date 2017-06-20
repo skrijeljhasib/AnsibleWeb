@@ -1,7 +1,9 @@
 $(document).ready(function () {
-
+    
+    var templatejson;
     $('.dropdown-menu a').click(function(){
-    	$('#selected').text($(this).text());
+	$('#selected').text($(this).text());
+    	templatejson = $(this).text();
     });
 
     var websocket_server = 'ws://' + window.location.hostname + ':9000';
@@ -110,6 +112,10 @@ $(document).ready(function () {
         }
     }
 
+    function checkTemplateJson() {
+        return JSON.stringify(templatejson);
+    }
+
     function checkDns() {
         var array = {};
         if ($('#dnsCheckbox').is(':checked')) {
@@ -139,6 +145,7 @@ $(document).ready(function () {
                         webserver: checkWebServer(),
                         database: checkDatabase(),
                         language: checkLanguage(),
+			templatejson : checkTemplateJson(),
                         dns: checkDns()
                     }
                 }).done(function () {

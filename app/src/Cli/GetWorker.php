@@ -189,23 +189,26 @@ class GetWorker extends AbstractCliAction
                                 break;
                             }
 
-			    $response = $guzzle_client->request('GET', '/PlayBook',
-                                [   
+                            $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
+                            $order = $orders_gateway->fetchByName($name);
+
+                            if (!empty($order)) {
+
+                                if (!is_null($order->getTemplateJson()) && $order->getTemplateJson() == '"Template:Yes"') {
+                                    $dns = json_decode($order->getTemplateJson(), true);
+			            $response = $guzzle_client->request('GET', '/PlayBook',
+                                [
                                     'query' => [
                                         'playbook' => 'installtemplate',
                                         'ip' => $ip
                                     ]
                                 ]
-                            );
-                            if ($response->getStatusCode() != 200) {
-                                echo 'Error playbook installtemplate';
-                                break;
-                            }
-
-                            $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
-                            $order = $orders_gateway->fetchByName($name);
-
-                            if (!empty($order)) {
+                                    );
+                            		if ($response->getStatusCode() != 200) {
+                                		echo 'Error playbook installtemplate';
+                                		break;
+                            		}
+                                }
 
                                 if (!is_null($order->getDns()) && $order->getDns()) {
                                     $dns = json_decode($order->getDns(), true);
@@ -225,6 +228,7 @@ class GetWorker extends AbstractCliAction
                                         break;
                                     }
                                 }
+
 
                                 if (!is_null($order->getLanguage()) && $order->getLanguage()) {
                                     $language = json_decode($order->getLanguage(), true);

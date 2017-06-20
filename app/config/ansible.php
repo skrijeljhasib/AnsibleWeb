@@ -18,9 +18,6 @@ $url = [
 ];
 
 $templateJson = [
-	"template1", 
-	"template2", 
-	"template3"
 ];
 
 $openstack_auth = [

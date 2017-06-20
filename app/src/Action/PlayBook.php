@@ -142,7 +142,8 @@ class PlayBook
                 $this->tube = 'ansible-post';
                 $notifyService = new NotifyService();
                 $json = $notifyService->load(
-                    $app->getRequest()->getParameters()
+                    $app->getRequest()->getParameters(),
+		    $this->host
                 );
                 break;
 
