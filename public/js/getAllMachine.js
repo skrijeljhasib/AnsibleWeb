@@ -35,9 +35,15 @@ $(document).ready(function () {
         socket.onmessage = function (msg) {
             var jsonObject = JSON.parse(msg.data);
             if (jsonObject.progress == "100") {
-                output.innerHTML = 'Done';
-                machineTable.ajax.reload();
-                $('#refresh').attr('disabled', false);
+
+                setTimeout(
+                    function(){
+                        machineTable.ajax.reload();
+                        output.innerHTML = 'Done';
+                        $('#refresh').attr('disabled', false);
+                    },
+                    3000
+                );
             }
             return;
         };
