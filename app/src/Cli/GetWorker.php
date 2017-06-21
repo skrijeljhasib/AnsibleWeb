@@ -40,18 +40,6 @@ class GetWorker extends AbstractCliAction
 
             if ($job !== false) {
 
-                $websocket_client = new \Hoa\Websocket\Client(
-                    new \Hoa\Socket\Client($url['websocket_client'])
-                );
-                $websocket_client->setHost(gethostname());
-                $websocket_client->connect();
-
-                $callback['callback'] = json_decode($job->getData(), true)['name'];
-                if (!is_null($callback['callback'])) {
-                    $websocket_client->send(json_encode($callback));
-                }
-                $websocket_client->close();
-
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
                         $machines = json_decode($job->getData(), true);
@@ -292,28 +280,6 @@ class GetWorker extends AbstractCliAction
                         break;
 
                     default:
-                        /*
-                        $machine = json_decode($job->getData(), true);
-                        if ($machine['unreachable'] == "true") {
-                            $pheanstalk->bury($job);
-                            break;
-                        }
-                        if (($machine['state'] == "started") && ($machine['port'] == "22")) {
-                            $pheanstalk->delete($job);
-                            break;
-                        }
-                        if ($machine['msg'] == "line added") {
-                            $pheanstalk->delete($job);
-                            break;
-                        }
-                        if (strpos($machine['stdout'], 'Setting up python-simplejson') !== false) {
-                            $pheanstalk->delete($job);
-                            break;
-                        }
-                        if ($machine['msg'] == "All items completed") {
-                            $pheanstalk->delete($job);
-                            break;
-                        }*/
                         $pheanstalk->delete($job);
                         break;
                 }

@@ -9,8 +9,8 @@
 namespace Project\Cli;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Cli\Action\AbstractCliAction;
 use Pheanstalk\Pheanstalk;
@@ -46,12 +46,6 @@ class PostWorker extends AbstractCliAction
 
             if ($job !== false) {
 
-                $websocket_client = new \Hoa\Websocket\Client(
-                    new \Hoa\Socket\Client($url['websocket_client'])
-                );
-                $websocket_client->setHost(gethostname());
-                $websocket_client->connect();
-
                 $guzzle_client = new Client(
                     [
                         'base_uri' => $url["ansible_api"],
@@ -63,7 +57,13 @@ class PostWorker extends AbstractCliAction
                 try {
                     $callback['progress'] = "0";
                     $callback['task'] = json_decode($job->getData(), true)['name'];
+                    $websocket_client = new \Hoa\Websocket\Client(
+                        new \Hoa\Socket\Client($url['websocket_client'])
+                    );
+                    $websocket_client->setHost(gethostname());
+                    $websocket_client->connect();
                     $websocket_client->send(json_encode($callback));
+                    $websocket_client->close();
 
                     $response = $guzzle_client->request('POST', '/post_data',
                         [
@@ -74,7 +74,14 @@ class PostWorker extends AbstractCliAction
                     if ($response->getStatusCode() == 200) {
                         $callback['progress'] = "100";
                         $callback['task'] = json_decode($job->getData(), true)['name'];
+                        $websocket_client = new \Hoa\Websocket\Client(
+                            new \Hoa\Socket\Client($url['websocket_client'])
+                        );
+                        $websocket_client->setHost(gethostname());
+                        $websocket_client->connect();
                         $websocket_client->send(json_encode($callback));
+                        $websocket_client->close();
+
                         $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody());
                         $pheanstalk->delete($job);
                     } else {
@@ -87,7 +94,6 @@ class PostWorker extends AbstractCliAction
                         echo Psr7\str($e->getResponse());
                     }
                 }
-                $websocket_client->close();
 
             } else {
                 echo 'waiting...';
