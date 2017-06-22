@@ -330,7 +330,8 @@ class GetWorker extends AbstractCliAction
                                 [
                                     'query' => [
                                         'playbook' => 'notify',
-                                        'ip' => $ip
+                                        'ip' => $ip,
+					'name' => $name
                                     ]
                                 ]
                             );

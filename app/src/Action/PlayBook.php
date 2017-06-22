@@ -94,8 +94,8 @@ class PlayBook
 
             case 'addtohostfile':
                 $this->tube = 'ansible-post';
-                $addtohotfile = new AddToHostFile();
-                $json = $addtohotfile->load($app);
+                $addtohostfile = new AddToHostFile();
+                $json = $addtohostfile->load($app);
                 break;
 
             case 'installpackage':
@@ -142,8 +142,7 @@ class PlayBook
                 $this->tube = 'ansible-post';
                 $notifyService = new NotifyService();
                 $json = $notifyService->load(
-                    $app->getRequest()->getParameters(),
-		    $this->host
+                    $app->getRequest()->getParameters()
                 );
                 break;
 
