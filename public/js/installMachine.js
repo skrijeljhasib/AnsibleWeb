@@ -12,6 +12,7 @@ $(document).ready(function () {
 
     $('#name').bind('input propertychange', function () {
         var hostname = $(this).val();
+	if (/^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/.test(hostname)) {
 
         $.ajax({
             type: 'GET',
@@ -31,7 +32,11 @@ $(document).ready(function () {
         }).fail(function (error) {
             console.log(JSON.stringify(error));
         });
-    });
+	} else {
+		$('#name').css('border-color', 'red');
+                $('#SendToAnsibleApi').attr('disabled', true);
+	}
+});
 
     $('#createMachine').submit(function (event) {
         event.preventDefault();
