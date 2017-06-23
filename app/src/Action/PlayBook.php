@@ -82,14 +82,17 @@ class PlayBook
                 break;
 
             case 'installmachine':
-                $this->tube = 'installmachine';
-                $machineService = new InstallMachineService();
-                $json = $machineService->load(
-                    $this->openstack_auth,
-                    $this->machine_template,
-                    $this->host,
-                    $app
-                );
+		$key = "name";
+		if (preg_match("/^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/", json_decode($app->getRequest()->getParameters()->get('host'))->$key, $output_array)) {
+                	$this->tube = 'installmachine';
+                	$machineService = new InstallMachineService();
+                	$json = $machineService->load(
+                    		$this->openstack_auth,
+                    		$this->machine_template,
+                    		$this->host,
+                    		$app
+                	);
+		}
                 break;
 
             case 'addtohostfile':
