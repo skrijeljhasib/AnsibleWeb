@@ -226,7 +226,8 @@ class PlayBook
         }
         if (!empty($this->tube)) {
             $pheanstalk->useTube($this->tube)->put($json);
-        }
-
+        } else {
+		throw new \Exception ("Bad Request", 400);
+	}
     }
 }
