@@ -8,14 +8,14 @@
 
 namespace Project\Action;
 
-
 use ObjectivePHP\Html\Exception;
-use Project\Application;
+use ObjectivePHP\Application\ApplicationInterface;
+use ObjectivePHP\Application\Action\AjaxAction;
 
-class GetAllMachine
+class GetAllMachine extends AjaxAction
 {
 
-    public function __invoke(Application $app)
+    public function run(ApplicationInterface $app)
     {
         try {
             $host_gateway = $app->getServicesFactory()->get('gateway.hosts');
@@ -40,8 +40,8 @@ class GetAllMachine
 
             $hosts['data'][] = $host;
         }
-
-        echo json_encode($hosts);
+	
+        return $hosts;
     }
 
 }
