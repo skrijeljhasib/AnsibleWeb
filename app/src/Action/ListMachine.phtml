@@ -50,11 +50,20 @@
 <div class="row">
     <div class="container">
         <div class="alert alert-info col-md-8 text-center" id="status" align="center"></div>
-        <button type="button" class="btn btn-primary pull-right" data-toggle="modal"
+	<div>
+        <button type="button" class="btn btn-danger pull-right" data-toggle="modal"
+                data-target="#confirmAllDeleteModal" id="deleteallmachines" value="DeleteAll"><i
+                    class="glyphicon glyphicon-trash"
+                    data-toggle="tooltip" title="DeleteAll"></i>
+        </button>	
+	<span class="pull-right">&nbsp</span>
+	<button type="button" class="btn btn-primary pull-right" data-toggle="modal"
                 data-target="#confirmRefreshListModal" id="refresh" value="Refresh"><i
                     class="glyphicon glyphicon-refresh"
                     data-toggle="tooltip" title="Refresh"></i>
+	
         </button>
+	</div>
         <br>
     </div>
 </div>
