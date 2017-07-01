@@ -19,6 +19,7 @@ $(document).ready(function () {
         columns: [
             {"data": "id"},
             {"data": "name"},
+            {"data": "group"},
             {"data": "ip"},
             {"data": "location"},
             {"data": "status"},

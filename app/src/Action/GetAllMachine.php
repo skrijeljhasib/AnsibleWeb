@@ -34,7 +34,7 @@ class GetAllMachine extends AjaxAction
             if ($host['status'] != 'ACTIVE') {
                 $btn = 'disabled';
             }
-            $action = '<form><input type="hidden" name="name" value="' . $host['name'] . '"><button type="button" ' . $btn . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button></form>';
+            $action = '<form><input type="hidden" name="name" value="' . $host['name'] . '"><button type="button" ' . $btn . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button>&nbsp<button type="button" ' . $btn . ' class="btn btn-primary" data-toggle="modal" data-target="#hostEditModal"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Delete"></i></button></form>';
 
             $host['action'] = $action;
 

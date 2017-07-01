@@ -52,6 +52,12 @@ class Host
     protected $status;
 
     /**
+     * @Column(type="string")
+     * @var string
+     **/
+    protected $group = '';
+
+    /**
      * @Column(type="integer",length=2)
      * @var int
      **/
@@ -143,6 +149,22 @@ class Host
     public function setState(int $state)
     {
         $this->status = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param string $group
+     */
+    public function setGroup(string $group)
+    {
+        $this->ip = $group;
     }
 
     /**
