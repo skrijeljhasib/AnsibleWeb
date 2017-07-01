@@ -53,6 +53,13 @@ $(document).ready(function () {
     $('#confirmDeleteModal').on('show.bs.modal', function (e) {
         var form = $(e.relatedTarget).closest('form');
         $('#machinetodelete').val(form[0].name.value);
+	$('#deletehostname').text(form[0].name.value);
+    });
+
+    $('#hostEditModal').on('show.bs.modal', function (e) {
+        var form = $(e.relatedTarget).closest('form');
+        $('#machinetoedit').val(form[0].name.value);
+	$('#edithostname').text(form[0].name.value);
 
     });
 
@@ -76,6 +83,29 @@ $(document).ready(function () {
     });
 
 });
+
+function edithost() {
+        var output = document.getElementById('status');
+        output.innerHTML = 'Modifying Host';
+        $.ajax({
+            type: 'GET',
+            url: 'PlayBook',
+            data: {
+                playbook: 'editmachine',
+                name: $('#machinetoedit').val()
+            }
+        }).done(function () {
+
+            machineTable.ajax.reload();
+
+        }).fail(function (error) {
+            console.log(JSON.stringify(error));
+        });
+
+        $('#hostEditModal').modal('hide');
+
+        return false;
+}
 
 function check() {
     if (document.getElementById("confirmToDeleteCheckBox").checked === false) {
