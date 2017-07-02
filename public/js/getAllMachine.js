@@ -59,6 +59,7 @@ $(document).ready(function () {
     $('#confirmSoftDeleteModal').on('show.bs.modal', function (e) {
         var form = $(e.relatedTarget).closest('form');
         $('#machinetosoftdelete').val(form[0].name.value);
+	$('#deletedbhostname').text(form[0].name.value);
     });
 
     $('#hostEditModal').on('show.bs.modal', function (e) {
