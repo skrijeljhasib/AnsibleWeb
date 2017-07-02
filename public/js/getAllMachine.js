@@ -26,6 +26,7 @@ $(document).ready(function () {
             {"data": "action"}
         ]
     });
+    $('#machineTable_filter input').focus();
 
     try {
         socket = new WebSocket(websocket_server);
