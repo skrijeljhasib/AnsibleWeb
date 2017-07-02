@@ -17,6 +17,7 @@ use Project\Service\CleanService;
 use Project\Service\DatabaseService;
 use Project\Service\DelDnsEntryToOvh;
 use Project\Service\DeleteMachineService;
+use Project\Service\DeleteMachineServiceDB;
 use Project\Service\GetAllMachineService;
 use Project\Service\InstallDependenciesService;
 use Project\Service\InstallMachineService;
@@ -79,6 +80,14 @@ class PlayBook
                     $this->openstack_auth,
                     $app
                 );
+                break;
+
+            case 'deletemachinedb':
+                $machineService = new DeleteMachineServiceDB();
+                $json = $machineService->load(
+                    $app
+                );
+		return;
                 break;
 
             case 'installmachine':

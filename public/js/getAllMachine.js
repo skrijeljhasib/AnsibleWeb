@@ -56,6 +56,11 @@ $(document).ready(function () {
 	$('#deletehostname').text(form[0].name.value);
     });
 
+    $('#confirmSoftDeleteModal').on('show.bs.modal', function (e) {
+        var form = $(e.relatedTarget).closest('form');
+        $('#machinetosoftdelete').val(form[0].name.value);
+    });
+
     $('#hostEditModal').on('show.bs.modal', function (e) {
         var form = $(e.relatedTarget).closest('form');
         $('#machinetoedit').val(form[0].name.value);
@@ -129,6 +134,33 @@ function check() {
         });
 
         $('#confirmDeleteModal').modal('hide');
+
+        return false;
+    }
+}
+
+function deletesoft() {
+    if (document.getElementById("confirmToSoftDeleteCheckBox").checked === false) {
+        return false;
+    } else {
+        var output = document.getElementById('status');
+        output.innerHTML = 'Deleting';
+        $.ajax({
+            type: 'GET',
+            url: 'PlayBook',
+            data: {
+                playbook: 'deletemachinedb',
+                name: $('#machinetosoftdelete').val()
+            }
+        }).done(function () {
+
+            machineTable.ajax.reload();
+
+        }).fail(function (error) {
+            console.log(JSON.stringify(error));
+        });
+
+        $('#confirmSoftDeleteModal').modal('hide');
 
         return false;
     }

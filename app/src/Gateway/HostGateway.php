@@ -73,9 +73,9 @@ class HostGateway
      * @return boolean
      */
 
-    public function delete($id)
+    public function delete($host)
     {
-        $this->getEntityManager()->remove($id);
+        $this->getEntityManager()->remove($host);
         $this->getEntityManager()->flush();
         return true;
     }

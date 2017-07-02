@@ -127,6 +127,37 @@
         </tbody>
     </table>
 
+    <div class="modal fade" id="confirmSoftDeleteModal">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Confirm DB Deletion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-warning">
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            Warning: <b><span id="deletehostname"></span></b> will be deleted from database!
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="hidden" id="machinetosoftdelete" />
+                                <label><input type="checkbox" value="0" name="confirmToSoftDelete"
+                                              id="confirmToSoftDeleteCheckBox">
+                                    Check to confirm</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="confirm" onclick="deletesoft();">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="confirmDeleteModal">
         <div class="vertical-alignment-helper">
             <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
