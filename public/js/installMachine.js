@@ -49,6 +49,7 @@ $(document).ready(function () {
         $('#SendToAnsibleApi').attr('disabled', true);
         $('#expertbtn').removeAttr("data-toggle");
         $('#expertbtn').attr('disabled', true);
+	$('#templateBtn').attr('disabled', true);
         $('#name').attr('disabled', true);
         $('#ProgressName').text($('#name').val());
         $('#progress').addClass("active");
@@ -202,6 +203,7 @@ $(document).ready(function () {
                         $('#SendToAnsibleApi').removeAttr("disabled");
                         $('#expertbtn').removeAttr("disabled");
                         $('#expertbtn').attr('data-toggle', 'collapse');
+			$('#templateBtn').removeAttr("disabled");
                         $('#name').removeAttr("disabled");
                         $('#task').text('Installation Completed');
                         $('#result').append('Installation Completed<br>');
@@ -217,6 +219,7 @@ $(document).ready(function () {
                 $('#progress').removeClass("active");
                 $('#SendToAnsibleApi').removeAttr("disabled");
                 $('#expertbtn').removeAttr("disabled");
+		$('#templateBtn').removeAttr("disabled");
                 $('#name').removeAttr("disabled");
                 $.ajax({
                     type: 'GET',
