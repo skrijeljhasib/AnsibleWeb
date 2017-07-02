@@ -55,13 +55,19 @@ class Host
      * @Column(type="string")
      * @var string
      **/
-    protected $group = '';
+    protected $hostgroup = '';
 
     /**
      * @Column(type="integer",length=2)
      * @var int
      **/
     protected $state = 0;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     **/
+    protected $inventory = '';
 
     /**
      * @return int
@@ -154,17 +160,17 @@ class Host
     /**
      * @return string
      */
-    public function getGroup(): string
+    public function getHostGroup(): string
     {
-        return $this->group;
+        return $this->hostgroup;
     }
 
     /**
-     * @param string $group
+     * @param string $hostgroup
      */
-    public function setGroup(string $group)
+    public function setHostGroup(string $hostgroup)
     {
-        $this->ip = $group;
+        $this->hostgroup = $hostgroup;
     }
 
     /**
@@ -183,6 +189,21 @@ class Host
         $this->ip = $ip;
     }
 
+    /**
+     * @return string
+     */
+    public function getInventory(): string
+    {
+        return $this->inventory;
+    }
+
+    /**
+     * @param string $inventory
+     */
+    public function setInventory(string $inventory)
+    {
+        $this->inventory = $inventory;
+    }
 
     public function toArray() {
         return get_object_vars($this);

@@ -39,6 +39,20 @@ class HostGateway
     }
 
     /**
+     * @param string $hostid
+     *
+     * @return array|object
+     */
+    public function fetchByHostId($hostid)
+    {
+        if ($hostid) {
+            return $this->getRepository()->findOneBy(array('hostid' => $hostid));
+        } else {
+            return [];
+        }
+    }
+
+    /**
      * @param Host|Host[] $hosts
      *
      * @return bool
@@ -62,6 +76,20 @@ class HostGateway
     public function delete($id)
     {
         $this->getEntityManager()->remove($id);
+        $this->getEntityManager()->flush();
+        return true;
+    }
+
+     /**
+     *
+     * @return boolean
+     */
+
+    public function deleteAllFromInventory($inventory)
+    {
+        $query = $this->getEntityManager()->createQuery("DELETE FROM Project\Entity\DB\Host h WHERE h.inventory = 'toto'");
+	//$query->setParameter(1, $inventory);
+	$query->execute();
         $this->getEntityManager()->flush();
         return true;
     }

@@ -34,7 +34,7 @@ class GetAllMachine extends AjaxAction
             if ($host['status'] != 'ACTIVE') {
                 $btn = 'disabled';
             }
-            $action = '<form><input type="hidden" name="name" value="' . $host['name'] . '"><button type="button" ' . $btn . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button>&nbsp<button type="button" ' . $btn . ' class="btn btn-primary" data-toggle="modal" data-target="#hostEditModal"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Delete"></i></button></form>';
+            $action = '<form><input type="hidden" name="name" value="' . $host['name'] . '" /><input type="hidden" id="hostgroup" name="hostgroup" value="' . $host['hostgroup'] . '" /><button type="button" ' . $btn . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button>&nbsp<button type="button" ' . $btn . ' class="btn btn-primary" data-toggle="modal" data-target="#hostEditModal"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit"></i></button>&nbsp<button type="button" ' . $btn . ' class="btn btn-warning" data-toggle="modal" data-target="#hostSoftDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete from DB"></i></button></form>';
 
             $host['action'] = $action;
 

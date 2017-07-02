@@ -19,7 +19,7 @@ $(document).ready(function () {
         columns: [
             {"data": "id"},
             {"data": "name"},
-            {"data": "group"},
+            {"data": "hostgroup"},
             {"data": "ip"},
             {"data": "location"},
             {"data": "status"},
@@ -60,7 +60,7 @@ $(document).ready(function () {
         var form = $(e.relatedTarget).closest('form');
         $('#machinetoedit').val(form[0].name.value);
 	$('#edithostname').text(form[0].name.value);
-
+	$('#hostgroup').val(form[0][1].value);
     });
 
     $('#getAllMachine').click(function (event) {
@@ -89,10 +89,10 @@ function edithost() {
         output.innerHTML = 'Modifying Host';
         $.ajax({
             type: 'GET',
-            url: 'PlayBook',
+            url: 'EditMachine',
             data: {
-                playbook: 'editmachine',
-                name: $('#machinetoedit').val()
+                name: $('#machinetoedit').val(),
+		group: $('#hostgroup').val()
             }
         }).done(function () {
 

@@ -56,8 +56,8 @@ class GetWorker extends AbstractCliAction
                 switch ($pheanstalk->statsJob($job)['tube']) {
                     case 'ansible-get-getallmachine' :
                         $machines = json_decode($job->getData(), true);
-                        $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
-                        $hosts_gateway->deleteAll();
+                        $inventory = uniqid("gen",true);
+			$hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
                         for ($i = 0; $i < count($machines['ansible_facts']['openstack_servers']); $i++) {
                             $name = $machines['ansible_facts']['openstack_servers'][$i]['name'];
                             $hostid = $machines['ansible_facts']['openstack_servers'][$i]['id'];
@@ -65,14 +65,19 @@ class GetWorker extends AbstractCliAction
                             $location = $machines['ansible_facts']['openstack_servers'][$i]['region'];
                             $public_v4 = $machines['ansible_facts']['openstack_servers'][$i]['networks']['Ext-Net'][0];
                             $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
-                            $host = new Host();
-                            $host->setName($name);
-                            $host->setIp($public_v4);
-                            $host->setHostID($hostid);
-                            $host->setLocation($location);
-                            $host->setStatus($status);
+			    $host = $hosts_gateway->fetchByHostId($hostid);
+			    if (!$host) {
+				$host = new Host();
+                            	$host->setName($name);
+                            	$host->setIp($public_v4);
+                            	$host->setHostID($hostid);
+                            	$host->setLocation($location);
+                            	$host->setStatus($status);
+			    }
+			    $host->setInventory($inventory);
                             $hosts_gateway->put($host);
                         }
+			$hosts_gateway->deleteAllFromInventory($inventory);
                         $pheanstalk->delete($job);
                         break;
 
