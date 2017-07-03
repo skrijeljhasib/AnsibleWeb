@@ -20,7 +20,7 @@ class GetAllMachineService
     {
         $playbook = new PlayBook();
 	$playbook->init('Get all machines from '.$machine_template["region_name"], 'local', 'false', 'www-data', 
-					'-s /bin/sh', 'localhost', 'true');
+					'-s /bin/sh', 'localhost', 'false');
         $os_server_facts = new OsServerFacts();
         $os_server_auth = new OsServerAuth();
         $os_server_auth->setAuthFromConfigFile($openstack_auth);

@@ -87,8 +87,7 @@ class HostGateway
 
     public function deleteAllFromInventory($inventory)
     {
-        $query = $this->getEntityManager()->createQuery("DELETE FROM Project\Entity\DB\Host h WHERE h.inventory = 'toto'");
-	//$query->setParameter(1, $inventory);
+        $query = $this->getEntityManager()->createQuery("DELETE FROM Project\Entity\DB\Host h WHERE h.inventory = 'toto' and h.status != 'STATIC'");
 	$query->execute();
         $this->getEntityManager()->flush();
         return true;
