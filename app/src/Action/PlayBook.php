@@ -12,7 +12,6 @@ use Project\Config\OvhDnsAuth;
 use Project\Config\TemplateJson;
 use Project\Config\Url;
 use Project\Service\AddDnsEntryToOvh;
-use Project\Service\AddToHostFile;
 use Project\Service\CleanService;
 use Project\Service\DatabaseService;
 use Project\Service\DelDnsEntryToOvh;
@@ -102,12 +101,6 @@ class PlayBook
                     		$app
                 	);
 		}
-                break;
-
-            case 'addtohostfile':
-                $this->tube = 'ansible-post';
-                $addtohostfile = new AddToHostFile();
-                $json = $addtohostfile->load($app);
                 break;
 
             case 'installpackage':

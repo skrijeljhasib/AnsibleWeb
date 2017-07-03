@@ -1,6 +1,6 @@
 $(document).ready(function () {
     
-    var templatejson;
+    var templatejson = $('#selected').text();
     $('.dropdown-menu a').click(function(){
 	$('#selected').text($(this).text());
     	templatejson = $(this).text();

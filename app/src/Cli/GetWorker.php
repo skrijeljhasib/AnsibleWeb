@@ -158,19 +158,6 @@ class GetWorker extends AbstractCliAction
                             $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
-                                        'playbook' => 'addtohostfile',
-                                        'ip' => $ip
-                                    ]
-                                ]
-                            );
-                            if ($response->getStatusCode() != 200) {
-                                echo 'Error playbook addtohostfile';
-                                break;
-                            }
-
-                            $response = $guzzle_client->request('GET', '/PlayBook',
-                                [
-                                    'query' => [
                                         'playbook' => 'waitssh',
                                         'ip' => $ip
                                     ]
