@@ -95,10 +95,10 @@ class PostWorker extends AbstractCliAction
                 }
 
             }
-		/* else {
+		 else {
                 echo 'waiting...';
-                sleep(3);
-            }*/
+                sleep(1);
+            }
         }
     }
 }

@@ -9,7 +9,8 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\DB\Job;
+use Project\Entity\DB\Host;
+use Project\Entity\DB\Order;
 
 class DeleteMachineServiceDB
 {
@@ -19,8 +20,11 @@ class DeleteMachineServiceDB
     public function load($app)
     {
         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
+	$orders_gateway = $app->getServicesFactory()->get('gateway.orders');
         $host = $hosts_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
-        $hosts_gateway->delete($host);
+        $order = $orders_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
+        if ($host) { $hosts_gateway->delete($host); }
+	if ($order) { $orders_gateway->delete($order); }
 
     }
 }
