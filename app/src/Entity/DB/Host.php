@@ -28,7 +28,7 @@ class Host
     protected $name;
 
     /**
-     * @Column(type="string", length=15, unique=true, nullable=true)
+     * @Column(type="string", length=15, nullable=true)
      * @var string
      **/
     protected $ip = '0.0.0.0';
