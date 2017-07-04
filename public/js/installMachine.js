@@ -189,11 +189,25 @@ $(document).ready(function () {
 
                     if ((data.progress == "0") && (data.task != "Install Machine Notification")) {
                         $('#task').text(data.task);
-                        $('#result').append('Start : ' + data.task + '<br>');
+                        $('#result').append('Start (' + new Date().toLocaleString('en-GB') + ') : <b>' + data.task + '</b><br>');
                     }
                     if ((data.progress == "100") && (data.task != "Install Machine Notification")) {
                         $('#task').text(data.task);
-                        $('#result').append('Stop : ' + data.task + '<br>');
+                        $('#result').append('Stop  (' + new Date().toLocaleString('en-GB') + ') : <b>' + data.task + '</b><br>');
+                    }
+		    if ((data.progress == "100") && (data.task == "Install Ubuntu 16.04")) {
+			$.ajax({
+                        	type: 'GET',
+                        	url: 'GetNewMachineData',
+                        	data: {
+                            		name: finalName
+                        	}
+                    	}).done(function (data) {
+                        	var machine = JSON.parse(data);
+                        	$('#ipaddress').text(machine.ip);
+                    	}).fail(function (error) {
+                        	console.log(JSON.stringify(error));
+                    	});
                     }
                     if ((data.progress == "100") && (data.task == "Install Machine Notification")) {
 
