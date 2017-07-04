@@ -35,7 +35,7 @@ class InstallDependenciesService
         $playbook->setGatherFacts('false');
 
         $raw = new Raw();
-        $raw->setRaw('apt-get update ; apt-get upgrade -y; apt-get install -y python-simplejson python-apt aptitude');
+        $raw->setRaw('apt-get update ; apt-get upgrade -y; apt-get install -y python-apt aptitude');
 
         $playbook->setTask($raw->toArray());
 
