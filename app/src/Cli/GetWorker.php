@@ -135,7 +135,7 @@ class GetWorker extends AbstractCliAction
                         $machine = json_decode($job->getData(), true);
                         $name = $machine['server']['name'];
                         $ip = $machine['server']['public_v4'];
-                        $hostid = $machine['server']['hostId'];
+                        $hostid = $machine['server']['id'];
                         $status = $machine['server']['status'];
                         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
                         $host = $hosts_gateway->fetchByName($name);
