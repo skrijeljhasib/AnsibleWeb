@@ -187,7 +187,7 @@ $(document).ready(function () {
 
                 if ("task" in data) {
 
-                    if ((data.progress == "0") && (data.task != "Install Machine Notification")) {
+                    if (data.progress == "0") {
                         $('#task').text(data.task);
                         $('#result').append('Start (' + new Date().toLocaleString('en-GB') + ') : <b>' + data.task + '</b><br>');
                     }
@@ -210,7 +210,7 @@ $(document).ready(function () {
                     	});
                     }
                     if ((data.progress == "100") && (data.task == "Install Machine Notification")) {
-
+			$('#result').append('Stop  (' + new Date().toLocaleString('en-GB') + ') : <b>' + data.task + '</b><br>');
                         $('#name').val('');
                         $('#name').css('border-color', '');
                         $('#progress').removeClass("active");
