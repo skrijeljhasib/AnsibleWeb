@@ -140,7 +140,6 @@ class PlayBook
                     );
                     $pheanstalk->useTube($this->tube)->put($json);
                 }
-                $this->tube = '';
                 break;
 
             case 'notify':
