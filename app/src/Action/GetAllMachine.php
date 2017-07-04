@@ -30,7 +30,8 @@ class GetAllMachine extends AjaxAction
 
             $host = $host->toArray();
 
-            $btn = '';
+            $btndel = '';
+            $btnmod = '';
             if ($host['status'] != 'ACTIVE') {
                 $btndel = 'disabled';
             }
