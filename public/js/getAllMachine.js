@@ -38,6 +38,8 @@ $(document).ready(function () {
             var jsonObject = JSON.parse(msg.data);
             if (jsonObject.progress == "100") {
                 output.innerHTML = 'Done';
+		$('#status').removeClass('alert alert-warning');
+                $('#status').addClass('alert alert-info');
                 machineTable.ajax.reload();
                 $('#refresh').attr('disabled', false);
             }
@@ -82,6 +84,8 @@ $(document).ready(function () {
         }).done(function () {
 
             $('#refresh').attr('disabled', true);
+	    $('#status').removeClass('alert alert-info');
+            $('#status').addClass('alert alert-warning');
             $('#status').text('Please wait ...');
 
         }).fail(function (error) {
@@ -93,6 +97,8 @@ $(document).ready(function () {
 
 function edithost() {
         var output = document.getElementById('status');
+        $('#status').removeClass('alert alert-info');
+        $('#status').addClass('alert alert-warning');
         output.innerHTML = 'Modifying Host';
         $.ajax({
             type: 'GET',
@@ -119,6 +125,8 @@ function check() {
         return false;
     } else {
         var output = document.getElementById('status');
+	$('#status').removeClass('alert alert-info');
+        $('#status').addClass('alert alert-warning');
         output.innerHTML = 'Deleting';
         $.ajax({
             type: 'GET',
@@ -146,6 +154,8 @@ function deletesoft() {
         return false;
     } else {
         var output = document.getElementById('status');
+	$('#status').removeClass('alert alert-info');
+	$('#status').addClass('alert alert-warning');
         output.innerHTML = 'Deleting';
         $.ajax({
             type: 'GET',
@@ -155,7 +165,6 @@ function deletesoft() {
                 name: $('#machinetosoftdelete').val()
             }
         }).done(function () {
-
             machineTable.ajax.reload();
 
         }).fail(function (error) {
