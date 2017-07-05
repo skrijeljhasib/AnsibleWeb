@@ -51,8 +51,9 @@ $(document).ready(function () {
         $('#expertbtn').attr('disabled', true);
 	$('#templateBtn').attr('disabled', true);
         $('#name').attr('disabled', true);
-        $('#ProgressName').text($('#name').val());
+        $('#ProgressName').html('<b>' + $('#name').val() + '</b>');
         $('#progress').addClass("active");
+	return;
         websocket();
     });
 
@@ -163,8 +164,8 @@ $(document).ready(function () {
                         }
                     }).done(function (data) {
                         var machine = JSON.parse(data);
-                        $('#ipaddress').text(machine.ip);
-                        $('#status').text(machine.status);
+                        $('#ipaddress').html('<b>' + machine.ip) + '</b>';
+                        $('#status').html('<b>' + machine.status + '</b>');
                     }).fail(function (error) {
                         console.log(JSON.stringify(error));
                     });
@@ -204,7 +205,7 @@ $(document).ready(function () {
                         	}
                     	}).done(function (data) {
                         	var machine = JSON.parse(data);
-                        	$('#ipaddress').text(machine.ip);
+                        	$('#ipaddress').html('<b>' + machine.ip + '</b>');
                     	}).fail(function (error) {
                         	console.log(JSON.stringify(error));
                     	});
@@ -243,8 +244,8 @@ $(document).ready(function () {
                     }
                 }).done(function (data) {
                     var machine = JSON.parse(data);
-                    $('#ipaddress').text(machine.ip);
-                    $('#status').text(machine.status);
+                    $('#ipaddress').html('<b>' + machine.ip + '</b>');
+                    $('#status').html('<b>' + machine.status + '</b>');
                 }).fail(function (error) {
                     console.log(JSON.stringify(error));
                 });
