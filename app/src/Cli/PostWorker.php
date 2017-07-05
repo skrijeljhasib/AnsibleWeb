@@ -64,7 +64,6 @@ class PostWorker extends AbstractCliAction
                     $websocket_client->connect();
                     $websocket_client->send(json_encode($callback));
                     $websocket_client->close();
-
                     $response = $guzzle_client->request('POST', '/post_data',
                         [
                             'json' => json_decode($job->getData())
@@ -81,8 +80,8 @@ class PostWorker extends AbstractCliAction
 			$websocket_client->connect();
                         $websocket_client->send(json_encode($callback));
                         $websocket_client->close();
-                        $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody());
-                        $pheanstalk->delete($job);
+                        $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody()->getContents());
+                        $pheanstalk->bury($job);
                     } else {
                         echo 'Request failed: HTTP status code: ' . $response->getStatusCode();
                         $pheanstalk->bury($job);

@@ -135,8 +135,7 @@ function check() {
                 playbook: 'deletemachine',
                 name: $('#machinetodelete').val()
             }
-        }).done(function () {
-
+        }).success(function () {
             machineTable.ajax.reload();
 
         }).fail(function (error) {

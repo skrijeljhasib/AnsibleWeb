@@ -26,7 +26,7 @@ class InstallDependenciesService
 	$step = $app_get->get('step');
         $playbook = new PlayBook();
 
-        $playbook->setName('Install dependencies (' . $step . ')');
+        $playbook->setName('Install dependencies ' . $step);
         $playbook->setHosts($ip);
         $playbook->setConnection('ssh');
         $playbook->setRemoteUser($machine_access['remote_user']);
