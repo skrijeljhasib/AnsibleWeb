@@ -53,7 +53,6 @@ $(document).ready(function () {
         $('#name').attr('disabled', true);
         $('#ProgressName').html('<b>' + $('#name').val() + '</b>');
         $('#progress').addClass("active");
-	return;
         websocket();
     });
 
