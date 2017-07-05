@@ -13,7 +13,7 @@ $(document).ready(function () {
     $('#name').bind('input propertychange', function () {
         var hostname = $(this).val();
 	if (/^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/.test(hostname)) {
-
+	$('#apache_document_root').val('/var/www/' + hostname);
         $.ajax({
             type: 'GET',
             url: 'CheckHostName',
