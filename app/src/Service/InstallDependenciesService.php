@@ -47,7 +47,7 @@ class InstallDependenciesService
 
         if ($step == 3) {
                 $raw = new Raw();
-                $raw->setRaw('apt-get install -y python-apt aptitude');
+                $raw->setRaw('apt-get update; apt-get upgrade -y; apt-get install -y python-apt aptitude');
         }
 
         $playbook->setTask($raw->toArray());

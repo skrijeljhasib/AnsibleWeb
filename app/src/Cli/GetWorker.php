@@ -189,22 +189,6 @@ class GetWorker extends AbstractCliAction
 
                             if (!empty($order)) {
 
-                                if (!is_null($order->getTemplateJson()) && $order->getTemplateJson() == '"Template:Yes"') {
-                                    $dns = json_decode($order->getTemplateJson(), true);
-			            $response = $guzzle_client->request('GET', '/PlayBook',
-                                [
-                                    'query' => [
-                                        'playbook' => 'installtemplate',
-                                        'ip' => $ip
-                                    ]
-                                ]
-                                    );
-                            		if ($response->getStatusCode() != 200) {
-                                		echo 'Error playbook installtemplate';
-                                		break;
-                            		}
-                                }
-
                                 if (!is_null($order->getDns()) && $order->getDns()) {
                                     $dns = json_decode($order->getDns(), true);
                                     $response = $guzzle_client->request('GET', '/PlayBook',
@@ -318,6 +302,20 @@ class GetWorker extends AbstractCliAction
                                         echo 'Error playbook database';
                                         break;
                                     }
+				 }
+				 if (!is_null($order->getTemplateJson()) && $order->getTemplateJson() == '"Template:Yes"') {
+			            $response = $guzzle_client->request('GET', '/PlayBook',
+                                [
+                                    'query' => [
+                                        'playbook' => 'installtemplate',
+                                        'ip' => $ip
+                                    ]
+                                ]
+                                    );
+                            		if ($response->getStatusCode() != 200) {
+                                		echo 'Error playbook installtemplate';
+                                		break;
+                            		}
                                 }
                             }
 
