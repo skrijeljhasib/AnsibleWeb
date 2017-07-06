@@ -15,6 +15,7 @@ use ObjectivePHP\Html\Exception;
 use Project\Config\Monitoring;
 use Project\Config\DnsConfig;
 use Project\Config\Host;
+use Project\Config\DefaultInstall;
 use Project\Config\MachineTemplate;
 
 class CreateMachine extends RenderableAction
@@ -33,6 +34,7 @@ class CreateMachine extends RenderableAction
         $machine_template = $app->getConfig()->get(MachineTemplate::class);
         $monitoring = $app->getConfig()->get(Monitoring::class);
         $dns_config = $app->getConfig()->get(DnsConfig::class);
+        $default_install = $app->getConfig()->get(DefaultInstall::class);
 
         try {
             $package_gateway = $app->getServicesFactory()->get('gateway.packages');
@@ -41,6 +43,6 @@ class CreateMachine extends RenderableAction
             throw new Exception('Can not load packages from DB');
         }
 
-        return compact('packages', 'host', 'machine_template', 'monitoring', 'dns_config');
+        return compact('packages', 'host', 'machine_template', 'monitoring', 'dns_config', 'default_install');
     }
 }

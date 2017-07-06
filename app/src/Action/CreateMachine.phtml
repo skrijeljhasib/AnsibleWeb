@@ -90,11 +90,13 @@ use Project\Entity\DB\Package;
                                 <div role="tabpanel" class="tab-pane active" id="apache">
                                     <br>
                                     <label> Install Apache:
-                                        <input type="checkbox" name="webserver[]" id="apacheCheckbox" class="checkbox">
+                                        <input type="checkbox" name="webserver[]" id="apacheCheckbox" class="checkbox" 
+						<?php if (Vars::collection('default_install')["apache2"] == "true") { echo 'checked'; } ?>
+					>
                                     </label>
                                     <br>
                                     <label> DocumentRoot:
-                                        <input disabled required type="text" class="form-control"
+                                        <input <?php if (Vars::collection('default_install')["apache2"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control"
                                                id="apache_document_root">
                                     </label>
                                 </div>
@@ -123,11 +125,11 @@ use Project\Entity\DB\Package;
                                 <div role="tabpanel" class="tab-pane active" id="php">
                                     <br>
                                     <label> Install PHP:
-                                        <input type="checkbox" name="php[]" id="phpCheckbox" class="checkbox">
+                                        <input type="checkbox" name="php[]" id="phpCheckbox" class="checkbox" <?php if (Vars::collection('default_install')["php"] == "true") { echo 'checked'; } ?>>
                                     </label>
                                     <br>
                                     <label> Select your version:
-                                        <select required disabled name="php_version" id="php_version">
+                                        <select required <?php if (Vars::collection('default_install')["php"] != "true") { echo 'disabled'; } ?> name="php_version" id="php_version">
                                             <option value="php7.0" selected>7.0</option>
                                             <option value="php5.6">5.6</option>
                                             <option value="php5.5">5.5</option>
@@ -212,21 +214,21 @@ use Project\Entity\DB\Package;
                                 <div role="tabpanel" class="tab-pane active" id="mysql">
                                     <br>
                                     <label> Install MySQL:
-                                        <input type="checkbox" name="database[]" id="mysqlCheckbox" class="checkbox">
+                                        <input type="checkbox" name="database[]" id="mysqlCheckbox" class="checkbox" <?php if (Vars::collection('default_install')["mysql"] == "true") { echo 'checked'; } ?>>
                                     </label>
                                     <br>
                                     <label> Root Password:
-                                        <input disabled required type="password" class="form-control"
+                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="password" class="form-control"
                                                id="mysql_root_password">
                                     </label>
                                     <label> Database:
-                                        <input disabled required type="text" class="form-control" id="mysql_database">
+                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" id="mysql_database">
                                     </label>
                                     <label> New User:
-                                        <input disabled required type="text" class="form-control" id="mysql_new_user">
+                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" id="mysql_new_user">
                                     </label>
                                     <label> New User Password:
-                                        <input disabled required type="password" class="form-control"
+                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="password" class="form-control"
                                                id="mysql_new_user_password">
                                     </label>
                                 </div>
