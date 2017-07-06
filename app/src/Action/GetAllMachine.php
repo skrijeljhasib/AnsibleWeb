@@ -42,7 +42,12 @@ class GetAllMachine extends AjaxAction
 	    if ($host['status'] == 'DELETING') {
                 $btndbdel = 'disabled';
             }
-            $action = '<form><input type="hidden" name="name" value="' . $host['name'] . '" /><input type="hidden" id="hostgroup" name="hostgroup" value="' . $host['hostgroup'] . '" /><button type="button" ' . $btndel . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button>&nbsp<button type="button" ' . $btnmod . ' class="btn btn-primary" data-toggle="modal" data-target="#hostEditModal"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit"></i></button>&nbsp<button type="button" ' . $btndbdel . ' class="btn btn-warning" data-toggle="modal" data-target="#confirmSoftDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete from DB"></i></button></form>';
+            if ($host['status'] == 'STATIC') {
+                $modalEdit = '#hostEditStaticModal';
+            } else {
+		$modalEdit = '#hostEditModal';
+	    }
+            $action = '<form><input type="hidden" name="name" value="' . $host['name'] . '" /><input type="hidden" id="hostgroup" name="hostgroup" value="' . $host['hostgroup'] . '" /><input type="hidden" id="hostip" name="hostip" value="' . $host['ip'] . '" /><input type="hidden" id="hostlocation" name="hostlocation" value="' . $host['location'] . '" /><button type="button" ' . $btndel . ' class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete"></i></button>&nbsp<button type="button" ' . $btnmod . ' class="btn btn-primary" data-toggle="modal" data-target="' . $modalEdit . '"><i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit"></i></button>&nbsp<button type="button" ' . $btndbdel . ' class="btn btn-warning" data-toggle="modal" data-target="#confirmSoftDeleteModal"><i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete from DB"></i></button></form>';
 
             $host['action'] = $action;
 

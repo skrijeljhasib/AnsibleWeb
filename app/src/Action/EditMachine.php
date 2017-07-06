@@ -20,7 +20,15 @@ class EditMachine extends AjaxAction
         try {
             $host_gateway = $app->getServicesFactory()->get('gateway.hosts');
             $host = $host_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
-	    $host->setHostGroup($app->getRequest()->getParameters()->get('group'));
+	    if ($app->getRequest()->getParameters()->get('group')) {
+	    	$host->setHostGroup($app->getRequest()->getParameters()->get('group'));
+	    }
+	    if ($app->getRequest()->getParameters()->get('ip')) { 
+		$host->setIp($app->getRequest()->getParameters()->get('ip'));
+	    }
+            if ($app->getRequest()->getParameters()->get('hostlocation')) {
+                $host->setLocation($app->getRequest()->getParameters()->get('hostlocation'));
+            }
             $host_gateway->put($host);
         } catch (Exception $e) {
             throw new Exception('Can not load hosts from DB');
