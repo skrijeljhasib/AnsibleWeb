@@ -8,6 +8,7 @@
 
 namespace Project\Action;
 
+use Project\Entity\DB\Host;
 use ObjectivePHP\Html\Exception;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Application\Action\AjaxAction;
@@ -20,6 +21,10 @@ class EditMachine extends AjaxAction
         try {
             $host_gateway = $app->getServicesFactory()->get('gateway.hosts');
             $host = $host_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
+	    if (!$host) { 
+		$host = new Host();
+		$host->setName($app->getRequest()->getParameters()->get('name'));
+	    }
 	    if ($app->getRequest()->getParameters()->get('group')) {
 	    	$host->setHostGroup($app->getRequest()->getParameters()->get('group'));
 	    }
@@ -28,6 +33,11 @@ class EditMachine extends AjaxAction
 	    }
             if ($app->getRequest()->getParameters()->get('hostlocation')) {
                 $host->setLocation($app->getRequest()->getParameters()->get('hostlocation'));
+            }
+	    if ($app->getRequest()->getParameters()->get('hoststatus')) {
+                $host->setStatus($app->getRequest()->getParameters()->get('hoststatus'));
+                $host->setHostId($app->getRequest()->getParameters()->get('name'));
+                $host->setState(0);
             }
             $host_gateway->put($host);
         } catch (Exception $e) {

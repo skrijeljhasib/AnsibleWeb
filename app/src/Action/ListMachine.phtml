@@ -5,6 +5,47 @@
         margin: auto;
     }</style>
 
+<div class="modal fade" id="hostCreateStaticModal">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Host Modification</h4>
+                </div>
+                <div class="modal-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+    					<label class="control-label col-sm-2">Host:</label>
+    					<div class="col-sm-4"><input type="text" class="form-label" id="createstaticmachinetoedit" placeholder="Enter Hostnme" autofocus required></div>
+  				</div>
+  				<div class="form-group">
+    					<label class="control-label col-sm-2" for="statichostgroup">Group:</label>
+    					<div class="col-sm-4"><input type="text" class="form-control" id="createstatichostgroup" placeholder="Enter Group"></div>
+  				</div>
+				<div class="form-group">
+                                        <label class="control-label col-sm-2" for="statichostip">IP:</label>
+                                        <div class="col-sm-4"><input type="text" class="form-control" id="createstatichostip" placeholder="Enter IP" required></div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="control-label col-sm-2" for="statichostlocation">Location:</label>
+                                        <div class="col-sm-4"><input type="text" class="form-control" id="createstatichostlocation" placeholder="Enter Location" required></div>
+                                </div>
+			</form>
+		</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm" onclick="createstatichost();">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div class="modal fade" id="hostEditStaticModal">
     <div class="vertical-alignment-helper">
         <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
@@ -147,7 +188,7 @@
         </button>
         <span class="pull-right">&nbsp</span>
         <button type="button" class="btn btn-success pull-right" data-toggle="modal"
-                data-target="#addStaticHostModal" id="addstatichost" value="AddStaticHost"><i
+                data-target="#hostCreateStaticModal" id="addstatichost" value="AddStaticHost"><i
                     class="glyphicon glyphicon-plus"
                     data-toggle="tooltip" title="Add Static Host"></i>
 

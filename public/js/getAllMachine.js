@@ -99,6 +99,12 @@ $(document).ready(function () {
         $('#status').addClass('alert alert-info');
     });
 
+    $('#hostCreateStaticModal').on('hide.bs.modal', function (e) {
+        $('#status').html('Ready');
+        $('#status').removeClass('alert alert-warning');
+        $('#status').addClass('alert alert-info');
+    });
+
     $('#getAllMachine').click(function (event) {
         event.preventDefault();
 
@@ -137,7 +143,7 @@ function edithost() {
         }).fail(function (error) {
             console.log(JSON.stringify(error));
         });
-        $('#hostEditStaticModal').modal('hide');
+        $('#hostEditModal').modal('hide');
         return false;
 }
 
@@ -152,13 +158,31 @@ function editstatichost() {
         	hostlocation: $('#statichostlocation').val()
             }
         }).done(function () {
-
             machineTable.ajax.reload();
-
         }).fail(function (error) {
             console.log(JSON.stringify(error));
         });
-        $('#hostEditModal').modal('hide');
+        $('#hostEditStaticModal').modal('hide');
+        return false;
+}
+
+function createstatichost() {
+        $.ajax({
+            type: 'GET',
+            url: 'EditMachine',
+            data: {
+                name: $('#createstaticmachinetoedit').val(),
+                group: $('#createstatichostgroup').val(),
+                ip: $('#createstatichostip').val(),
+		hoststatus: "STATIC",
+                hostlocation: $('#createstatichostlocation').val()
+            }
+        }).done(function () {
+            machineTable.ajax.reload();
+        }).fail(function (error) {
+            console.log(JSON.stringify(error));
+        });
+        $('#hostCreateStaticModal').modal('hide');
         return false;
 }
 

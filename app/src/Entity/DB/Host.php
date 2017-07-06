@@ -154,7 +154,7 @@ class Host
      */
     public function setState(int $state)
     {
-        $this->status = $state;
+        $this->state = $state;
     }
 
     /**
