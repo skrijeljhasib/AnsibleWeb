@@ -59,10 +59,23 @@ $(document).ready(function () {
 	$('#deletehostname').text(form[0].name.value);
     });
 
+    $('#confirmDeleteModal').on('show.bs.modal', function (e) {
+        $('#status').html('Ready');
+        $('#status').removeClass('alert alert-warning');
+        $('#status').addClass('alert alert-info');
+    });
+
     $('#confirmSoftDeleteModal').on('show.bs.modal', function (e) {
         var form = $(e.relatedTarget).closest('form');
         $('#machinetosoftdelete').val(form[0].name.value);
 	$('#deletedbhostname').text(form[0].name.value);
+
+    });
+
+    $('#confirmSoftDeleteModal').on('hide.bs.modal', function (e) {
+        $('#status').html('Ready');
+        $('#status').removeClass('alert alert-warning');
+        $('#status').addClass('alert alert-info');
     });
 
     $('#hostEditModal').on('show.bs.modal', function (e) {
