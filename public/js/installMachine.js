@@ -73,6 +73,7 @@ $(document).ready(function () {
         if ($('#apacheCheckbox').is(':checked')) {
             array['webserver'] = 'apache';
             array['document_root'] = $('#apache_document_root').val();
+	    array['owner_directory'] = $('#apache_owner_directory').val();
             return JSON.stringify(array);
         } else if ($('#nginxCheckbox').is(':checked')) {
             array['webserver'] = 'nginx';
@@ -180,15 +181,11 @@ $(document).ready(function () {
 
             socket.onmessage = function (msg) {
                 var data = JSON.parse(msg.data);
-
                 if ("progress" in data) {
-                    $(".progress-bar").animate(
-                        {
-                            width: data.progress + '%'
-                        }, 1500
-                    );
+			var percent = parseInt(document.getElementById("progress-bar-animated").style.width.replace('%','')) + 3;
+			document.getElementById("progress-bar-animated").style.width = percent + '%';
+			console.log(document.getElementById("progress-bar-animated").style.width);
                 }
-
                 if ("task" in data) {
 
                     if (data.progress == "0") {

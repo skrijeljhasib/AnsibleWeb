@@ -251,6 +251,7 @@ class GetWorker extends AbstractCliAction
                                                 'query' => [
                                                     'playbook' => $webserver['webserver'],
                                                     'document_root' => $webserver['document_root'],
+						    'owner_directory' => $webserver['owner_directory'],
                                                     'ip' => $ip
                                                 ]
                                             ]

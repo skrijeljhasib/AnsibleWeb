@@ -69,9 +69,10 @@ class WebServerService
         $shell = new Shell();
         $shell->setShell('a2ensite {{ansible_hostname}} ; a2dissite 000-default');
 
-        $file = new File();
+        /*$file = new File();
 	$file->setPath($app_get->get('document_root'));
-        $file->setState('directory');
+	$file->setOwner($app_get->get('apache_owner_directory'));
+        $file->setState('directory');*/
 
         $service = new Service();
         $service->setSName('apache2');
@@ -81,8 +82,12 @@ class WebServerService
         $this->playbook->setTask($file->toArray());
         $this->playbook->setTask($lineinfile->toArray());
         $this->playbook->setTask($shell->toArray());
-        $this->playbook->setTask($service->toArray());
 
+	$this->playbook->setTask([ "file" => [ 	"path" => $app_get->get('document_root'), 
+						"owner" => $app_get->get('owner_directory'),
+						"state" => "directory" ] ]);
+
+        $this->playbook->setTask($service->toArray());
         $playbook_json = $this->playbook->toJSON();
 
         return $playbook_json;
