@@ -69,6 +69,10 @@ class WebServerService
         $shell = new Shell();
         $shell->setShell('a2ensite {{ansible_hostname}} ; a2dissite 000-default');
 
+        $file = new File();
+	$file->setPath($app_get->get('document_root'));
+        $file->setState('directory');
+
         $service = new Service();
         $service->setSName('apache2');
         $service->setState('restarted');
