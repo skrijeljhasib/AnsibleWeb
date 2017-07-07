@@ -101,7 +101,7 @@ use Project\Entity\DB\Package;
                                     </label>
                                     <br>
                                     <label> User:
-                                        <input <?php if (Vars::collection('default_install')["apache2"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" value="automate"
+                                        <input <?php if (Vars::collection('default_install')["apache2"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" value="www-data"
                                                id="apache_owner_directory">
                                     </label>
                                 </div>
