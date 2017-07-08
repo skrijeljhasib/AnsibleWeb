@@ -46,7 +46,6 @@ $machine_access = [
     "remote_user" => "remote_user"
 ];
 
-
 return [
     new OpenStackAuth($openstack_auth),
     new MachineTemplate($machine_template),

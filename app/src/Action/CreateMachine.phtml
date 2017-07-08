@@ -43,6 +43,50 @@ use Project\Entity\DB\Package;
                         }
                     }
                     ?>
+		
+		<br><br><div id="deploypanel" class="panel panel-default">
+                    <div class="panel-heading"><a href="#deploypanel" onClick="$(deploybody).toggle();">Projects</a></div>
+                    <div class="panel-body">
+                        <div id="deploybody">
+                            <ul class="nav nav-tabs" role="tablist" id="deployTabs">
+                                <li role="presentation" class="active"><a href="#chat" aria-controls="deploy"
+                                                                          role="tab"
+                                                                          data-toggle="tab">Chat</a></li>
+				<li role="presentation"><a href="#connect" aria-controls="deploy"
+                                                                          role="tab"
+                                                                          data-toggle="tab">Connect</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="chat">
+				    <br><div class="checkbox">
+					<label><input type="checkbox" name="chat" id="chatCheckbox" class="checkbox" checked>
+                                    	<b>Install Chat Project</b></label>
+					<br><br>
+                                    <label> Select your Branch:
+                                        <select required name="chat_version" id="chat_branch" class="form-control">
+                                            <option value="master" selected>master</option>
+                                        </select>
+                                    </label>
+					</div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="connect">
+                                    <br><div class="checkbox">
+                                    <label><input type="checkbox" name="connect" id="connectCheckbox" class="checkbox">
+					<b>Install Connect Project</b></label>
+                                        <br><br>
+                                    <label> Select your Branch:
+                                        <select required name="connect_version" id="connect_branch" class="form-control">
+                                            <option value="master" selected>master</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 </div>
             </div>
 
@@ -116,8 +160,8 @@ use Project\Entity\DB\Package;
                     </div>
                 </div>
 
-                <div d="wspanel" class="panel panel-default">
-                    <div class="panel-heading"><a href="#wspanel" onClick="$(languagesbody).toggle();">Languages</a></div>
+                <div id="langpanel" class="panel panel-default">
+                    <div class="panel-heading"><a href="#langpanel" onClick="$(languagesbody).toggle();">Languages</a></div>
                     <div class="panel-body">
                         <div id="languagesbody" style="display: none;">
                             <ul class="nav nav-tabs" role="tablist" id="languagesTabs">
@@ -145,6 +189,8 @@ use Project\Entity\DB\Package;
                         </div>
                     </div>
                 </div>
+
+                
 
                 <?php if (Vars::collection('monitoring')["enabled"] == "true") { ?>
                     <div id="monpanel" class="panel panel-default">

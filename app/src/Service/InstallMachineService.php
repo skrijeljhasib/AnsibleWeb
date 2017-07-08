@@ -99,12 +99,16 @@ class InstallMachineService
 	if(!is_null($app->getRequest()->getParameters()->get('templatejson'))) {
             $order->setTemplateJson($app->getRequest()->getParameters()->get('templatejson'));
         }
+        if(!is_null($app->getRequest()->getParameters()->get('project'))) {
+            $order->setDeploy($app->getRequest()->getParameters()->get('project'));
+        }
         $orders_gateway->put($order);
 
         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
         $host = new Host();
         $host->setName($machine_template['name']);
         $host->setLocation($machine_template['region_name']);
+	$host->setHostID('');
         $host->setStatus('CREATING');
         $hosts_gateway->put($host);
 

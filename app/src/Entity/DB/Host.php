@@ -37,7 +37,7 @@ class Host
      * @Column(type="string", unique=true, nullable=true)
      * @var string
      **/
-    protected $hostid = 'NA';
+    protected $hostid = '';
 
     /**
      * @Column(type="string")
@@ -106,7 +106,11 @@ class Host
      */
     public function setHostID(string $hostid)
     {
-        $this->hostid = $hostid;
+        if ($hostid != '') { 
+		$this->hostid = $hostid;
+	} else {
+		$this->hostid = substr(md5(microtime()), rand(0, 26), 15);
+	}
     }
 
     /**

@@ -318,6 +318,22 @@ class GetWorker extends AbstractCliAction
                                 		break;
                             		}
                                 }
+                                 if (!is_null($order->getDeploy()) && $order->getDeploy()) {
+                                    $response = $guzzle_client->request('GET', '/PlayBook',
+                                [
+                                    'query' => [
+                                        'playbook' => 'deployproject',
+                                        'ip' => $ip,
+					'project' => json_decode($order->getDeploy(), true)
+                                    ]
+                                ]
+                                    );
+                                        if ($response->getStatusCode() != 200) {
+                                                echo 'Error playbook deployproject';
+                                                break;
+                                        }
+                                }
+
                             }
 
                             $response = $guzzle_client->request('GET', '/PlayBook',

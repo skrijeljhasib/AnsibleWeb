@@ -42,6 +42,8 @@ $(document).ready(function () {
 	}
 });
 
+	websocket();
+
     $('#createMachine').submit(function (event) {
         event.preventDefault();
         var isHidden = $( "#outputbody" ).is( ":hidden" );
@@ -57,7 +59,7 @@ $(document).ready(function () {
         $('#name').attr('disabled', true);
         $('#ProgressName').html('<b>' + $('#name').val() + '</b>');
         $('#progress').addClass("active");
-        websocket();
+        installmachine();
     });
 
     function checkHost() {
@@ -81,6 +83,13 @@ $(document).ready(function () {
         } else {
             return null;
         }
+    }
+
+    function checkProject() {
+	var array = [];
+	if ($('#chatCheckbox').is(':checked')) { array.push("chat"); }
+	if ($('#connectCheckbox').is(':checked')) { array.push("connect"); }
+	return JSON.stringify(array);
     }
 
     function checkDatabase() {
@@ -138,14 +147,7 @@ $(document).ready(function () {
         }
     }
 
-    function websocket() {
-        try {
-            socket = new WebSocket(websocket_server);
-            socket.onerror = function () {
-                console.log('connection error');
-            };
-            socket.onopen = function () {
-                console.log('connection open');
+    function installmachine() {
                 $.ajax({
                     type: 'GET',
                     url: 'PlayBook',
@@ -157,7 +159,8 @@ $(document).ready(function () {
                         database: checkDatabase(),
                         language: checkLanguage(),
 			templatejson : checkTemplateJson(),
-                        dns: checkDns()
+                        dns: checkDns(),
+			project: checkProject()
                     }
                 }).done(function () {
                     $.ajax({
@@ -176,7 +179,16 @@ $(document).ready(function () {
                 }).fail(function (error) {
                     console.log(JSON.stringify(error));
                 });
+    }
 
+    function websocket() {
+        try {
+            socket = new WebSocket(websocket_server);
+            socket.onerror = function () {
+                console.log('connection error');
+            };
+	    socket.onopen = function () {
+                console.log('connection open');
             };
 
             socket.onmessage = function (msg) {

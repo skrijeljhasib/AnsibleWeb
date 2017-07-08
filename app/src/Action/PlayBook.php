@@ -24,6 +24,7 @@ use Project\Service\InstallPackageService;
 use Project\Service\LanguageService;
 use Project\Service\NotifyService;
 use Project\Service\TemplateService;
+use Project\Service\DeployService;
 use Project\Service\WaitSSHService;
 use Project\Service\WebServerService;
 use stdClass;
@@ -140,6 +141,19 @@ class PlayBook
                     );
                     $pheanstalk->useTube($this->tube)->put($json);
                 }
+                break;
+
+	    case 'deployproject':
+                $this->tube = 'ansible-post';
+		foreach ($app->getRequest()->getParameters()->get('project') as $project) {
+		    $deployService = new DeployService(); 
+                    $json = $deployService->load(
+                        $app->getRequest()->getParameters(),
+                        $this->ansible_api["ansible_playbook"],
+			$project
+                    );
+                    $pheanstalk->useTube($this->tube)->put($json);
+		}
                 break;
 
             case 'notify':

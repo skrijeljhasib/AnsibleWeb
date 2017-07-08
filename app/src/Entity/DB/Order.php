@@ -65,6 +65,12 @@ class Order
     protected $templateJson = "";
 
     /**
+     * @Column(type="string",nullable=true)
+     * @var string
+     */
+    protected $project = "";
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -143,6 +149,22 @@ class Order
     public function setPackages(string $packages)
     {
         $this->packages = $packages;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDeploy(): string
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param string $project
+     */
+    public function setDeploy(string $project)
+    {
+        $this->project = $project;
     }
 
     /**

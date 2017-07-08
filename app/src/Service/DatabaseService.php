@@ -74,6 +74,7 @@ class DatabaseService
         $mysql_new_user->setState('present');
         $mysql_new_user->setLoginUser('root');
         $mysql_new_user->setLoginPassword($app_get->get('mysql_root_password'));
+	error_log(print_r($mysql_new_user));
 
         $this->playbook->setTask($apt->toArray());
         $this->playbook->setTask($mysql_user_root->toArray());
