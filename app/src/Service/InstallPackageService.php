@@ -9,7 +9,6 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\JSON\Apt;
 use Project\Entity\JSON\PlayBook;
 
 class InstallPackageService
@@ -32,12 +31,8 @@ class InstallPackageService
         $playbook->setBecomeUser('root');
         $playbook->setGatherFacts('false');
 
-        $apt = new Apt();
-        $apt->setAName(Apt::MULTIPLE_ITEMS);
-        $apt->setState(Apt::PRESENT);
-        $apt->setWithItems(explode(',', $app->getRequest()->getParameters()->get('packages')));
-
-        $playbook->setTask($apt->toArray());
+        $playbook->setTask([      "apt" => [  "name" => "{{ item }}", "state" => "present" ],
+                                        "with_items" => [ explode(',', $app->getRequest()->getParameters()->get('packages')) ] ]);
 
         $playbook_json = $playbook->toJSON();
 

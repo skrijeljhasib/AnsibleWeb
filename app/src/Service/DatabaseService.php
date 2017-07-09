@@ -10,10 +10,6 @@ namespace Project\Service;
 
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Application;
-use Project\Entity\JSON\Apt;
-use Project\Entity\JSON\MongoDBUser;
-use Project\Entity\JSON\MySQLDB;
-use Project\Entity\JSON\MySQLUser;
 use Project\Entity\JSON\PlayBook;
 
 class DatabaseService
@@ -51,35 +47,30 @@ class DatabaseService
 
         $this->playbook->setName('Install and Configure MySQL');
 
-        $apt = new Apt();
-        $apt->setState(Apt::PRESENT);
-        $apt->setAName(Apt::MULTIPLE_ITEMS);
-        $apt->setWithItems(['mysql-server','mysql-client','python-mysqldb']);
+        $this->playbook->setTask([ 	"apt" => [  "name" => "{{ item }}", "state" => "present" ],
+					"with_items" => [ "mysql-server", "mysql-client", "python-mysqldb" ] ]);
 
-        $mysql_user_root = new MySQLUser();
-        $mysql_user_root->setUName('root');
-        $mysql_user_root->setPassword($app_get->get('mysql_root_password'));
-        $mysql_user_root->setUpdatePassword('always');
+        $this->playbook->setTask([ "mysql_user" => [
+          "name" => "root",
+          "password" => $app_get->get('mysql_root_password'),
+          "update_password" => "always"
+        ]]);
 
-        $mysql_db = new MySQLDB();
-        $mysql_db->setDName($app_get->get('mysql_database'));
-        $mysql_db->setState('present');
-        $mysql_db->setLoginUser('root');
-        $mysql_db->setLoginPassword($app_get->get('mysql_root_password'));
+	$this->playbook->setTask([ "mysql_db" => [
+	  "name" => $app_get->get('mysql_database'),
+	  "state" => "present",
+	  "login_user" => "root",
+          "login_password" => $app_get->get('mysql_root_password')
+	]]);
 
-        $mysql_new_user = new MySQLUser();
-        $mysql_new_user->setUName($app_get->get('mysql_new_user'));
-        $mysql_new_user->setPassword($app_get->get('mysql_new_user_password'));
-        $mysql_new_user->setPriv($app_get->get('mysql_database').'.*:ALL');
-        $mysql_new_user->setState('present');
-        $mysql_new_user->setLoginUser('root');
-        $mysql_new_user->setLoginPassword($app_get->get('mysql_root_password'));
-	error_log(print_r($mysql_new_user));
-
-        $this->playbook->setTask($apt->toArray());
-        $this->playbook->setTask($mysql_user_root->toArray());
-        $this->playbook->setTask($mysql_db->toArray());
-        $this->playbook->setTask($mysql_new_user->toArray());
+        $this->playbook->setTask([ "mysql_user" => [
+          "name" => $app_get->get('mysql_new_user'),
+          "password" => $app_get->get('mysql_new_user_password'),
+	  "priv" => $app_get->get('mysql_database').".*:ALL",
+          "login_user" => "root",
+          "login_password" => $app_get->get('mysql_root_password'),
+          "state" => "present"
+        ]]);
 
         $playbook_json = $this->playbook->toJSON();
 
@@ -93,12 +84,8 @@ class DatabaseService
     {
         $this->playbook->setName('Install MongoDB');
 
-        $apt = new Apt();
-        $apt->setState(Apt::PRESENT);
-        $apt->setAName(Apt::MULTIPLE_ITEMS);
-        $apt->setWithItems(['mongodb','python-pymongo']);
-
-        $this->playbook->setTask($apt->toArray());
+        $this->playbook->setTask([      "apt" => [  "pkg" => "{{ item }}", "state" => "present" ],
+                                        "with_items" => [ "mongodb", "python-mongodb" ] ]);
 
         $playbook_json = $this->playbook->toJSON();
 

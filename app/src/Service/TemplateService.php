@@ -13,7 +13,7 @@ class TemplateService
     public function load($app_get,$url,$templatename)
     {
 	$ip = $app_get->get('ip');
-	$contents = file_get_contents($url . '/repo/' . $templatename . '.json');
+	$contents = file_get_contents($url . '/repo/template_install/' . $templatename . '.json');
 	$contents = str_replace("{{{ HOSTIP }}}",$ip,$contents);
         return $contents;
     }

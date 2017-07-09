@@ -8,9 +8,7 @@
 
 namespace Project\Service;
 
-
 use Project\Application;
-use Project\Entity\JSON\Apt;
 use Project\Entity\JSON\PlayBook;
 
 class LanguageService
@@ -44,17 +42,10 @@ class LanguageService
     public function php($app) {
 
         $this->playbook->setName('Install '.$app->getRequest()->getParameters()->get('language'));
-/*        $apt = new Apt();
-        $apt->setAName($app->getRequest()->getParameters()->get('php_version'));
-        $apt->setState(Apt::PRESENT);
-        $this->playbook->setTask($apt->toArray());*/
 
-	$this->playbook->setTask([ "apt" => [  "name" => $app->getRequest()->getParameters()->get('php_version'),
-                                               "state" => "present" ] ]);
-	$this->playbook->setTask([ "apt" => [  "name" => "php-curl",
-                                               "state" => "present" ] ]);
-	$this->playbook->setTask([ "apt" => [  "name" => "php-mysql",
-                                               "state" => "present" ] ]);
+	$this->playbook->setTask([      "apt" => [  "name" => "{{ item }}", "state" => "present" ],
+                                        "with_items" => [ $app->getRequest()->getParameters()->get('php_version')
+							, "php-curl", "php-mysql" ] ]);
 
         $playbook_json = $this->playbook->toJSON();
 

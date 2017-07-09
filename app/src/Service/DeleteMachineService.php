@@ -9,7 +9,6 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\DB\Job;
 use Project\Entity\JSON\OsServer;
 use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
@@ -48,14 +47,6 @@ class DeleteMachineService
         $playbook->setTask($os_server->toArray());
 
         $playbook_json = $playbook->toJSON();
-
-        $jobs_gateway = $app->getServicesFactory()->get('gateway.jobs');
-        $jobs = new Job();
-        $jobs->setName('DeleteMachine' . $host->getName());
-        $jobs->setStatus(0);
-        $jobs->setJson($playbook_json);
-        $jobs->setTube('deletemachine');
-        $jobs_gateway->put($jobs);
 
         $host->setStatus('DELETING');
         $hosts_gateway->put($host);

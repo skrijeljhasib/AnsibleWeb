@@ -14,7 +14,6 @@ use Project\Entity\JSON\OsServer;
 use Project\Entity\JSON\OsServerAuth;
 use Project\Entity\JSON\PlayBook;
 use Project\Entity\DB\Host;
-use Project\Entity\DB\Job;
 
 class InstallMachineService
 {
@@ -68,14 +67,6 @@ class InstallMachineService
         $playbook->setTask($os_server->toArray());
 
         $playbook_json = $playbook->toJSON();
-
-        $jobs_gateway = $app->getServicesFactory()->get('gateway.jobs');
-        $jobs = new Job();
-        $jobs->setName('CreateMachine' . $machine_template['name']);
-        $jobs->setStatus(0);
-        $jobs->setJson($playbook_json);
-        $jobs->setTube('installmachine');
-        $jobs_gateway->put($jobs);
 
         $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
         $order = new Order();

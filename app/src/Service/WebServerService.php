@@ -10,12 +10,7 @@ namespace Project\Service;
 
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Application;
-use Project\Entity\JSON\Apt;
-use Project\Entity\JSON\File;
-use Project\Entity\JSON\LineInFile;
 use Project\Entity\JSON\PlayBook;
-use Project\Entity\JSON\Service;
-use Project\Entity\JSON\Shell;
 
 class WebServerService
 {
@@ -51,43 +46,27 @@ class WebServerService
     {
         $this->playbook->setName('Install and Configure Apache');
 
-        $apt = new Apt();
-        $apt->setState(Apt::PRESENT);
-        $apt->setAName('apache2');
+        $this->playbook->setTask([ "apt" => [  "name" => "apache2", "state" => "present" ] ]);
+        
+	$this->playbook->setTask([ "file" => [  "src" => "/etc/apache2/sites-available/000-default.conf", 
+						"path" => "/etc/apache2/sites-available/{{ansible_hostname}}.conf",
+						"state" => "hard" ] ]);
 
-        $file = new File();
-        $file->setState('hard');
-        $file->setSrc('/etc/apache2/sites-available/000-default.conf');
-        $file->setPath('/etc/apache2/sites-available/{{ansible_hostname}}.conf');
+        $this->playbook->setTask([ "lineinfile" => [  	"path" => "/etc/apache2/sites-available/{{ansible_hostname}}.conf",
+							"backrefs" => "yes",
+							"regexp" => "DocumentRoot",
+                                                	"line" => "DocumentRoot " . $app_get->get('document_root') ] ]);
 
-        $lineinfile = new LineInFile();
-        $lineinfile->setPath('/etc/apache2/sites-available/{{ansible_hostname}}.conf');
-        $lineinfile->setBackrefs('yes');
-        $lineinfile->setRegexp('DocumentRoot');
-        $lineinfile->setLine('DocumentRoot '.$app_get->get('document_root'));
+	$this->playbook->setTask([ "shell" => "a2ensite {{ansible_hostname}} ; a2dissite 000-default" ]);
 
-        $shell = new Shell();
-        $shell->setShell('a2ensite {{ansible_hostname}} ; a2dissite 000-default');
+	$this->playbook->setTask([ "apache2_module" => [  "name" => "rewrite", "state" => "present" ] ]);
 
-        /*$file = new File();
-	$file->setPath($app_get->get('document_root'));
-	$file->setOwner($app_get->get('apache_owner_directory'));
-        $file->setState('directory');*/
-
-        $service = new Service();
-        $service->setSName('apache2');
-        $service->setState('restarted');
-
-        $this->playbook->setTask($apt->toArray());
-        $this->playbook->setTask($file->toArray());
-        $this->playbook->setTask($lineinfile->toArray());
-        $this->playbook->setTask($shell->toArray());
+	$this->playbook->setTask([ "service" => [  "name" => "apache2", "state" => "restarted" ] ]);
 
 	$this->playbook->setTask([ "file" => [ 	"path" => $app_get->get('document_root'), 
 						"owner" => $app_get->get('owner_directory'),
 						"state" => "directory" ] ]);
 
-        $this->playbook->setTask($service->toArray());
         $playbook_json = $this->playbook->toJSON();
 
         return $playbook_json;
@@ -100,11 +79,7 @@ class WebServerService
     {
         $this->playbook->setName('Install NginX');
 
-        $apt = new Apt();
-        $apt->setState(Apt::PRESENT);
-        $apt->setAName('nginx');
-
-        $this->playbook->setTask($apt->toArray());
+	$this->playbook->setTask([ "apt" => [  "name" => "nginx", "state" => "present" ] ]);
 
         $playbook_json = $this->playbook->toJSON();
 

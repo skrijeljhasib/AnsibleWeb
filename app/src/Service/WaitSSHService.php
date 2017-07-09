@@ -10,7 +10,6 @@ namespace Project\Service;
 
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Entity\JSON\PlayBook;
-use Project\Entity\JSON\WaitFor;
 
 class WaitSSHService
 {
@@ -20,7 +19,6 @@ class WaitSSHService
      */
     public function load($app_get)
     {
-        $ip = $app_get->get('ip');
         $playbook = new PlayBook();
 
         $playbook->setName('Wait for SSH Connection');
@@ -31,11 +29,7 @@ class WaitSSHService
         $playbook->setHosts('localhost');
         $playbook->setGatherFacts('false');
 
-        $wait_for = new WaitFor();
-        $wait_for->setHost($ip);
-        $wait_for->setPort('22');
-
-        $playbook->setTask($wait_for->toArray());
+	$playbook->setTask([ "wait_for" => [ "host" => $app_get->get('ip'), "port" => "22" ] ]);
 
         $playbook_json = $playbook->toJSON();
 

@@ -195,6 +195,7 @@ $(document).ready(function () {
                 if ("progress" in data) {
 			var percent = parseInt(document.getElementById("progress-bar-animated").style.width.replace('%','')) + 3;
 			document.getElementById("progress-bar-animated").style.width = percent + '%';
+			console.log(document.getElementById("progress-bar-animated").style.width);
                 }
                 if ("task" in data) {
 
@@ -205,7 +206,6 @@ $(document).ready(function () {
                     if ((data.progress == "100") && (data.task != "Install Machine Notification")) {
                         $('#task').text(data.task);
                         $('#result').append('Stop  (' + new Date().toLocaleString('en-GB') + ') : <b>' + data.task + '</b><br>');
-			document.getElementById("progress-bar-animated").style.width = '100%';
                     }
 		    if ((data.progress == "100") && (data.task == "Install Ubuntu 16.04")) {
 			$.ajax({
@@ -233,6 +233,7 @@ $(document).ready(function () {
                         $('#name').removeAttr("disabled");
                         $('#task').text('Installation Completed');
                         $('#result').append('Installation Completed<br>');
+			document.getElementById("progress-bar-animated").style.width = '100%';
                         socket.close();
                     }
 
