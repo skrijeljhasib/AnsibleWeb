@@ -85,10 +85,8 @@ use Project\Entity\DB\Package;
                         </div>
                     </div>
                 </div>
-
-
                 </div>
-            </div>
+            </div></div>
 
             <div id="expert" class="collapse">
                 <div id="pkgpanel" class="panel panel-default">
@@ -270,7 +268,7 @@ use Project\Entity\DB\Package;
                                     <br>
                                     <label> Root Password:
                                         <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="password" class="form-control"
-                                               id="mysql_root_password">
+                                               id="mysql_root_password" value="<?php echo Vars::collection('default_install')['mysql_root_pwd']; ?>">
                                     </label>
                                     <label> Database:
                                         <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" id="mysql_database">
