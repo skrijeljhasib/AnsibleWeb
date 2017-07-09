@@ -195,7 +195,6 @@ $(document).ready(function () {
                 if ("progress" in data) {
 			var percent = parseInt(document.getElementById("progress-bar-animated").style.width.replace('%','')) + 3;
 			document.getElementById("progress-bar-animated").style.width = percent + '%';
-			console.log(document.getElementById("progress-bar-animated").style.width);
                 }
                 if ("task" in data) {
 
