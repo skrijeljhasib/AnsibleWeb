@@ -2,7 +2,7 @@
 
 namespace Project\Gateway;
 
-use Project\Entity\DB\Package;
+use Project\Entity\Package;
 
 class PackageGateway
 {

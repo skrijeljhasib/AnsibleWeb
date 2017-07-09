@@ -5,7 +5,7 @@ namespace Project\Cli;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Cli\Action\AbstractCliAction;
 use Project\Config\Url;
-use Project\Entity\DB\Host;
+use Project\Entity\Host;
 use Pheanstalk\Pheanstalk;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;

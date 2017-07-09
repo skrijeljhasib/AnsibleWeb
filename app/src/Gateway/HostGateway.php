@@ -2,7 +2,7 @@
 
 namespace Project\Gateway;
 
-use Project\Entity\DB\Host;
+use Project\Entity\Host;
 
 class HostGateway
 {
@@ -87,7 +87,7 @@ class HostGateway
 
     public function deleteAllFromInventory($inventory)
     {
-        $query = $this->getEntityManager()->createQuery("DELETE FROM Project\Entity\DB\Host h WHERE h.inventory = 'toto' and h.status != 'STATIC'");
+        $query = $this->getEntityManager()->createQuery("DELETE FROM Project\Entity\Host h WHERE h.inventory = 'toto' and h.status != 'STATIC'");
 	$query->execute();
         $this->getEntityManager()->flush();
         return true;
@@ -100,7 +100,7 @@ class HostGateway
 
     public function deleteAll()
     {
-        $this->getEntityManager()->createQuery('DELETE FROM Project\Entity\DB\Host')->execute();
+        $this->getEntityManager()->createQuery('DELETE FROM Project\Entity\Host')->execute();
         $this->getEntityManager()->flush();
         return true;
     }

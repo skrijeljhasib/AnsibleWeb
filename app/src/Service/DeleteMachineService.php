@@ -9,9 +9,9 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\JSON\OsServer;
-use Project\Entity\JSON\OsServerAuth;
-use Project\Entity\JSON\PlayBook;
+use Project\Entity\OsServer;
+use Project\Entity\OsServerAuth;
+use Project\Entity\PlayBook;
 
 class DeleteMachineService
 {

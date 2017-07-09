@@ -10,7 +10,7 @@ namespace Project\Service;
 
 use ObjectivePHP\Message\Request\Parameter\Container\ParameterContainerInterface;
 use Project\Application;
-use Project\Entity\JSON\PlayBook;
+use Project\Entity\PlayBook;
 
 class WebServerService
 {

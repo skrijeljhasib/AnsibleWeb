@@ -9,8 +9,8 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\DB\Host;
-use Project\Entity\DB\Order;
+use Project\Entity\Host;
+use Project\Entity\Order;
 
 class DeleteMachineServiceDB
 {

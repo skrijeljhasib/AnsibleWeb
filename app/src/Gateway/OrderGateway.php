@@ -2,7 +2,7 @@
 
 namespace Project\Gateway;
 
-use Project\Entity\DB\Order;
+use Project\Entity\Order;
 
 class OrderGateway
 {

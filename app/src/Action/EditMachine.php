@@ -8,7 +8,7 @@
 
 namespace Project\Action;
 
-use Project\Entity\DB\Host;
+use Project\Entity\Host;
 use ObjectivePHP\Html\Exception;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Application\Action\AjaxAction;

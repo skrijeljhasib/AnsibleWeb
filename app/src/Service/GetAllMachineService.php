@@ -6,9 +6,9 @@
  * Time: 15:34
  */
 namespace Project\Service;
-use Project\Entity\JSON\OsServerAuth;
-use Project\Entity\JSON\OsServerFacts;
-use Project\Entity\JSON\PlayBook;
+use Project\Entity\OsServerAuth;
+use Project\Entity\OsServerFacts;
+use Project\Entity\PlayBook;
 class GetAllMachineService
 {
     /**

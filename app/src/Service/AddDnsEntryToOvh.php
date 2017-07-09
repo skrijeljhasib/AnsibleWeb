@@ -8,10 +8,8 @@
 
 namespace Project\Service;
 
-
 use Project\Application;
-use Project\Entity\JSON\OvhDns;
-use Project\Entity\JSON\PlayBook;
+use Project\Entity\PlayBook;
 
 class AddDnsEntryToOvh
 {
@@ -29,14 +27,13 @@ class AddDnsEntryToOvh
                                         '-s /bin/sh', 'localhost', 'false');
         $playbook->setEnvironment($ovh_dns_auth);
 
-        $ovhdns = new OvhDns();
-        $ovhdns->setHName($app->getRequest()->getParameters()->get('host_name'));
-        $ovhdns->setState('present');
-        $ovhdns->setType($app->getRequest()->getParameters()->get('type'));
-        $ovhdns->setDomain($app->getRequest()->getParameters()->get('domain_name'));
-        $ovhdns->setValue($app->getRequest()->getParameters()->get('ip'));
-
-        $playbook->setTask($ovhdns->toArray());
+	$playbook->setTask([ "ovh_dns" => [
+          "name" => $app->getRequest()->getParameters()->get('host_name'),
+          "type" => $app->getRequest()->getParameters()->get('type'),
+          "state" => "present",
+	  "domain" => $app->getRequest()->getParameters()->get('domain_name'),
+	  "value" => $app->getRequest()->getParameters()->get('ip')
+        ]]);
 
         $playbook_json = $playbook->toJSON();
 

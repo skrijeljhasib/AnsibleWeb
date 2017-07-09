@@ -2,7 +2,7 @@
 
 namespace Project\Service;
 
-use Project\Entity\JSON\PlayBook;
+use Project\Entity\PlayBook;
 
 class NotifyService
 {

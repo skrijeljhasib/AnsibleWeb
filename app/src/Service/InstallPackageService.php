@@ -9,7 +9,7 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\JSON\PlayBook;
+use Project\Entity\PlayBook;
 
 class InstallPackageService
 {
