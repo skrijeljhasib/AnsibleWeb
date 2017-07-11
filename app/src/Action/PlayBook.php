@@ -92,7 +92,7 @@ class PlayBook
 
             case 'installmachine':
 		$key = "name";
-		if (preg_match("/^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/", json_decode($app->getRequest()->getParameters()->get('host'))->$key, $output_array)) {
+		if (preg_match("/^(?=.{1,255}$)[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?(?:\.[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?)*\.?$/", json_decode($app->getRequest()->getParameters()->get('host'))->$key, $output_array)) {
                 	$this->tube = 'installmachine';
                 	$machineService = new InstallMachineService();
                 	$json = $machineService->load(

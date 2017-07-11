@@ -324,7 +324,8 @@ class GetWorker extends AbstractCliAction
                                     'query' => [
                                         'playbook' => 'deployproject',
                                         'ip' => $ip,
-					'project' => json_decode($order->getDeploy(), true)
+					'project' => json_decode($order->getDeploy(), true),
+                                        'name' => $name
                                     ]
                                 ]
                                     );
