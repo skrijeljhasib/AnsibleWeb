@@ -1,0 +1,4 @@
+# gently ask robots to get the f*ck out.
+User-agent: *
+Disallow: /
+
