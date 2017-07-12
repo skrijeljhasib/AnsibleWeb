@@ -9,7 +9,6 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\PlayBook;
 
 class AddDnsEntryToOvh
 {
@@ -19,25 +18,18 @@ class AddDnsEntryToOvh
      * @param $ovh_dns_auth
      * @return string
      */
-    public function load(Application $app, $ovh_dns_auth)
+    public function load(Application $app, $ovh_dns_auth, $url)
     {
-        $playbook = new PlayBook();
-
-	$playbook->init('Add Dns Entry to Ovh', 'local', 'false', 'www-data',
-                                        '-s /bin/sh', 'localhost', 'false');
-        $playbook->setEnvironment($ovh_dns_auth);
-
-	$playbook->setTask([ "ovh_dns" => [
-          "name" => $app->getRequest()->getParameters()->get('host_name'),
-          "type" => $app->getRequest()->getParameters()->get('type'),
-          "state" => "present",
-	  "domain" => $app->getRequest()->getParameters()->get('domain_name'),
-	  "value" => $app->getRequest()->getParameters()->get('ip')
-        ]]);
-
-        $playbook_json = $playbook->toJSON();
-
-        return $playbook_json;
+        $contents = file_get_contents($url . '/repo/dns_create/create.json');
+        $contents = str_replace("{{{ DNS_URL }}}",$ovh_dns_auth['OVH_ENDPOINT'],$contents);
+        $contents = str_replace("{{{ DNS_A_KEY }}}",$ovh_dns_auth['OVH_APPLICATION_KEY'],$contents);
+        $contents = str_replace("{{{ DNS_SECRET }}}",$ovh_dns_auth['OVH_APPLICATION_SECRET'],$contents);
+        $contents = str_replace("{{{ DNS_C_KEY }}}",$ovh_dns_auth['OVH_CONSUMER_KEY'],$contents);
+        $contents = str_replace("{{{ HOST_IP }}}",$app->getRequest()->getParameters()->get('ip'),$contents);
+        $contents = str_replace("{{{ HOST_NAME }}}",$app->getRequest()->getParameters()->get('host_name'),$contents);
+        $contents = str_replace("{{{ DNS_TYPE }}}",$app->getRequest()->getParameters()->get('type'),$contents);
+        $contents = str_replace("{{{ HOST_DOMAIN }}}",$app->getRequest()->getParameters()->get('domain_name'),$contents);
+        return $contents;
     }
 
 }

@@ -14,7 +14,7 @@ class TemplateService
     {
 	$ip = $app_get->get('ip');
 	$contents = file_get_contents($url . '/repo/template_install/' . $templatename . '.json');
-	$contents = str_replace("{{{ HOSTIP }}}",$ip,$contents);
+	$contents = str_replace("{{{ HOST_IP }}}",$ip,$contents);
         return $contents;
     }
 }

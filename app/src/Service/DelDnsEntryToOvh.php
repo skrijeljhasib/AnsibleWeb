@@ -19,7 +19,7 @@ class DelDnsEntryToOvh
      * @param $ovh_dns_auth
      * @return string
      */
-    public function load(Application $app, $ovh_dns_auth)
+    public function load(Application $app, $ovh_dns_auth, $url)
     {
         $playbook = new PlayBook();
 

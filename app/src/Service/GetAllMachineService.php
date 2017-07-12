@@ -6,9 +6,6 @@
  * Time: 15:34
  */
 namespace Project\Service;
-use Project\Entity\OsServerAuth;
-use Project\Entity\OsServerFacts;
-use Project\Entity\PlayBook;
 class GetAllMachineService
 {
     /**
@@ -16,18 +13,15 @@ class GetAllMachineService
      * @param $openstack_auth array
      * @return string
      */
-    public function load($machine_template, $openstack_auth)
+    public function load($machine_template, $openstack_auth,$url)
     {
-        $playbook = new PlayBook();
-	$playbook->init('Get all machines from '.$machine_template["region_name"], 'local', 'false', 'www-data', 
-					'-s /bin/sh', 'localhost', 'false');
-        $os_server_facts = new OsServerFacts();
-        $os_server_auth = new OsServerAuth();
-        $os_server_auth->setAuthFromConfigFile($openstack_auth);
-        $os_server_facts->setRegionName($machine_template["region_name"]);
-        $os_server_facts->setAuth($os_server_auth->toArray());
-        $playbook->setTask($os_server_facts->toArray());
-        $playbook_json = $playbook->toJSON();
-        return $playbook_json;
+        $contents = file_get_contents($url . '/repo/machine_getall/getall.json');
+        $contents = str_replace("{{{ AUTH_URL }}}",$openstack_auth['auth_url'],$contents);
+        $contents = str_replace("{{{ AUTH_USERNAME }}}",$openstack_auth['username'],$contents);
+        $contents = str_replace("{{{ AUTH_PASSWORD }}}",$openstack_auth['password'],$contents);
+        $contents = str_replace("{{{ AUTH_PROJECT }}}",$openstack_auth['project_name'],$contents);
+        $contents = str_replace("{{{ HOST_REGION }}}",$machine_template['region_name'],$contents);
+        $contents = str_replace("{{{ HOST_NAME }}}",$machine_template['name'],$contents);
+        return $contents;
     }
 }

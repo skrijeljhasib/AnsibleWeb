@@ -69,7 +69,8 @@ class PlayBook
                 $machineService = new GetAllMachineService();
                 $json = $machineService->load(
                     $this->machine_template,
-                    $this->openstack_auth
+                    $this->openstack_auth,
+                    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
@@ -78,7 +79,8 @@ class PlayBook
                 $machineService = new DeleteMachineService();
                 $json = $machineService->load(
                     $this->openstack_auth,
-                    $app
+                    $app,
+		    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
@@ -99,7 +101,8 @@ class PlayBook
                     		$this->openstack_auth,
                     		$this->machine_template,
                     		$this->host,
-                    		$app
+                    		$app,
+				$this->ansible_api["ansible_playbook"]
                 	);
 		}
                 break;
@@ -118,7 +121,8 @@ class PlayBook
                 $installDependencies = new InstallDependenciesService();
                 $json = $installDependencies->load(
                     $this->machine_access,
-                    $app->getRequest()->getParameters()
+                    $app->getRequest()->getParameters(),
+                    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
@@ -126,7 +130,8 @@ class PlayBook
                 $this->tube = 'ansible-post';
                 $waitService = new WaitSSHService();
                 $json = $waitService->load(
-                    $app->getRequest()->getParameters()
+                    $app->getRequest()->getParameters(),
+		    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
@@ -160,7 +165,8 @@ class PlayBook
                 $this->tube = 'ansible-post';
                 $notifyService = new NotifyService();
                 $json = $notifyService->load(
-                    $app->getRequest()->getParameters()
+                    $app->getRequest()->getParameters(),
+		    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
@@ -223,7 +229,8 @@ class PlayBook
                 $addDnsEntryToOvh = new AddDnsEntryToOvh();
                 $json = $addDnsEntryToOvh->load(
                     $app,
-                    $this->ovh_dns_auth
+                    $this->ovh_dns_auth,
+                    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
@@ -232,7 +239,8 @@ class PlayBook
                 $addDnsEntryToOvh = new DelDnsEntryToOvh();
                 $json = $addDnsEntryToOvh->load(
                     $app,
-                    $this->ovh_dns_auth
+                    $this->ovh_dns_auth,
+                    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 

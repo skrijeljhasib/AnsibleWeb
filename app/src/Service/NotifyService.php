@@ -9,16 +9,11 @@ class NotifyService
     /**
      * @return string
      */
-    public function load($app_get)
+    public function load($app_get,$url)
       {
-        $ip = $app_get->get('ip');
-	$name = $app_get->get('name');
-        $playbook = new PlayBook();
-	$playbook->init('Install Machine Notification', 'local', 'false', 'www-data',
-                                         '-s /bin/sh', 'localhost', 'false');
-         $playbook->setTask(["shell" => "echo 'Machine " . $name . " with " . $ip . " has been Installed !!' | mail -s test l.venier@flash-global.net"]);
-         $playbook_json = $playbook->toJSON();
-
-          return $playbook_json;
+        $contents = file_get_contents($url . '/repo/notify_install/install.json');
+        $contents = str_replace("{{{ HOST_IP }}}",$app_get->get('ip'),$contents);
+        $contents = str_replace("{{{ HOST_NAME }}}",$app_get->get('name'),$contents);
+        return $contents;
       }
 }

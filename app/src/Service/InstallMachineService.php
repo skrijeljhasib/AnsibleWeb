@@ -10,9 +10,6 @@ namespace Project\Service;
 
 use Project\Application;
 use Project\Entity\Order;
-use Project\Entity\OsServer;
-use Project\Entity\OsServerAuth;
-use Project\Entity\PlayBook;
 use Project\Entity\Host;
 
 class InstallMachineService
@@ -24,7 +21,7 @@ class InstallMachineService
      * @param $app Application
      * @return string
      */
-    public function load($openstack_auth, $machine_template, $host, $app)
+    public function load($openstack_auth, $machine_template, $host, $app, $url)
     {
         $app_get = $app->getRequest()->getParameters();
         switch ($host['host_config']) {
@@ -46,27 +43,13 @@ class InstallMachineService
                 $machine_template['name'] = $name;
         }
 
-        $playbook = new PlayBook();
-
-        $playbook->setName('Install '.$machine_template['image']);
-        $playbook->setConnection('local');
-        $playbook->setBecome('false');
-        $playbook->setBecomeUser('www-data');
-        $playbook->setBecomeFlags('-s /bin/sh');
-        $playbook->setHosts('localhost');
-        $playbook->setGatherFacts('false');
-
-        $os_server = new OsServer();
-        $os_server->setState('present');
-        $os_server->setRegister('newserver');
-        $os_server->setMachineFromConfigFile($machine_template);
-        $os_server_auth = new OsServerAuth();
-        $os_server_auth->setAuthFromConfigFile($openstack_auth);
-        $os_server->setAuth($os_server_auth->toArray());
-
-        $playbook->setTask($os_server->toArray());
-
-        $playbook_json = $playbook->toJSON();
+        $contents = file_get_contents($url . '/repo/machine_install/install.json');
+        $contents = str_replace("{{{ AUTH_URL }}}",$openstack_auth['auth_url'],$contents);
+        $contents = str_replace("{{{ AUTH_USERNAME }}}",$openstack_auth['username'],$contents);
+        $contents = str_replace("{{{ AUTH_PASSWORD }}}",$openstack_auth['password'],$contents);
+        $contents = str_replace("{{{ AUTH_PROJECT }}}",$openstack_auth['project_name'],$contents);
+        $contents = str_replace("{{{ HOST_REGION }}}",$machine_template['region_name'],$contents);
+        $contents = str_replace("{{{ HOST_NAME }}}",$machine_template['name'],$contents);
 
         $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
         $order = new Order();
@@ -103,6 +86,6 @@ class InstallMachineService
         $host->setStatus('CREATING');
         $hosts_gateway->put($host);
 
-        return $playbook_json;
+        return $contents;
     }
 }

@@ -9,44 +9,27 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\OsServer;
-use Project\Entity\OsServerAuth;
-use Project\Entity\PlayBook;
 
 class DeleteMachineService
 {
     /**
      * @param $openstack_auth array
-     * @param $app Application
+     * @param $app application
+     * @param $app url
      * @return string
      */
-    public function load($openstack_auth, $app)
+    public function load($openstack_auth, $app, $url)
     {
         $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
         $host = $hosts_gateway->fetchByName($app->getRequest()->getParameters()->get('name'));
 
-        $playbook = new PlayBook();
-
-        $playbook->setName('Delete '. $host->getName());
-        $playbook->setConnection('local');
-        $playbook->setBecome('false');
-        $playbook->setBecomeUser('www-data');
-        $playbook->setBecomeFlags('-s /bin/sh');
-        $playbook->setHosts('localhost');
-        $playbook->setGatherFacts('false');
-
-        $os_server = new OsServer();
-        $os_server->setState('absent');
-        $os_server->setWait('true');
-        $os_server->setRegionName($host->getLocation());
-        $os_server->setOSName($host->getName());
-        $os_server_auth = new OsServerAuth();
-        $os_server_auth->setAuthFromConfigFile($openstack_auth);
-        $os_server->setAuth($os_server_auth->toArray());
-
-        $playbook->setTask($os_server->toArray());
-
-        $playbook_json = $playbook->toJSON();
+        $contents = file_get_contents($url . '/repo/machine_delete/delete.json');
+        $contents = str_replace("{{{ AUTH_URL }}}",$openstack_auth['auth_url'],$contents);
+        $contents = str_replace("{{{ AUTH_USERNAME }}}",$openstack_auth['username'],$contents);
+        $contents = str_replace("{{{ AUTH_PASSWORD }}}",$openstack_auth['password'],$contents);
+        $contents = str_replace("{{{ AUTH_PROJECT }}}",$openstack_auth['project_name'],$contents);
+        $contents = str_replace("{{{ HOST_REGION }}}",$host->getLocation(),$contents);
+        $contents = str_replace("{{{ HOST_NAME }}}",$host->getName(),$contents);
 
         $host->setStatus('DELETING');
         $hosts_gateway->put($host);
@@ -55,6 +38,6 @@ class DeleteMachineService
         $order = $orders_gateway->fetchByName($host->getName());
         if ($order) { $orders_gateway->delete($order); }
 
-        return $playbook_json;
+        return $contents;
     }
 }
