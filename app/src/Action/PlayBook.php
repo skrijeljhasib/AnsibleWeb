@@ -112,7 +112,8 @@ class PlayBook
                 $packageService = new InstallPackageService();
                 $json = $packageService->load(
                     $this->machine_access,
-                    $app
+                    $app->getRequest()->getParameters(),
+		    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
@@ -173,55 +174,47 @@ class PlayBook
             case 'apache':
                 $this->tube = 'ansible-post';
                 $webserverService = new WebServerService();
-                $webserverService->load(
-                    $this->machine_access,
-                    $app
-                );
-                $json = $webserverService->apache(
-                    $app->getRequest()->getParameters()
+                $json = $webserverService->loadapache(
+                    $app->getRequest()->getParameters(),
+		    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
             case 'nginx':
                 $this->tube = 'ansible-post';
                 $webserverService = new WebServerService();
-                $webserverService->load(
+                $json = $webserverService->loadnginx(
                     $this->machine_access,
-                    $app
+                    $app->getRequest()->getParameters(),
+		    $this->ansible_api["ansible_playbook"]
                 );
-                $json = $webserverService->nginx();
                 break;
 
             case 'mysql':
                 $this->tube = 'ansible-post';
                 $databaseService = new DatabaseService();
-                $databaseService->load(
-                    $this->machine_access,
-                    $app
-                );
-                $json = $databaseService->mysql(
-                    $app->getRequest()->getParameters()
+                $json = $databaseService->load(
+                    $app>getRequest()->getParameters(),
+                    $this->ansible_api["ansible_playbook"]
                 );
                 break;
 
             case 'mongodb':
                 $this->tube = 'ansible-post';
                 $databaseService = new DatabaseService();
-                $databaseService->load(
-                    $this->machine_access,
-                    $app
+                $json = $databaseService->load(
+                    $app->getRequest()->getParameters(),
+                    $this->ansible_api["ansible_playbook"]
                 );
-                $json = $databaseService->mongodb();
                 break;
 
             case 'php':
                 $this->tube = 'ansible-post';
                 $languageService = new LanguageService();
-                $languageService->load(
-                    $this->machine_access,
-                    $app
+                $json = $languageService->load(
+		    $app->getRequest()->getParameters(),
+		    $this->ansible_api["ansible_playbook"]
                 );
-                $json = $languageService->php($app);
                 break;
 
             case 'addDnsEntryToOvh':
@@ -236,8 +229,8 @@ class PlayBook
 
             case 'delDnsEntryToOvh':
                 $this->tube = 'ansible-post';
-                $addDnsEntryToOvh = new DelDnsEntryToOvh();
-                $json = $addDnsEntryToOvh->load(
+                $delDnsEntryToOvh = new DelDnsEntryToOvh();
+                $json = $delDnsEntryToOvh->load(
                     $app,
                     $this->ovh_dns_auth,
                     $this->ansible_api["ansible_playbook"]

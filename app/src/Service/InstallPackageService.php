@@ -9,7 +9,6 @@
 namespace Project\Service;
 
 use Project\Application;
-use Project\Entity\PlayBook;
 
 class InstallPackageService
 {
@@ -18,24 +17,11 @@ class InstallPackageService
      * @param $app Application
      * @return string
      */
-    public function load($machine_access, $app)
+    public function load($machine_access, $app, $url)
     {
-        $playbook = new PlayBook();
-
-        $playbook->setName('Install package(s)');
-        $playbook->setHosts($app->getRequest()->getParameters()->get('ip'));
-        $playbook->setConnection('ssh');
-        $playbook->setRemoteUser($machine_access['remote_user']);
-        $playbook->setBecome('true');
-        $playbook->setBecomeMethod('sudo');
-        $playbook->setBecomeUser('root');
-        $playbook->setGatherFacts('false');
-
-        $playbook->setTask([      "apt" => [  "name" => "{{ item }}", "state" => "present" ],
-                                        "with_items" => [ explode(',', $app->getRequest()->getParameters()->get('packages')) ] ]);
-
-        $playbook_json = $playbook->toJSON();
-
-        return $playbook_json;
+        $contents = file_get_contents($url . '/repo/install_pkg/install.json');
+        $contents = str_replace("{{{ HOST_IP }}}",$app->get('ip'),$contents);
+        $contents = str_replace("{{{ HOST_PKG }}}",explode(',', $app->get('packages')),$contents);
+        return $contents;
     }
 }

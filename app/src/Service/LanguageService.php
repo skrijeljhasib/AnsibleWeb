@@ -22,33 +22,10 @@ class LanguageService
      * @param $machine_access array
      * @param $app Application
      */
-    public function load($machine_access, $app)
+    public function load($app, $url)
     {
-        $this->playbook = new PlayBook();
-
-        $this->playbook->setHosts($app->getRequest()->getParameters()->get('ip'));
-        $this->playbook->setConnection('ssh');
-        $this->playbook->setRemoteUser($machine_access['remote_user']);
-        $this->playbook->setBecome('true');
-        $this->playbook->setBecomeMethod('sudo');
-        $this->playbook->setBecomeUser('root');
-        $this->playbook->setGatherFacts('false');
-    }
-
-    /**
-     * @param $app Application
-     * @return string
-     */
-    public function php($app) {
-
-        $this->playbook->setName('Install '.$app->getRequest()->getParameters()->get('language'));
-
-	$this->playbook->setTask([      "apt" => [  "name" => "{{ item }}", "state" => "present" ],
-                                        "with_items" => [ $app->getRequest()->getParameters()->get('php_version')
-							, "php-curl", "php-mysql" ] ]);
-
-        $playbook_json = $this->playbook->toJSON();
-
-        return $playbook_json;
+        $contents = file_get_contents($url . '/repo/language_install/php.json');
+        $contents = str_replace("{{{ HOST_IP }}}",$app->get('ip'),$contents);
+        return $contents;
     }
 }

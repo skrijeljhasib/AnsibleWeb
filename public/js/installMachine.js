@@ -193,7 +193,7 @@ $(document).ready(function () {
             socket.onmessage = function (msg) {
                 var data = JSON.parse(msg.data);
                 if ("progress" in data) {
-			var percent = parseInt(document.getElementById("progress-bar-animated").style.width.replace('%','')) + 3;
+			var percent = parseInt(document.getElementById("progress-bar-animated").style.width.replace('%','')) + 2;
 			document.getElementById("progress-bar-animated").style.width = percent + '%';
                 }
                 if ("task" in data) {
