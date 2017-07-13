@@ -193,8 +193,8 @@ class PlayBook
             case 'mysql':
                 $this->tube = 'ansible-post';
                 $databaseService = new DatabaseService();
-                $json = $databaseService->load(
-                    $app>getRequest()->getParameters(),
+                $json = $databaseService->loadmysql(
+                    $app->getRequest()->getParameters(),
                     $this->ansible_api["ansible_playbook"]
                 );
                 break;
