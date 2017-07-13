@@ -36,6 +36,7 @@ $(document).ready(function () {
         };
         socket.onmessage = function (msg) {
             var jsonObject = JSON.parse(msg.data);
+	    console.log(msg.data);
             if (jsonObject.progress == "100") {
                 output.innerHTML = 'Done';
 		$('#status').removeClass('alert alert-warning');
@@ -106,7 +107,7 @@ $(document).ready(function () {
 	$('#statichostlocation').val(form[0][3].value);
     });
     $('#deployAppModal').on('show.bs.modal', function (e) {
-        $('#status').html('Modifying Host');
+        $('#status').html('Deploying Application');
         $('#status').removeClass('alert alert-info');
         $('#status').addClass('alert alert-warning');
         var form = $(e.relatedTarget).closest('form');
