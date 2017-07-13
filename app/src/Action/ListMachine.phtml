@@ -5,13 +5,43 @@
         margin: auto;
     }</style>
 
+<div class="modal fade" id="deployAppModal">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Deploy Application</h4>
+                </div>
+                <div class="modal-body">
+			<form class="form-horizontal">
+                                <div class="form-group">
+                                        <label class="control-label col-sm-2" for="statichostlocation">Project:</label>
+                                        <div class="col-sm-4"><select type="select" class="form-control" id="selectproject" placeholder="Enter Location" required><option value="chat">chat</option><option value="logger">logger</option></select></div>
+                                </div>
+			</form>
+			<input type="hidden" id="deployhostname" />
+			<input type="hidden" id="deployip" />
+		</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="deployappbtn" onclick="deployapp();">Deploy</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade" id="hostCreateStaticModal">
     <div class="vertical-alignment-helper">
         <div class="modal-dialog" style="display: table-cell; vertical-align: middle;">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Host Modification</h4>
+                    <h4 class="modal-title">Host Creation</h4>
                 </div>
                 <div class="modal-body">
 			<form class="form-horizontal">
@@ -42,9 +72,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 <div class="modal fade" id="hostEditStaticModal">
     <div class="vertical-alignment-helper">

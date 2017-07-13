@@ -105,6 +105,14 @@ $(document).ready(function () {
 	$('#statichostip').val(form[0][2].value);
 	$('#statichostlocation').val(form[0][3].value);
     });
+    $('#deployAppModal').on('show.bs.modal', function (e) {
+        $('#status').html('Modifying Host');
+        $('#status').removeClass('alert alert-info');
+        $('#status').addClass('alert alert-warning');
+        var form = $(e.relatedTarget).closest('form');
+        $('#deployhostname').val(form[0].name.value);
+        $('#deployip').val(form[0].hostip.value);
+    });
     
     $('#hostEditStaticModal').on('hide.bs.modal', function (e) {
         $('#status').html('Ready');
@@ -253,4 +261,32 @@ function deletesoft() {
 
         return false;
     }
+}
+
+function deployapp() {
+	var array = [];
+        array.push($('#selectproject').val());
+        var output = document.getElementById('status');
+        $('#status').removeClass('alert alert-info');
+        $('#status').addClass('alert alert-warning');
+        output.innerHTML = 'Deploying ' + $('#selectproject').val();
+        $.ajax({
+            type: 'GET',
+            url: 'PlayBook',
+            data: {
+                playbook: 'redeployproject',
+		name: $('#deployhostname').val(),
+		ip: $('#deployip').val(),
+                project: JSON.stringify(array)
+            }
+        }).done(function () {
+            machineTable.ajax.reload();
+
+        }).fail(function (error) {
+            console.log(JSON.stringify(error));
+        });
+
+        $('#deployAppModal').modal('hide');
+
+        return false;
 }

@@ -147,6 +147,7 @@ class PlayBook
                     );
                     $pheanstalk->useTube($this->tube)->put($json);
                 }
+		$this->tube = null;
                 break;
 
 	    case 'deployproject':
@@ -160,6 +161,20 @@ class PlayBook
                     );
                     $pheanstalk->useTube($this->tube)->put($json);
 		}
+		$this->tube = null;
+                break;
+	     case 'redeployproject':
+                $this->tube = 'ansible-post';
+		foreach (json_decode($app->getRequest()->getParameters()->get('project')) as $project) {
+		    $deployService = new DeployService(); 
+                    $json = $deployService->load(
+                        $app->getRequest()->getParameters(),
+                        $this->ansible_api["ansible_playbook"],
+			$project
+                    );
+                    $pheanstalk->useTube($this->tube)->put($json);
+		}
+		$this->tube = null;
                 break;
 
             case 'notify':
@@ -242,8 +257,6 @@ class PlayBook
         }
         if (!empty($this->tube)) {
             $pheanstalk->useTube($this->tube)->put($json);
-        } else {
-		throw new \Exception ("Bad Request", 400);
 	}
     }
 }
