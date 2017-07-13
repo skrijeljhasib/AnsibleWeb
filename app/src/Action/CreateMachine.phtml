@@ -55,6 +55,9 @@ use Project\Entity\Package;
 				<li role="presentation"><a href="#connect" aria-controls="deploy"
                                                                           role="tab"
                                                                           data-toggle="tab">Connect</a></li>
+                                <li role="presentation"><a href="#logger" aria-controls="deploy"
+                                                                          role="tab"
+                                                                          data-toggle="tab">Logger</a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -81,10 +84,22 @@ use Project\Entity\Package;
                                         </select>
                                     </label>
                                 </div>
+                		</div>
+                                <div role="tabpanel" class="tab-pane" id="logger">
+                                    <br><div class="checkbox">
+                                    <label><input type="checkbox" name="logger" id="loggerCheckbox" class="checkbox" checked>
+                                        <b>Install Logger Project</b></label>
+                                        <br><br>
+                                    <label> Select your Branch:
+                                        <select required name="logger_version" id="logger_branch" class="form-control">
+                                            <option value="master" selected>master</option>
+                                        </select>
+                                    </label>
+                                </div>
                             </div>
                         </div>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div></div>
 
