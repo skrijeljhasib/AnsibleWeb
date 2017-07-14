@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f85e9412a25f30d7f394560be686eda",
+    "content-hash": "81e2c7c7cc6da6809461dc10e0632318",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -638,17 +638,74 @@
             "time": "2016-12-18T15:42:34+00:00"
         },
         {
-            "name": "erusev/parsedown",
-            "version": "1.6.2",
+            "name": "egulias/email-validator",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/erusev/parsedown.git",
-                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01"
+                "url": "https://github.com/egulias/EmailValidator.git",
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/1bf24f7334fe16c88bf9d467863309ceaf285b01",
-                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "^1.0.1",
+                "php": ">= 5.5"
+            },
+            "require-dev": {
+                "dominicsayers/isemail": "dev-master",
+                "phpunit/phpunit": "^4.8.0",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "suggest": {
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Egulias\\EmailValidator\\": "EmailValidator"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduardo Gulias Davis"
+                }
+            ],
+            "description": "A library for validating emails against several RFCs",
+            "homepage": "https://github.com/egulias/EmailValidator",
+            "keywords": [
+                "email",
+                "emailvalidation",
+                "emailvalidator",
+                "validation",
+                "validator"
+            ],
+            "time": "2017-01-30T22:07:36+00:00"
+        },
+        {
+            "name": "erusev/parsedown",
+            "version": "1.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "728952b90a333b5c6f77f06ea9422b94b585878d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/728952b90a333b5c6f77f06ea9422b94b585878d",
+                "reference": "728952b90a333b5c6f77f06ea9422b94b585878d",
                 "shasum": ""
             },
             "require": {
@@ -677,7 +734,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2017-03-29T16:04:15+00:00"
+            "time": "2017-05-14T14:47:48+00:00"
         },
         {
             "name": "erusev/parsedown-extra",
@@ -724,17 +781,904 @@
             "time": "2015-11-01T10:19:22+00:00"
         },
         {
-            "name": "guzzlehttp/guzzle",
-            "version": "6.2.3",
+            "name": "fei/api-client",
+            "version": "v1.1.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006"
+                "url": "git@github.com:flash-global/api-client.git",
+                "reference": "5a15cc50b13ea1693ca08e4d7dcb1a4829c8086f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8d6c6cc55186db87b7dc5009827429ba4e9dc006",
-                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006",
+                "url": "https://composer.flash-global.net/dist/fei-api-client-5a15cc50b13ea1693ca08e4d7dcb1a4829c8086f-zip-9f6611.zip",
+                "reference": "5a15cc50b13ea1693ca08e4d7dcb1a4829c8086f",
+                "shasum": "2e4070dd0783d3588f4b6432eb4894b45bd15bef"
+            },
+            "require": {
+                "fei/entities": "1.*",
+                "guzzle/guzzle": "^3.9",
+                "pda/pheanstalk": "^3.1"
+            },
+            "require-dev": {
+                "codeception/aspect-mock": "*",
+                "codeception/codeception": "^2.2"
+            },
+            "bin": [
+                "scripts/api-client-worker.php"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\ApiClient\\": "src/"
+                }
+            },
+            "license": [
+                "Proprietary"
+            ],
+            "description": "FEI client side API helpers",
+            "support": {
+                "source": "https://github.com/flash-global/api-client/tree/v1.1.8",
+                "issues": "https://github.com/flash-global/api-client/issues"
+            },
+            "time": "2016-12-23T14:28:48+00:00"
+        },
+        {
+            "name": "fei/audit-client",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/audit-client.git",
+                "reference": "434375f08fd348f1721b5f4325004ca2cec87343"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-audit-client-434375f08fd348f1721b5f4325004ca2cec87343-zip-e38e10.zip",
+                "reference": "434375f08fd348f1721b5f4325004ca2cec87343",
+                "shasum": "7acabd501f7977db9bf0f69b70de8d4ecad84fb7"
+            },
+            "require": {
+                "fei/api-client": "^1.1.0",
+                "fei/audit-common": "^1.0.1"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2",
+                "fzaninotto/faker": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Audit\\Client\\": "src/"
+                }
+            },
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Jerome Schaeffer",
+                    "email": "jsc@opcoding.eu"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/audit-client/tree/v1.0.0",
+                "issues": "https://github.com/flash-global/audit-client/issues"
+            },
+            "time": "2016-12-14T10:23:09+00:00"
+        },
+        {
+            "name": "fei/audit-common",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/audit-common.git",
+                "reference": "58f514c22dbb2a818e461e0d1084a3402faab155"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-audit-common-58f514c22dbb2a818e461e0d1084a3402faab155-zip-ac9c81.zip",
+                "reference": "58f514c22dbb2a818e461e0d1084a3402faab155",
+                "shasum": "f262959588172f23ca2d02013dcdfff63ee1b92c"
+            },
+            "require": {
+                "doctrine/orm": ">=2.5",
+                "fei/entities": "^1.0.3",
+                "league/fractal": "^0.14.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Audit\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Gauthier Delamarre",
+                    "email": "gauthier@opcoding.eu",
+                    "role": "lead"
+                }
+            ],
+            "description": "Flash applicative audit - common components",
+            "keywords": [
+                "audit"
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/audit-common/tree/v1.0.1",
+                "issues": "https://github.com/flash-global/audit-common/issues"
+            },
+            "time": "2016-12-13T15:31:59+00:00"
+        },
+        {
+            "name": "fei/audit-package",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/audit-package.git",
+                "reference": "4e2bdbb54e287b2d258f41d449c624ee6b49e842"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-audit-package-4e2bdbb54e287b2d258f41d449c624ee6b49e842-zip-27aac6.zip",
+                "reference": "4e2bdbb54e287b2d258f41d449c624ee6b49e842",
+                "shasum": "f91be823db857c2f6d72d38a8cf38347b3635261"
+            },
+            "require": {
+                "fei/audit-client": "~1.0.0",
+                "objective-php/application": "~1.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Audit\\Package\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Boris Cerati",
+                    "email": "bce@opcoding.eu"
+                }
+            ],
+            "description": "Audit client package integration for Objective PHP applications",
+            "support": {
+                "source": "https://github.com/flash-global/audit-package/tree/master",
+                "issues": "https://github.com/flash-global/audit-package/issues"
+            },
+            "time": "2017-05-18T09:49:44+00:00"
+        },
+        {
+            "name": "fei/connect-client",
+            "version": "v1.2.6",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/connect-client.git",
+                "reference": "b57b3e1c62016c090270e7c6106029dc0beaaacb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-connect-client-b57b3e1c62016c090270e7c6106029dc0beaaacb-zip-80a1dd.zip",
+                "reference": "b57b3e1c62016c090270e7c6106029dc0beaaacb",
+                "shasum": "37a1bf8934762787ab00ee9ab0ad7d53baa653d1"
+            },
+            "require": {
+                "fei/api-client": "^1.1",
+                "fei/connect-common": "~1.4.0",
+                "lightsaml/lightsaml": "^1.2",
+                "nikic/fast-route": "^1.0",
+                "symfony/event-dispatcher": "~2.3",
+                "zendframework/zend-diactoros": "^1.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7",
+                "psy/psysh": "^0.8.3"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Connect\\Client\\": "src"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Simonin",
+                    "email": "vsi@opcoding.eu"
+                }
+            ],
+            "description": "Flash Connect Client - Service Provider",
+            "support": {
+                "source": "https://github.com/flash-global/connect-client/tree/v1.2.6",
+                "issues": "https://github.com/flash-global/connect-client/issues"
+            },
+            "time": "2017-07-12T11:42:10+00:00"
+        },
+        {
+            "name": "fei/connect-common",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/connect-common.git",
+                "reference": "bce0e58501ec0602c63acb020765444272d8d3ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-connect-common-bce0e58501ec0602c63acb020765444272d8d3ba-zip-666965.zip",
+                "reference": "bce0e58501ec0602c63acb020765444272d8d3ba",
+                "shasum": "115e786d2f79d8dd7e9b85ebec11e94cc379b18c"
+            },
+            "require": {
+                "doctrine/annotations": "^1.3",
+                "doctrine/collections": "^1.3",
+                "egulias/email-validator": "~2.1",
+                "fei/entities": "^1.0",
+                "zendframework/zend-diactoros": "^1.4",
+                "zendframework/zend-permissions-acl": "^2.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Connect\\Common\\": "src"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Simonin",
+                    "email": "vsi@opcoding.eu"
+                }
+            ],
+            "description": "Flash Connect common components",
+            "support": {
+                "source": "https://github.com/flash-global/connect-common/tree/master",
+                "issues": "https://github.com/flash-global/connect-common/issues"
+            },
+            "time": "2017-07-03T13:24:30+00:00"
+        },
+        {
+            "name": "fei/connect-package",
+            "version": "v1.2.6",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/connect-package.git",
+                "reference": "8709f43700c0f168b6a6fbfbabb970f510b6a692"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-connect-package-8709f43700c0f168b6a6fbfbabb970f510b6a692-zip-ee4671.zip",
+                "reference": "8709f43700c0f168b6a6fbfbabb970f510b6a692",
+                "shasum": "98859bf2b2489fc5e69802f57d68a828939ecc3f"
+            },
+            "require": {
+                "fei/connect-client": "~1.2.0",
+                "objective-php/application": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ObjectivePHP\\Package\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Simonin",
+                    "email": "vsi@opcoding.eu"
+                }
+            ],
+            "description": "Connect client package integration for Objective PHP applications",
+            "support": {
+                "source": "https://github.com/flash-global/connect-package/tree/v1.2.6",
+                "issues": "https://github.com/flash-global/connect-package/issues"
+            },
+            "time": "2017-07-12T11:47:14+00:00"
+        },
+        {
+            "name": "fei/entities",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/entities.git",
+                "reference": "bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-entities-bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab-zip-acd356.zip",
+                "reference": "bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab",
+                "shasum": "67bf0a2ab69dfdb61a376b8ced88c87ed7f47e03"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2",
+                "league/fractal": "^0.13.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Entity\\": "src/"
+                }
+            },
+            "license": [
+                "Proprietary"
+            ],
+            "description": "Entities descriptors and helpers",
+            "support": {
+                "source": "https://github.com/flash-global/entities/tree/v1.0.4",
+                "issues": "https://github.com/flash-global/entities/issues"
+            },
+            "time": "2016-07-18T12:12:09+00:00"
+        },
+        {
+            "name": "fei/filer-client",
+            "version": "v1.0.10",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/filer-client.git",
+                "reference": "46adfb30ff7d9f98ee36e10a1519ce27726ec6bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-filer-client-46adfb30ff7d9f98ee36e10a1519ce27726ec6bc-zip-05d706.zip",
+                "reference": "46adfb30ff7d9f98ee36e10a1519ce27726ec6bc",
+                "shasum": "9166b9b4b4fef8878f2b9217cad407327f5be7d1"
+            },
+            "require": {
+                "fei/api-client": "^1.1",
+                "fei/filer-common": "^1.0.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Filer\\Client\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Simonin",
+                    "email": "vsi@opcoding.eu",
+                    "role": "lead"
+                },
+                {
+                    "name": "Alexandre Lopez",
+                    "email": "alo@opcoding.eu",
+                    "role": "dev"
+                }
+            ],
+            "description": "Flash applicative Filer - client component",
+            "support": {
+                "source": "https://github.com/flash-global/filer-client/tree/master",
+                "issues": "https://github.com/flash-global/filer-client/issues"
+            },
+            "time": "2017-04-07T11:52:15+00:00"
+        },
+        {
+            "name": "fei/filer-common",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/filer-common.git",
+                "reference": "7bae5e89964025585da086876819e31be490194d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-filer-common-7bae5e89964025585da086876819e31be490194d-zip-b5ea57.zip",
+                "reference": "7bae5e89964025585da086876819e31be490194d",
+                "shasum": "7b470d2b674b5ff66882d69673b3dd18f99c00db"
+            },
+            "require": {
+                "doctrine/common": "^2.6.1",
+                "fei/entities": "^1.0.3",
+                "league/fractal": "^0.14.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Filer\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Vincent Simonin",
+                    "email": "vsi@opcoding.eu",
+                    "role": "lead"
+                },
+                {
+                    "name": "Boris Cerati",
+                    "email": "bce@opcoding.eu",
+                    "role": "dev"
+                }
+            ],
+            "description": "Flash applicative filer - common components",
+            "keywords": [
+                "filer"
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/filer-common/tree/v1.0.4",
+                "issues": "https://github.com/flash-global/filer-common/issues"
+            },
+            "time": "2017-03-15T09:07:08+00:00"
+        },
+        {
+            "name": "fei/filer-package",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/filer-package.git",
+                "reference": "d3843a53f12dbf3ce1ca98a4b56d92190e6fb3d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-filer-package-d3843a53f12dbf3ce1ca98a4b56d92190e6fb3d1-zip-ba0726.zip",
+                "reference": "d3843a53f12dbf3ce1ca98a4b56d92190e6fb3d1",
+                "shasum": "d7c869dc624cbf45607ab1645af23e27d0198293"
+            },
+            "require": {
+                "fei/filer-client": "~1.0",
+                "objective-php/application": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Filer\\Package\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Boris Cerati",
+                    "email": "bce@opcoding.eu"
+                }
+            ],
+            "description": "Filer client package integration for Objective PHP applications",
+            "support": {
+                "source": "https://github.com/flash-global/filer-package/tree/master",
+                "issues": "https://github.com/flash-global/filer-package/issues"
+            },
+            "time": "2017-04-06T13:29:38+00:00"
+        },
+        {
+            "name": "fei/logger-client",
+            "version": "v1.2.9",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/logger-client.git",
+                "reference": "a8a86e8acc49e3fea4bf0422a3f3bf89f4474af3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-logger-client-a8a86e8acc49e3fea4bf0422a3f3bf89f4474af3-zip-ad8987.zip",
+                "reference": "a8a86e8acc49e3fea4bf0422a3f3bf89f4474af3",
+                "shasum": "ab50f53b83d726a8594679dc3e63ae521fc73ec6"
+            },
+            "require": {
+                "fei/api-client": "^1.1.0",
+                "fei/logger-common": "^1.1.20"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2",
+                "fzaninotto/faker": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Logger\\Client\\": "src/"
+                }
+            },
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Jerome Schaeffer",
+                    "email": "jsc@opcoding.eu"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/logger-client/tree/master",
+                "issues": "https://github.com/flash-global/logger-client/issues"
+            },
+            "time": "2017-06-27T14:20:14+00:00"
+        },
+        {
+            "name": "fei/logger-common",
+            "version": "v1.1.25",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/logger-common.git",
+                "reference": "25cee9b3abb43b6aecb82140b5bb3511f52b9097"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-logger-common-25cee9b3abb43b6aecb82140b5bb3511f52b9097-zip-4b4421.zip",
+                "reference": "25cee9b3abb43b6aecb82140b5bb3511f52b9097",
+                "shasum": "e74b2740015ef384121028bc42f95477347efcf8"
+            },
+            "require": {
+                "doctrine/orm": ">=2.5",
+                "fei/entities": "^1.0.3",
+                "league/fractal": "^0.14.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Logger\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Gauthier Delamarre",
+                    "email": "gauthier@opcoding.eu",
+                    "role": "lead"
+                }
+            ],
+            "description": "Flash applicative logger - common components",
+            "keywords": [
+                "logger"
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/logger-common/tree/v1.1.25",
+                "issues": "https://github.com/flash-global/logger-common/issues"
+            },
+            "time": "2016-09-30T12:21:08+00:00"
+        },
+        {
+            "name": "fei/logger-package",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/logger-package.git",
+                "reference": "a4c60799569022ca340aa84a9e8692db57ae370a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-logger-package-a4c60799569022ca340aa84a9e8692db57ae370a-zip-3cff4e.zip",
+                "reference": "a4c60799569022ca340aa84a9e8692db57ae370a",
+                "shasum": "7955c7fc0483a31f359adadfbb773d0a5a518737"
+            },
+            "require": {
+                "fei/logger-client": "~1.2.0",
+                "objective-php/application": "~1.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Logger\\Package\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Flavien Rodrigues",
+                    "email": "fro@opcoding.eu"
+                }
+            ],
+            "description": "Logger client package integration for Objective PHP applications",
+            "support": {
+                "source": "https://github.com/flash-global/logger-package/tree/v1.0.0",
+                "issues": "https://github.com/flash-global/logger-package/issues"
+            },
+            "time": "2017-04-26T14:07:32+00:00"
+        },
+        {
+            "name": "fei/mailer-client",
+            "version": "v1.0.17",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/mailer-client.git",
+                "reference": "84e89632404ba5b260e62bfc73e91308efbb2f65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-mailer-client-84e89632404ba5b260e62bfc73e91308efbb2f65-zip-5df6eb.zip",
+                "reference": "84e89632404ba5b260e62bfc73e91308efbb2f65",
+                "shasum": "dae2e2c7008a5f767c2d4301d159d7b236842244"
+            },
+            "require": {
+                "egulias/email-validator": "^2.1",
+                "fei/api-client": "^1.1.0",
+                "fei/logger-client": "^1.2.4",
+                "fei/mailer-common": "^1.0.3",
+                "zendframework/zend-json": "^2.4.9"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Mailer\\Client\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Gauthier Delamarre",
+                    "email": "gauthier@opcoding.eu",
+                    "role": "lead"
+                },
+                {
+                    "name": "Vincent Simonin",
+                    "email": "vsi@opcoding.eu",
+                    "role": "developer"
+                }
+            ],
+            "description": "Flash mailer client",
+            "keywords": [
+                "client",
+                "mailer"
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/mailer-client/tree/v1.0.17",
+                "issues": "https://github.com/flash-global/mailer-client/issues"
+            },
+            "time": "2017-02-02T10:25:01+00:00"
+        },
+        {
+            "name": "fei/mailer-common",
+            "version": "v1.0.17",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/mailer-common.git",
+                "reference": "c177a4c59256f4f720900d675abf4dd225b63b77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-mailer-common-c177a4c59256f4f720900d675abf4dd225b63b77-zip-ed4a91.zip",
+                "reference": "c177a4c59256f4f720900d675abf4dd225b63b77",
+                "shasum": "09173429257fc37be24a8dc6b71ab4fb46c0e8d9"
+            },
+            "require": {
+                "egulias/email-validator": "^2.1",
+                "fei/entities": "^1.0.3"
+            },
+            "require-dev": {
+                "codeception/codeception": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Mailer\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Gauthier Delamarre",
+                    "email": "gauthier@opcoding.eu",
+                    "role": "lead"
+                },
+                {
+                    "name": "Vincent Simonin",
+                    "email": "vsi@opcoding.eu",
+                    "role": "developer"
+                }
+            ],
+            "description": "Flash mailer - common components",
+            "keywords": [
+                "mailer"
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/mailer-common/tree/v1.0.17",
+                "issues": "https://github.com/flash-global/mailer-common/issues"
+            },
+            "time": "2017-02-02T10:14:55+00:00"
+        },
+        {
+            "name": "fei/mailer-package",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/mailer-package.git",
+                "reference": "682a2a36ce7c713b486f7d54706a7f50ed6c9f3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-mailer-package-682a2a36ce7c713b486f7d54706a7f50ed6c9f3c-zip-31504a.zip",
+                "reference": "682a2a36ce7c713b486f7d54706a7f50ed6c9f3c",
+                "shasum": "0a2632f7f2a6630d26cd72067016ebb20ae8835d"
+            },
+            "require": {
+                "fei/mailer-client": "~1.0",
+                "objective-php/application": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fei\\Service\\Mailer\\Package\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Boris Cerati",
+                    "email": "bce@opcoding.eu"
+                }
+            ],
+            "description": "Mailer client package integration for Objective PHP applications",
+            "support": {
+                "source": "https://github.com/flash-global/mailer-package/tree/v1.0.2",
+                "issues": "https://github.com/flash-global/mailer-package/issues"
+            },
+            "time": "2017-04-07T07:23:03+00:00"
+        },
+        {
+            "name": "fei/pricer-logger-client",
+            "version": "v1.1.7",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:flash-global/pricer-logger-client.git",
+                "reference": "420da60b7c14bf0e70052256546878f6a3f97b88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.flash-global.net/dist/fei-pricer-logger-client-420da60b7c14bf0e70052256546878f6a3f97b88-zip-ab3927.zip",
+                "reference": "420da60b7c14bf0e70052256546878f6a3f97b88",
+                "shasum": "982d7ff61aed7ce869177efe8faa7b0700b7ff31"
+            },
+            "require": {
+                "fei/logger-client": "^1.1.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.2",
+                "doctrine/orm": ">=2.5",
+                "fzaninotto/faker": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pricer\\Logger\\Client\\": "src/"
+                }
+            },
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Jerome Schaeffer",
+                    "email": "jsc@opcoding.eu"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/flash-global/pricer-logger-client/tree/v1.1.7",
+                "issues": "https://github.com/flash-global/pricer-logger-client/issues"
+            },
+            "time": "2016-10-25T09:33:17+00:00"
+        },
+        {
+            "name": "guzzle/guzzle",
+            "version": "v3.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle3.git",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3",
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.3",
+                "monolog/monolog": "~1.0",
+                "phpunit/phpunit": "3.7.*",
+                "psr/log": "~1.0",
+                "symfony/class-loader": "~2.1",
+                "zendframework/zend-cache": "2.*,<2.3",
+                "zendframework/zend-log": "2.*,<2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle": "src/",
+                    "Guzzle\\Tests": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "abandoned": "guzzlehttp/guzzle",
+            "time": "2015-03-18T18:23:50+00:00"
+        },
+        {
+            "name": "guzzlehttp/guzzle",
+            "version": "6.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
                 "shasum": ""
             },
             "require": {
@@ -744,8 +1688,11 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.0",
+                "phpunit/phpunit": "^4.0 || ^5.0",
                 "psr/log": "^1.0"
+            },
+            "suggest": {
+                "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
             "extra": {
@@ -783,7 +1730,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-02-28T22:50:30+00:00"
+            "time": "2017-06-22T18:50:49+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1497,6 +2444,132 @@
             "time": "2016-04-04T20:24:59+00:00"
         },
         {
+            "name": "league/fractal",
+            "version": "0.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/fractal.git",
+                "reference": "56ad8933fbb40328ca3321c84143b2c16186eebf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/56ad8933fbb40328ca3321c84143b2c16186eebf",
+                "reference": "56ad8933fbb40328ca3321c84143b2c16186eebf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "illuminate/contracts": "~5.0",
+                "mockery/mockery": "~0.9",
+                "pagerfanta/pagerfanta": "~1.0.0",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5",
+                "zendframework/zend-paginator": "~2.3"
+            },
+            "suggest": {
+                "illuminate/pagination": "The Illuminate Pagination component.",
+                "pagerfanta/pagerfanta": "Pagerfanta Paginator",
+                "zendframework/zend-paginator": "Zend Framework Paginator"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Fractal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Sturgeon",
+                    "email": "me@philsturgeon.uk",
+                    "homepage": "http://philsturgeon.uk/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle the output of complex data structures ready for API output.",
+            "homepage": "http://fractal.thephpleague.com/",
+            "keywords": [
+                "api",
+                "json",
+                "league",
+                "rest"
+            ],
+            "time": "2016-07-21T09:56:14+00:00"
+        },
+        {
+            "name": "lightsaml/lightsaml",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lightSAML/lightSAML.git",
+                "reference": "a5201d9001771930a8d4f6f8ba4d983679941b7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lightSAML/lightSAML/zipball/a5201d9001771930a8d4f6f8ba4d983679941b7a",
+                "reference": "a5201d9001771930a8d4f6f8ba4d983679941b7a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.1",
+                "robrichards/xmlseclibs": "~2.0|~3.0",
+                "symfony/event-dispatcher": "~2.3|~3.0",
+                "symfony/http-foundation": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "monolog/monolog": "~1.3",
+                "phpunit/phpunit": "~4.5",
+                "pimple/pimple": "~3.0",
+                "satooshi/php-coveralls": "~0.6",
+                "symfony/css-selector": "~2.3",
+                "symfony/dom-crawler": "~2.3"
+            },
+            "suggest": {
+                "lightsaml/sp-bundle": "Symfony 2 SP security bundle",
+                "lightsaml/symfony-bridge": "Symfony 2 build container bridge"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LightSaml\\Tests\\": "tests/",
+                    "LightSaml\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milos Tomic",
+                    "email": "tmilos@gmail.com",
+                    "homepage": "https://github.com/tmilos/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Light SAML 2.0 PHP library",
+            "homepage": "https://www.lightsaml.com/",
+            "keywords": [
+                "SAML 2.0",
+                "Single Logout",
+                "Single SignOn",
+                "library",
+                "lightSAML",
+                "php"
+            ],
+            "time": "2017-06-20T05:15:02+00:00"
+        },
+        {
             "name": "nikic/fast-route",
             "version": "v1.2.0",
             "source": {
@@ -1541,16 +2614,16 @@
         },
         {
             "name": "objective-php/application",
-            "version": "v1.1.4",
+            "version": "v1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/application.git",
-                "reference": "edd86d5c4047c9264c4bd000ab56117928f9484e"
+                "reference": "c9dffd185095f2013d6986e19297a3fd64df7b82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/application/zipball/edd86d5c4047c9264c4bd000ab56117928f9484e",
-                "reference": "edd86d5c4047c9264c4bd000ab56117928f9484e",
+                "url": "https://api.github.com/repos/objective-php/application/zipball/c9dffd185095f2013d6986e19297a3fd64df7b82",
+                "reference": "c9dffd185095f2013d6986e19297a3fd64df7b82",
                 "shasum": ""
             },
             "require": {
@@ -1590,7 +2663,7 @@
                 "framework",
                 "objective php"
             ],
-            "time": "2017-06-01T12:26:39+00:00"
+            "time": "2017-06-28T12:04:31+00:00"
         },
         {
             "name": "objective-php/beanstalk-package",
@@ -1598,12 +2671,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/beanstalk-package.git",
-                "reference": "a7a638a02565bdb1b3327838cc740a90a45913af"
+                "reference": "c36a8ae2dd8944d4bb64f365d67756452b6fe274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/beanstalk-package/zipball/a7a638a02565bdb1b3327838cc740a90a45913af",
-                "reference": "a7a638a02565bdb1b3327838cc740a90a45913af",
+                "url": "https://api.github.com/repos/objective-php/beanstalk-package/zipball/c36a8ae2dd8944d4bb64f365d67756452b6fe274",
+                "reference": "c36a8ae2dd8944d4bb64f365d67756452b6fe274",
                 "shasum": ""
             },
             "require": {
@@ -1642,20 +2715,20 @@
                 "beanstalk",
                 "objective php"
             ],
-            "time": "2016-07-10 15:57:27"
+            "time": "2017-06-28 13:56:08"
         },
         {
             "name": "objective-php/cli",
-            "version": "v1.0.6",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/cli.git",
-                "reference": "bbe8cebf2b31569cbab2ad338ed9b33dbe304442"
+                "reference": "48022f155a9f4d40ea5fa5c511dbe05e08e3f558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/cli/zipball/bbe8cebf2b31569cbab2ad338ed9b33dbe304442",
-                "reference": "bbe8cebf2b31569cbab2ad338ed9b33dbe304442",
+                "url": "https://api.github.com/repos/objective-php/cli/zipball/48022f155a9f4d40ea5fa5c511dbe05e08e3f558",
+                "reference": "48022f155a9f4d40ea5fa5c511dbe05e08e3f558",
                 "shasum": ""
             },
             "require": {
@@ -1690,26 +2763,26 @@
                 "cli",
                 "objective php"
             ],
-            "time": "2017-05-27T13:12:58+00:00"
+            "time": "2017-06-28T12:10:06+00:00"
         },
         {
             "name": "objective-php/components",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/components.git",
-                "reference": "7a537f33ab8da44a17b50887a33ae2a8082ce48b"
+                "reference": "1048205612b6a76c9846b39e077a7f4c19b8995a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/components/zipball/7a537f33ab8da44a17b50887a33ae2a8082ce48b",
-                "reference": "7a537f33ab8da44a17b50887a33ae2a8082ce48b",
+                "url": "https://api.github.com/repos/objective-php/components/zipball/1048205612b6a76c9846b39e077a7f4c19b8995a",
+                "reference": "1048205612b6a76c9846b39e077a7f4c19b8995a",
                 "shasum": ""
             },
             "require": {
                 "objective-php/config": "~1.0",
                 "objective-php/data-processor": "~1.0",
-                "objective-php/invokable": "~1.0",
+                "objective-php/invokable": "~1.1",
                 "objective-php/matcher": "~1.0",
                 "objective-php/notification": "~1.0",
                 "objective-php/phpunit-extension": "~1.0",
@@ -1738,7 +2811,7 @@
                 "objective php",
                 "primitives"
             ],
-            "time": "2017-03-24T15:06:35+00:00"
+            "time": "2017-06-23T11:40:23+00:00"
         },
         {
             "name": "objective-php/config",
@@ -1842,16 +2915,16 @@
         },
         {
             "name": "objective-php/doctrine-package",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/doctrine-package.git",
-                "reference": "dde3ac28f45ee1b00e4ba446b5ada6b95fceef9e"
+                "reference": "4d3fccaec8f3c92d1bc2a7c112c9fbdbad609f2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/doctrine-package/zipball/dde3ac28f45ee1b00e4ba446b5ada6b95fceef9e",
-                "reference": "dde3ac28f45ee1b00e4ba446b5ada6b95fceef9e",
+                "url": "https://api.github.com/repos/objective-php/doctrine-package/zipball/4d3fccaec8f3c92d1bc2a7c112c9fbdbad609f2d",
+                "reference": "4d3fccaec8f3c92d1bc2a7c112c9fbdbad609f2d",
                 "shasum": ""
             },
             "require": {
@@ -1889,20 +2962,20 @@
                 "doctrine",
                 "objective php"
             ],
-            "time": "2017-05-01T15:58:15+00:00"
+            "time": "2017-06-28T13:38:21+00:00"
         },
         {
             "name": "objective-php/events-handler",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/events-handler.git",
-                "reference": "b91fa4aa5c53bfddf7ec9b36a13819f9014bd7b5"
+                "reference": "26442ac2c88cf01406e1b7385e9ba9bb38259a9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/events-handler/zipball/b91fa4aa5c53bfddf7ec9b36a13819f9014bd7b5",
-                "reference": "b91fa4aa5c53bfddf7ec9b36a13819f9014bd7b5",
+                "url": "https://api.github.com/repos/objective-php/events-handler/zipball/26442ac2c88cf01406e1b7385e9ba9bb38259a9e",
+                "reference": "26442ac2c88cf01406e1b7385e9ba9bb38259a9e",
                 "shasum": ""
             },
             "require": {
@@ -1938,20 +3011,20 @@
                 "events handler",
                 "objective php"
             ],
-            "time": "2016-05-06T15:58:36+00:00"
+            "time": "2017-07-06T15:31:05+00:00"
         },
         {
             "name": "objective-php/fastroute-package",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/fastroute-package.git",
-                "reference": "6896fdacf557116fa95bde0bbb33d81b19c1f08d"
+                "reference": "299773775ad31dcb54258830b190469de032a942"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/fastroute-package/zipball/6896fdacf557116fa95bde0bbb33d81b19c1f08d",
-                "reference": "6896fdacf557116fa95bde0bbb33d81b19c1f08d",
+                "url": "https://api.github.com/repos/objective-php/fastroute-package/zipball/299773775ad31dcb54258830b190469de032a942",
+                "reference": "299773775ad31dcb54258830b190469de032a942",
                 "shasum": ""
             },
             "require": {
@@ -1989,7 +3062,7 @@
                 "FastRoute",
                 "objective php"
             ],
-            "time": "2017-03-17T10:36:10+00:00"
+            "time": "2017-06-28T13:48:01+00:00"
         },
         {
             "name": "objective-php/html",
@@ -2041,16 +3114,16 @@
         },
         {
             "name": "objective-php/invokable",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/invokable.git",
-                "reference": "459f017413d58f730d3ec6a09b8fdaf24141401b"
+                "reference": "aec03eea6e85f133e30182cf9ca03bb1c85da1c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/invokable/zipball/459f017413d58f730d3ec6a09b8fdaf24141401b",
-                "reference": "459f017413d58f730d3ec6a09b8fdaf24141401b",
+                "url": "https://api.github.com/repos/objective-php/invokable/zipball/aec03eea6e85f133e30182cf9ca03bb1c85da1c1",
+                "reference": "aec03eea6e85f133e30182cf9ca03bb1c85da1c1",
                 "shasum": ""
             },
             "require": {
@@ -2085,7 +3158,7 @@
                 "invokable",
                 "objective php"
             ],
-            "time": "2017-03-24T10:16:19+00:00"
+            "time": "2017-06-29T12:46:13+00:00"
         },
         {
             "name": "objective-php/matcher",
@@ -2275,16 +3348,16 @@
         },
         {
             "name": "objective-php/primitives",
-            "version": "v1.3.5",
+            "version": "v1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/primitives.git",
-                "reference": "8295143db2c701d6350f96b3901c95aadacd6256"
+                "reference": "a582360b8d5792b84ab443ce2a309d1a224dc737"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/primitives/zipball/8295143db2c701d6350f96b3901c95aadacd6256",
-                "reference": "8295143db2c701d6350f96b3901c95aadacd6256",
+                "url": "https://api.github.com/repos/objective-php/primitives/zipball/a582360b8d5792b84ab443ce2a309d1a224dc737",
+                "reference": "a582360b8d5792b84ab443ce2a309d1a224dc737",
                 "shasum": ""
             },
             "require": {
@@ -2325,7 +3398,7 @@
                 "objective php",
                 "primitives"
             ],
-            "time": "2017-05-23T17:01:35+00:00"
+            "time": "2017-07-04T10:02:19+00:00"
         },
         {
             "name": "objective-php/router",
@@ -2377,22 +3450,23 @@
         },
         {
             "name": "objective-php/services-factory",
-            "version": "v1.1.0",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/services-factory.git",
-                "reference": "d9f89dfce1c3ae5aa0ad3631164aec6ef93e5070"
+                "reference": "394b5a4390995a95bd0d5555637b20631c9eabf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/services-factory/zipball/d9f89dfce1c3ae5aa0ad3631164aec6ef93e5070",
-                "reference": "d9f89dfce1c3ae5aa0ad3631164aec6ef93e5070",
+                "url": "https://api.github.com/repos/objective-php/services-factory/zipball/394b5a4390995a95bd0d5555637b20631c9eabf3",
+                "reference": "394b5a4390995a95bd0d5555637b20631c9eabf3",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
                 "doctrine/annotations": "*",
                 "objective-php/config": "~1.0.0",
+                "objective-php/invokable": "~1.1.1",
                 "objective-php/matcher": "~1.0.0",
                 "objective-php/primitives": "~1.3.0",
                 "php": ">=7.0",
@@ -2400,7 +3474,6 @@
             },
             "require-dev": {
                 "objective-php/events-handler": "~1.0.0",
-                "objective-php/invokable": "~1.0.0",
                 "objective-php/phpunit-extension": "~1.0.0",
                 "phpunit/phpunit": "5.*",
                 "zendframework/zend-servicemanager": "^2.7.6"
@@ -2429,7 +3502,7 @@
                 "objective php",
                 "services"
             ],
-            "time": "2017-05-01T14:47:47+00:00"
+            "time": "2017-07-05T12:42:58+00:00"
         },
         {
             "name": "pda/pheanstalk",
@@ -2774,6 +3847,46 @@
             "time": "2016-10-10T12:19:37+00:00"
         },
         {
+            "name": "robrichards/xmlseclibs",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robrichards/xmlseclibs.git",
+                "reference": "a29eb3100eb6c5a427d6a3f9e61aff37492405ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robrichards/xmlseclibs/zipball/a29eb3100eb6c5a427d6a3f9e61aff37492405ae",
+                "reference": "a29eb3100eb6c5a427d6a3f9e61aff37492405ae",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.6"
+            },
+            "suggest": {
+                "ext-openssl": "OpenSSL extension"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RobRichards\\XMLSecLibs\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "A PHP library for XML Security",
+            "homepage": "https://github.com/robrichards/xmlseclibs",
+            "keywords": [
+                "security",
+                "signature",
+                "xml",
+                "xmldsig"
+            ],
+            "time": "2017-05-25T15:25:34+00:00"
+        },
+        {
             "name": "seld/cli-prompt",
             "version": "1.0.3",
             "source": {
@@ -2823,16 +3936,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "b95ff2c3b122a3ee4b57d149a57d2afce65522c3"
+                "reference": "f9eaf037edf22fdfccf04cb0ab57ebcb1e166219"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/b95ff2c3b122a3ee4b57d149a57d2afce65522c3",
-                "reference": "b95ff2c3b122a3ee4b57d149a57d2afce65522c3",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f9eaf037edf22fdfccf04cb0ab57ebcb1e166219",
+                "reference": "f9eaf037edf22fdfccf04cb0ab57ebcb1e166219",
                 "shasum": ""
             },
             "require": {
@@ -2870,20 +3983,20 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-05-04T00:33:04+00:00"
+            "time": "2017-06-14T01:23:49+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "70d2a29b2911cbdc91a7e268046c395278238b2e"
+                "reference": "a97e45d98c59510f085fa05225a1acb74dfe0546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/70d2a29b2911cbdc91a7e268046c395278238b2e",
-                "reference": "70d2a29b2911cbdc91a7e268046c395278238b2e",
+                "url": "https://api.github.com/repos/symfony/console/zipball/a97e45d98c59510f085fa05225a1acb74dfe0546",
+                "reference": "a97e45d98c59510f085fa05225a1acb74dfe0546",
                 "shasum": ""
             },
             "require": {
@@ -2939,20 +4052,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T19:24:58+00:00"
+            "time": "2017-07-03T13:19:36+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "e9c50482841ef696e8fa1470d950a79c8921f45d"
+                "reference": "63b85a968486d95ff9542228dc2e4247f16f9743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/e9c50482841ef696e8fa1470d950a79c8921f45d",
-                "reference": "e9c50482841ef696e8fa1470d950a79c8921f45d",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/63b85a968486d95ff9542228dc2e4247f16f9743",
+                "reference": "63b85a968486d95ff9542228dc2e4247f16f9743",
                 "shasum": ""
             },
             "require": {
@@ -2995,20 +4108,133 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-01T21:01:25+00:00"
+            "time": "2017-07-05T13:02:37+00:00"
         },
         {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
+            "name": "symfony/event-dispatcher",
+            "version": "v2.8.24",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "1377400fd641d7d1935981546aaef780ecd5bf6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/1377400fd641d7d1935981546aaef780ecd5bf6d",
+                "reference": "1377400fd641d7d1935981546aaef780ecd5bf6d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "^2.0.5|~3.0.0",
+                "symfony/dependency-injection": "~2.6|~3.0.0",
+                "symfony/expression-language": "~2.6|~3.0.0",
+                "symfony/stopwatch": "~2.3|~3.0.0"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\EventDispatcher\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-06-02T07:47:27+00:00"
+        },
+        {
+            "name": "symfony/http-foundation",
+            "version": "v3.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-foundation.git",
+                "reference": "f347a5f561b03db95ed666959db42bbbf429b7e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/f347a5f561b03db95ed666959db42bbbf429b7e5",
+                "reference": "f347a5f561b03db95ed666959db42bbbf429b7e5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.1"
+            },
+            "require-dev": {
+                "symfony/expression-language": "~2.8|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpFoundation\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpFoundation Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-06-24T09:29:48+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f29dca382a6485c3cbe6379f0c61230167681937",
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
                 "shasum": ""
             },
             "require": {
@@ -3020,7 +4246,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -3054,7 +4280,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2017-06-09T14:24:12+00:00"
         },
         {
             "name": "twbs/bootstrap",
@@ -3208,6 +4434,110 @@
                 "psr-7"
             ],
             "time": "2017-04-06T16:18:34+00:00"
+        },
+        {
+            "name": "zendframework/zend-json",
+            "version": "2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-json.git",
+                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-json/zipball/4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
+                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "1.7.*",
+                "phpunit/phpunit": "~4.0",
+                "zendframework/zend-http": "^2.5.4",
+                "zendframework/zend-server": "^2.6.1",
+                "zendframework/zend-stdlib": "^2.5 || ^3.0",
+                "zendframework/zendxml": "^1.0.2"
+            },
+            "suggest": {
+                "zendframework/zend-http": "Zend\\Http component, required to use Zend\\Json\\Server",
+                "zendframework/zend-server": "Zend\\Server component, required to use Zend\\Json\\Server",
+                "zendframework/zend-stdlib": "Zend\\Stdlib component, for use with caching Zend\\Json\\Server responses",
+                "zendframework/zendxml": "To support Zend\\Json\\Json::fromXml() usage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev",
+                    "dev-develop": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Json\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides convenience methods for serializing native PHP to JSON and decoding JSON to native PHP",
+            "homepage": "https://github.com/zendframework/zend-json",
+            "keywords": [
+                "json",
+                "zf2"
+            ],
+            "time": "2016-02-04T21:20:26+00:00"
+        },
+        {
+            "name": "zendframework/zend-permissions-acl",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-permissions-acl.git",
+                "reference": "843bbd9c6f6d20b84dd0ce6c815d10397e98082b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-permissions-acl/zipball/843bbd9c6f6d20b84dd0ce6c815d10397e98082b",
+                "reference": "843bbd9c6f6d20b84dd0ce6c815d10397e98082b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "1.7.*",
+                "phpunit/phpunit": "~4.0",
+                "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
+            },
+            "suggest": {
+                "zendframework/zend-servicemanager": "To support Zend\\Permissions\\Acl\\Assertion\\AssertionManager plugin manager usage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev",
+                    "dev-develop": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Permissions\\Acl\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides a lightweight and flexible access control list (ACL) implementation for privileges management",
+            "homepage": "https://github.com/zendframework/zend-permissions-acl",
+            "keywords": [
+                "acl",
+                "zf2"
+            ],
+            "time": "2016-02-03T21:46:45+00:00"
         }
     ],
     "packages-dev": [],

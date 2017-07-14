@@ -27,6 +27,35 @@ use ObjectivePHP\Application\View\Helper\Vars;
                 <li><a href="/listMachine">List machine</a></li>
 
             </ul>
+	    <div class="navbar-right">
+                <!--<div class="navbar-text" style="position: relative;">
+                    <?php
+                    if (!empty($user['mini_avatar_url'])) {
+                        echo '<img src="'.htmlspecialchars($user['mini_avatar_url'], ENT_QUOTES).'" alt="User avatar" style="max-height: 30px; position: absolute; top: -5px; left: -40px;" /></a>';
+                    }
+                    ?>
+                    Hello, <?= htmlspecialchars($user['user_name'], ENT_QUOTES|ENT_SUBSTITUTE) ?>
+                </div>-->
+                <ul class="nav navbar-nav">
+                    <li>
+                        <span class="imageAvatar"></span>
+                        <?php if (null !== $user['mini_avatar_url']): ?>
+                            <script>
+                                var img = new Image();
+                                img.onload = function () {
+                                    document.getElementsByClassName('imageAvatar')[0].appendChild(img);
+                                };
+                                img.style.maxHeight = '30px';
+                                img.style.top = '15px';
+                                img.style.left = '-40px';
+                                img.style.position= 'absolute';
+                                img.src = '<?= Html::escape($user['mini_avatar_url']); ?>';
+                            </script>
+                        <?php endif; ?>
+                        <a href="/logout"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!--/.nav-collapse -->
     </div>

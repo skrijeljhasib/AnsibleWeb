@@ -136,11 +136,21 @@ class PlayBook
                 );
                 break;
 
+            case 'deletetemplate':
+                $this->tube = 'ansible-post';
+                $templateService = new TemplateService();
+                $json = $templateService->loaddelete(
+                        $app->getRequest()->getParameters(),
+                        $this->ansible_api["ansible_playbook"],
+                        'delete'
+                    );
+                break;
+
             case 'installtemplate':
                 $this->tube = 'ansible-post';
                 foreach ($this->templateJson as $templatename) {
                     $templateService = new TemplateService();
-                    $json = $templateService->load(
+                    $json = $templateService->loadinstall(
                         $app->getRequest()->getParameters(),
                         $this->ansible_api["ansible_playbook"],
                         $templatename

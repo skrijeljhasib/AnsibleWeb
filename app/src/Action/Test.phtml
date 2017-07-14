@@ -1,0 +1,42 @@
+<?php
+use ObjectivePHP\Application\Config\ApplicationName;
+use ObjectivePHP\Application\View\Helper\Vars;
+use ObjectivePHP\Html\Tag\Tag;
+?>
+<?php $tester = Vars::get('tester');?>
+<?php if(!$tester->getErrorLog()):?>
+    <div class="alert alert-success">
+        <strong>Success!</strong> Logger plugin is currently working with BasicTransport
+    </div>
+<?php else:?>
+    <div class="alert alert-danger">
+        <strong>Error!</strong> Logger plugin is currently not working.<br>Error:  <?=$tester->getErrorLogMessage()?>
+    </div>
+<?php endif;?>
+<?php if(!$tester->getErrorAudit()):?>
+    <div class="alert alert-success">
+        <strong>Success!</strong> Audit plugin is currently working with BasicTransport
+    </div>
+<?php else:?>
+    <div class="alert alert-danger">
+        <strong>Error!</strong> Audit plugin is currently not working.<br>Error: <?= $tester->getErrorAuditMessage()?>
+    </div>
+<?php endif;?>
+<?php if(!$tester->getErrorMailer()):?>
+    <div class="alert alert-success">
+        <strong>Success!</strong> Mailer plugin is currently working with BasicTransport
+    </div>
+<?php else:?>
+    <div class="alert alert-danger">
+        <strong>Error!</strong> Mailer plugin is currently not working.<br>Error: <?=$tester->getErrorMailerMessage()?>
+    </div>
+<?php endif;?>
+<?php if(!$tester->getErrorFiler()):?>
+    <div class="alert alert-success">
+        <strong>Success!</strong> Filer plugin is currently working with BasicTransport
+    </div>
+<?php else:?>
+    <div class="alert alert-danger">
+        <strong>Error!</strong> Filer plugin is currently not working.<br>Error: <?=$tester->getErrorFilerMessage()?>
+    </div>
+<?php endif;?>

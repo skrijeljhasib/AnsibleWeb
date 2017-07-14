@@ -117,6 +117,18 @@ class GetWorker extends AbstractCliAction
                                         	echo 'Error playbook delDnsEntryToOvh';
                                         	break;
                                     	}
+                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                        [
+                                            'query' => [
+                                                'playbook' => 'deletetemplate',
+                                                'ip' => $host->getIp()
+                                                        ]
+                                        ]
+                                        );
+                                        if ($response->getStatusCode() != 200) {
+                                                echo 'Error playbook delete Template';
+                                                break;
+                                        }
 					} catch (RequestException $e) {
                             			echo Psr7\str($e->getRequest());
                             			if ($e->hasResponse()) {

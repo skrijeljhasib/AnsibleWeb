@@ -24,6 +24,13 @@ use ObjectivePHP\Package\FastRoute\FastRouteRouter;
 use ObjectivePHP\Router\Dispatcher;
 use ObjectivePHP\Router\MetaRouter;
 use ObjectivePHP\Router\PathMapperRouter;
+
+use Fei\Service\Audit\Package\AuditPackage;
+use Fei\Service\Logger\Package\LoggerPackage;
+use Fei\Service\Mailer\Package\MailerPackage;
+use ObjectivePHP\Package\Connect\ConnectPackage;
+use ObjectivePHP\Package\Connect\Middleware\ConnectMiddleware;
+
 use Project\Cli\PostWorker;
 use Project\Cli\SocketWorker;
 use Project\Cli\GetWorker;
@@ -103,6 +110,10 @@ class Application extends AbstractApplication
 
         $this->getStep('bootstrap')
             // load external packages
+	    ->plug(ConnectPackage::class)
+            ->plug(AuditPackage::class)
+            ->plug(LoggerPackage::class)
+            ->plug(MailerPackage::class)
             ->plug(new DoctrinePackage());
     }
 }
