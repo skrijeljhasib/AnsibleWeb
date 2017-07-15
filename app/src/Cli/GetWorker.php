@@ -337,7 +337,8 @@ class GetWorker extends AbstractCliAction
                                         'playbook' => 'deployproject',
                                         'ip' => $ip,
 					'project' => json_decode($order->getDeploy(), true),
-                                        'name' => $name
+                                        'name' => $name,
+					'mysql_root_password' => $database['mysql_root_password']
                                     ]
                                 ]
                                     );

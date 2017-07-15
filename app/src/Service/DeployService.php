@@ -17,6 +17,7 @@ class DeployService
 	$contents = str_replace("{{{ HOST_IP }}}",$app_get->get('ip'),$contents);
 	$contents = str_replace("{{{ PROJECT }}}",$project,$contents);
 	$contents = str_replace("{{{ NAME }}}",$app_get->get('name'),$contents);
+	$contents = str_replace("{{{ MYSQL_ROOT_PWD }}}",$app_get->get('mysql_root_password'),$contents);
         return $contents;
     }
 }

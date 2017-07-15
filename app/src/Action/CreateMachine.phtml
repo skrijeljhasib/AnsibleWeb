@@ -153,13 +153,11 @@ use Project\Entity\Package;
                                     </label>
                                     <br>
                                     <label> DocumentRoot:
-                                        <input <?php if (Vars::collection('default_install')["apache2"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control"
-                                               id="apache_document_root">
+                                        <input <?php if (Vars::collection('default_install')["apache2"] != "true") { echo 'disabled'; } ?> type="text" class="form-control" id="apache_document_root">
                                     </label>
                                     <br>
                                     <label> User:
-                                        <input <?php if (Vars::collection('default_install')["apache2"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" value="www-data"
-                                               id="apache_owner_directory">
+                                        <input <?php if (Vars::collection('default_install')["apache2"] != "true") { echo 'disabled'; } ?> type="text" class="form-control" value="" id="apache_owner_directory">
                                     </label>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="ngnix">
@@ -286,13 +284,13 @@ use Project\Entity\Package;
                                                id="mysql_root_password" value="<?php echo Vars::collection('default_install')['mysql_root_pwd']; ?>">
                                     </label>
                                     <label> Database:
-                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" id="mysql_database">
+                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> type="text" class="form-control" id="mysql_database">
                                     </label>
                                     <label> New User:
-                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="text" class="form-control" id="mysql_new_user">
+                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> type="text" class="form-control" id="mysql_new_user">
                                     </label>
                                     <label> New User Password:
-                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> required type="password" class="form-control"
+                                        <input <?php if (Vars::collection('default_install')["mysql"] != "true") { echo 'disabled'; } ?> type="password" class="form-control"
                                                id="mysql_new_user_password">
                                     </label>
                                 </div>

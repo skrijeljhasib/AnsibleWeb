@@ -84,11 +84,13 @@ class Application extends AbstractApplication
         $this->getStep('bootstrap')->plug(function ($app) {
             Vars::$config = $app->getConfig();
         });
-
-/*	$this->getStep('authentication')
-            ->plug(ConnectMiddleware::class);*/
-
-        // the dispatcher will actually run the matched route
+	
+	if ((php_sapi_name() != 'cli') && (($_SERVER["REDIRECT_URL"]) != '/PlayBook')) { 
+		$this->getStep('authentication')
+            	->plug(ConnectMiddleware::class);
+	}
+        
+	// the dispatcher will actually run the matched route
         $this->getStep('route')->plug(new Dispatcher())->as('dispatcher');
 
         // handle view rendering
