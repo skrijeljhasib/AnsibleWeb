@@ -1,0 +1,143 @@
+<?php
+
+use ObjectivePHP\Application\View\Helper\Vars;
+use Project\Entity\Package;
+
+?>
+<style>
+    .progress.active .progress-bar {
+        -webkit-transition: none !important;
+        transition: none !important;
+    }
+</style>
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+
+        <form id="createMachine">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Configuration</h4>
+                    <div class="btn-group pull-right">
+  <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" id="templateBtn" name="templateBtnName"><span id="selected">Template:Yes</span>
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu" id="templatejson">
+    <li><a href="#">Template:Yes</a></li>
+  </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                       <label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' required autofocus>
+		
+		<br><br><div id="deploypanel" class="panel panel-default">
+                    <div class="panel-heading"><a href="#deploypanel" onClick="$(deploybody).toggle();">Projects</a></div>
+                    <div class="panel-body">
+                        <div id="deploybody">
+                            <ul class="nav nav-tabs" role="tablist" id="deployTabs">
+                                <li role="presentation" class="active"><a href="#chat" aria-controls="deploy"
+                                                                          role="tab"
+                                                                          data-toggle="tab">Chat</a></li>
+				<li role="presentation"><a href="#connect" aria-controls="deploy"
+                                                                          role="tab"
+                                                                          data-toggle="tab">Connect</a></li>
+                                <li role="presentation"><a href="#connect-admin" aria-controls="deploy"
+                                                                          role="tab"
+                                                                          data-toggle="tab">Connect-Admin</a></li>
+                                <li role="presentation"><a href="#logger" aria-controls="deploy"
+                                                                          role="tab"
+                                                                          data-toggle="tab">Logger</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="chat">
+				    <br><div class="checkbox">
+					<label><input type="checkbox" name="chat" id="chatCheckbox" class="checkbox" checked>
+                                    	<b>Install Chat Project</b></label>
+					<br><br>
+                                    <label> Select your Branch:
+                                        <select required name="chat_version" id="chat_branch" class="form-control">
+                                            <option value="master" selected>master</option>
+                                        </select>
+                                    </label>
+					</div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="connect">
+                                    <br><div class="checkbox">
+                                    <label><input type="checkbox" name="connect" id="connectCheckbox" class="checkbox" checked>
+					<b>Install Connect Project</b></label>
+                                        <br><br>
+                                    <label> Select your Branch:
+                                        <select required name="connect_version" id="connect_branch" class="form-control">
+                                            <option value="master" selected>master</option>
+                                        </select>
+                                    </label>
+                                </div>
+                		</div>
+                                <div role="tabpanel" class="tab-pane" id="connect-admin">
+                                    <br><div class="checkbox">
+                                    <label><input type="checkbox" name="connect-admin" id="connect-adminCheckbox" class="checkbox" checked>
+                                        <b>Install Connect Admin Project</b></label>
+                                        <br><br>
+                                    <label> Select your Branch:
+                                        <select required name="connect-admin_version" id="connect-admin_branch" class="form-control">
+                                            <option value="master" selected>master</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="logger">
+                                    <br><div class="checkbox">
+                                    <label><input type="checkbox" name="logger" id="loggerCheckbox" class="checkbox" checked>
+                                        <b>Install Logger Project</b></label>
+                                        <br><br>
+                                    <label> Select your Branch:
+                                        <select required name="logger_version" id="logger_branch" class="form-control">
+                                            <option value="master" selected>master</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+
+            <br>
+            <input class="btn btn-danger btn-block" type="submit" id="SendToAnsibleApi"
+                   value="Create and install Machine">
+        </form>
+
+    </div>
+</div>
+
+<br><br>
+<div id="outputcreation" class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading"><a href="#outputcreation" onClick="$(outputbody).toggle();">Output</a></div>
+            <div class="panel-body">
+                <div id="outputbody" style="display: none;">
+
+                    <div id="progress" class="progress progress-striped">
+                        <div id="progress-bar-animated" class="progress-bar progress-bar-striped" role="progressbar"
+                                     aria-valuenow="0"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+                        </div>
+                        <div id="task" class="text-center" style="position:absolute; color: black; right: 0; left: 0;">Ready</div>
+                    </div>
+                    <div><pre><strong>Info:</strong>
+      Name:   <span id="ProgressName">Not Available</span>
+      IP:     <span id="ipaddress">0.0.0.0</span>
+      Status: <span id="status">Not Available</span>
+                    </pre></div>
+
+                    <div><pre><strong>Log:</strong>
+			            <div id="result"></div>
+		    </pre></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/handler.js"></script>
+<script src="/js/installMachine.js"></script>
