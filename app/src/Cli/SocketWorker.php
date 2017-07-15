@@ -46,7 +46,11 @@ class SocketWorker extends AbstractCliAction
             return;
         });
 
-        $websocket->run();
-
+	try {
+        	$websocket->run();
+	} catch (Exception $e) {
+		var_dump($e->getRequest());
+		exit;
+	}
     }
 }

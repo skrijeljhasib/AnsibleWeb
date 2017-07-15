@@ -28,6 +28,10 @@ class CreateMachine extends RenderableAction
      */
     function run(ApplicationInterface $app)
     {
+	$user = $app->getServicesFactory()->get('connect.client')->getUser()->toArray();
+	if (($user["current_role"]) != 'ADMIN') {
+		throw new Exception('Not Allowed');
+	 }
         Vars::set('page.title', 'Create your machine');
 
         $host = $app->getConfig()->get(Host::class);

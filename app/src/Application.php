@@ -50,7 +50,7 @@ class Application extends AbstractApplication
         $this->getAutoloader()->addPsr4('Project\\Package\\', 'packages/');
 
         // define middleware endpoints
-        $this->addSteps('init', 'bootstrap', 'route', 'action', 'rendering', 'end');
+        $this->addSteps('init', 'bootstrap', 'authentication', 'route', 'action', 'rendering', 'end');
 
 
         // initialize request and response
@@ -75,7 +75,6 @@ class Application extends AbstractApplication
 
         $this->getStep('route')->plug($router)->as('router');
 
-
         // load framework native middleware
         $this->getStep('bootstrap')->plug(ServiceLoader::class)->asDefault('service-loader');
 
@@ -86,14 +85,14 @@ class Application extends AbstractApplication
             Vars::$config = $app->getConfig();
         });
 
+/*	$this->getStep('authentication')
+            ->plug(ConnectMiddleware::class);*/
+
         // the dispatcher will actually run the matched route
         $this->getStep('route')->plug(new Dispatcher())->as('dispatcher');
 
-
         // handle view rendering
-
         $this->getStep('rendering')
-            ->plug(LayoutSwitcher::class, new UrlFilter('/'))
             ->plug(new ViewResolver())->as('view-resolver')
             ->plug(new ViewRenderer())->as('view-renderer');
 
