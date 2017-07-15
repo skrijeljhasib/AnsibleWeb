@@ -21,7 +21,7 @@ class InstallPackageService
     {
         $contents = file_get_contents($url . '/repo/install_pkg/install.json');
         $contents = str_replace("{{{ HOST_IP }}}",$app->get('ip'),$contents);
-        $contents = str_replace("{{{ HOST_PKG }}}",explode(',', $app->get('packages')),$contents);
+        $contents = str_replace("{{{ HOST_PKG }}}",str_replace($app->get('packages'),',','","'),$contents);
         return $contents;
     }
 }

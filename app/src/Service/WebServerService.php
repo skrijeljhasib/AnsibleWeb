@@ -28,8 +28,16 @@ class WebServerService
 		if (!empty($app->get('owner_directory'))) {
 			$contents = str_replace("{{{ DOC_OWNER }}}",$app->get('owner_directory'),$contents);
 			$contents = str_replace("{{{ DOC_OWNER_FLAG }}}","true",$contents);
+		} else {
+			$contents = str_replace("{{{ DOC_OWNER }}}",'/tmp',$contents);
+                        $contents = str_replace("{{{ DOC_OWNER_FLAG }}}","false",$contents);
 		}
-        }
+        } else {
+		$contents = str_replace("{{{ DOC_ROOT }}}",'/tmp',$contents);
+                $contents = str_replace("{{{ DOC_ROOT_FLAG }}}","false",$contents);
+		$contents = str_replace("{{{ DOC_OWNER }}}",'/tmp',$contents);
+                $contents = str_replace("{{{ DOC_OWNER_FLAG }}}","false",$contents);
+	}
 	return $contents;
     }
 

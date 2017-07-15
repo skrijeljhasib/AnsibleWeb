@@ -42,6 +42,10 @@ class InstallMachineService
                 $name = substr(md5(microtime()), rand(0, 26), 15);
                 $machine_template['name'] = $name;
         }
+        
+	$hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
+	$host = $hosts_gateway->fetchByName($machine_template['name']);
+	if ($host) { exit; }
 
         $contents = file_get_contents($url . '/repo/machine_install/install.json');
         $contents = str_replace("{{{ AUTH_URL }}}",$openstack_auth['auth_url'],$contents);
@@ -78,7 +82,6 @@ class InstallMachineService
         }
         $orders_gateway->put($order);
 
-        $hosts_gateway = $app->getServicesFactory()->get('gateway.hosts');
         $host = new Host();
         $host->setName($machine_template['name']);
         $host->setLocation($machine_template['region_name']);

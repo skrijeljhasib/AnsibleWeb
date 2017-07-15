@@ -27,6 +27,7 @@ class DatabaseService
 		$contents = str_replace("{{{ MYSQL_DB_FLAG }}}","true",$contents);
         	$contents = str_replace("{{{ MYSQL_DB }}}",$app->get('mysql_database'),$contents);
 	} else {
+		$contents = str_replace("{{{ MYSQL_DB }}}","tmp",$contents);
 		$contents = str_replace("{{{ MYSQL_DB_FLAG }}}","false",$contents);
 	}
 
@@ -36,6 +37,8 @@ class DatabaseService
                 $contents = str_replace("{{{ MYSQL_U_PWD }}}",$app->get('mysql_new_user_password'),$contents);
         } else {
                 $contents = str_replace("{{{ MYSQL_USER_FLAG }}}","false",$contents);
+		$contents = str_replace("{{{ MYSQL_USER }}}","tmp",$contents);
+                $contents = str_replace("{{{ MYSQL_U_PWD }}}","tmp",$contents);
         }
 
         return $contents;
