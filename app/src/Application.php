@@ -35,6 +35,8 @@ use Project\Cli\PostWorker;
 use Project\Cli\SocketWorker;
 use Project\Cli\GetWorker;
 use Project\Middleware\LayoutSwitcher;
+use Project\Filter\CliFilter;
+use Project\Filter\PlayBookFilter;
 
 /**
  * Class Application
@@ -85,10 +87,8 @@ class Application extends AbstractApplication
             Vars::$config = $app->getConfig();
         });
 	
-	if ((php_sapi_name() != 'cli') && (($_SERVER["REDIRECT_URL"]) != '/PlayBook')) { 
-		$this->getStep('authentication')
-            	->plug(ConnectMiddleware::class);
-	}
+	$this->getStep('authentication')
+                ->plug(ConnectMiddleware::class, CliFilter::class, PlayBookFilter::class);
         
 	// the dispatcher will actually run the matched route
         $this->getStep('route')->plug(new Dispatcher())->as('dispatcher');
