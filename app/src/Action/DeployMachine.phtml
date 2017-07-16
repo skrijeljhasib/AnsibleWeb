@@ -33,70 +33,34 @@ use Project\Entity\Package;
                     <div class="panel-body">
                         <div id="deploybody">
                             <ul class="nav nav-tabs" role="tablist" id="deployTabs">
-                                <li role="presentation" class="active"><a href="#chat" aria-controls="deploy"
-                                                                          role="tab"
-                                                                          data-toggle="tab">Chat</a></li>
-				<li role="presentation"><a href="#connect" aria-controls="deploy"
-                                                                          role="tab"
-                                                                          data-toggle="tab">Connect</a></li>
-                                <li role="presentation"><a href="#connect-admin" aria-controls="deploy"
-                                                                          role="tab"
-                                                                          data-toggle="tab">Connect-Admin</a></li>
-                                <li role="presentation"><a href="#logger" aria-controls="deploy"
-                                                                          role="tab"
-                                                                          data-toggle="tab">Logger</a></li>
+				<?php 	$apps = array("chat", "connect", "connect-admin", "logger", "audit","mailer", "translate");
+					$active = "active";
+					foreach($apps as $app) { 
+						echo '<li role="presentation" class="'.$active.'"><a href="#'.$app.'" aria-controls="deploy"
+                                                                          role="tab" data-toggle="tab">'.$app.'</a></li>';
+					$active = "";
+					}
+				?>
                             </ul>
 
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="chat">
+				<?php   $active = "active";
+				foreach($apps as $app) {
+                                echo '<div role="tabpanel" class="tab-pane '.$active.'" id="'.$app.'">
 				    <br><div class="checkbox">
-					<label><input type="checkbox" name="chat" id="chatCheckbox" class="checkbox" checked>
-                                    	<b>Install Chat Project</b></label>
-					<br><br>
+					<label><input type="checkbox" name="'.$app.'" id="'.$app.'Checkbox" class="checkbox" checked>
+                                    	<b>Install '.$app.' Project</b></label><br><br>
                                     <label> Select your Branch:
-                                        <select required name="chat_version" id="chat_branch" class="form-control">
+                                        <select required name="'.$app.'_version" id="'.$app.'_branch" class="form-control">
                                             <option value="master" selected>master</option>
                                         </select>
                                     </label>
 					</div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="connect">
-                                    <br><div class="checkbox">
-                                    <label><input type="checkbox" name="connect" id="connectCheckbox" class="checkbox" checked>
-					<b>Install Connect Project</b></label>
-                                        <br><br>
-                                    <label> Select your Branch:
-                                        <select required name="connect_version" id="connect_branch" class="form-control">
-                                            <option value="master" selected>master</option>
-                                        </select>
-                                    </label>
-                                </div>
-                		</div>
-                                <div role="tabpanel" class="tab-pane" id="connect-admin">
-                                    <br><div class="checkbox">
-                                    <label><input type="checkbox" name="connect-admin" id="connect-adminCheckbox" class="checkbox" checked>
-                                        <b>Install Connect Admin Project</b></label>
-                                        <br><br>
-                                    <label> Select your Branch:
-                                        <select required name="connect-admin_version" id="connect-admin_branch" class="form-control">
-                                            <option value="master" selected>master</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="logger">
-                                    <br><div class="checkbox">
-                                    <label><input type="checkbox" name="logger" id="loggerCheckbox" class="checkbox" checked>
-                                        <b>Install Logger Project</b></label>
-                                        <br><br>
-                                    <label> Select your Branch:
-                                        <select required name="logger_version" id="logger_branch" class="form-control">
-                                            <option value="master" selected>master</option>
-                                        </select>
-                                    </label>
-                                </div>
+                                </div>';
+				$active = "";
+				}
+				?>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
