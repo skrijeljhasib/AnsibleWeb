@@ -199,10 +199,17 @@ class GetWorker extends AbstractCliAction
                             $orders_gateway = $app->getServicesFactory()->get('gateway.orders');
                             $order = $orders_gateway->fetchByName($name);
 
+			    $dns_order = false;
                             if (!empty($order)) {
-
                                 if (!is_null($order->getDns()) && $order->getDns()) {
                                     $dns = json_decode($order->getDns(), true);
+				    $dns_order = true;
+				}
+			    }
+			    if (!$dns_order) {
+					$dns['dns_type'] = 'A';
+					$dns['dns_domain_name'] = 'vehbo.ovh';
+			    }
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                         [
                                             'query' => [
@@ -218,9 +225,8 @@ class GetWorker extends AbstractCliAction
                                         echo 'Error playbook addDnsEntryToOvh';
                                         break;
                                     }
-                                }
 
-
+                            if (!empty($order)) {
                                 if (!is_null($order->getLanguage()) && $order->getLanguage()) {
                                     $language = json_decode($order->getLanguage(), true);
                                     $response = $guzzle_client->request('GET', '/PlayBook',
