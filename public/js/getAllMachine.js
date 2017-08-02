@@ -106,6 +106,7 @@ $(document).ready(function () {
 	$('#statichostip').val(form[0][2].value);
 	$('#statichostlocation').val(form[0][3].value);
     });
+
     $('#deployAppModal').on('show.bs.modal', function (e) {
         $('#status').html('Deploying Application');
         $('#status').removeClass('alert alert-info');
@@ -114,7 +115,13 @@ $(document).ready(function () {
         $('#deployhostname').val(form[0].name.value);
         $('#deployip').val(form[0].hostip.value);
     });
-    
+  
+    $('#deployAppModal').on('hide.bs.modal', function (e) {
+        $('#status').html('Ready');
+        $('#status').removeClass('alert alert-warning');
+        $('#status').addClass('alert alert-info');
+    });
+ 
     $('#hostEditStaticModal').on('hide.bs.modal', function (e) {
         $('#status').html('Ready');
         $('#status').removeClass('alert alert-warning');
@@ -288,6 +295,9 @@ function deployapp() {
         });
 
         $('#deployAppModal').modal('hide');
+	$('#status').html('Deploying Application');
+        $('#status').removeClass('alert alert-info');
+        $('#status').addClass('alert alert-warning');
 
         return false;
 }

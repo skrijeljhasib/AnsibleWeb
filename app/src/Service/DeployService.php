@@ -12,7 +12,7 @@ class DeployService
      */
     public function load($app_get,$url,$project)
     {
-	$contents = file_get_contents($url . '/repo/deploy_project/deploy_project.json');
+	$contents = file_get_contents($url . '/repo/deploy_project/' . $project . '/deploy_project.json');
 	$contents = str_replace("{{{ REPO_URL }}}",$url,$contents);
 	$contents = str_replace("{{{ HOST_IP }}}",$app_get->get('ip'),$contents);
 	$contents = str_replace("{{{ PROJECT }}}",$project,$contents);
