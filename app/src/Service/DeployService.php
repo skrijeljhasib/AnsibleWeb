@@ -18,6 +18,7 @@ class DeployService
 	$contents = str_replace("{{{ PROJECT }}}",$project,$contents);
 	$contents = str_replace("{{{ NAME }}}",$app_get->get('name'),$contents);
 	$contents = str_replace("{{{ MYSQL_ROOT_PWD }}}",$app_get->get('mysql_root_password'),$contents);
+        //$contents = str_replace("{{{ ORIGIN }}}",'v1.0.3',$contents);
         return $contents;
     }
 }

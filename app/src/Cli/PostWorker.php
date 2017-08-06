@@ -42,7 +42,7 @@ class PostWorker extends AbstractCliAction
                 ->watch('ansible-post')
                 ->watch('installmachine')
                 ->ignore('default')
-                ->reserve();
+                ->reserve(600);
 
             if ($job !== false) {
                 $guzzle_client = new Client(
@@ -81,7 +81,8 @@ class PostWorker extends AbstractCliAction
                         $websocket_client->send(json_encode($callback));
                         $websocket_client->close();
                         $pheanstalk->useTube('ansible-get-' . $pheanstalk->statsJob($job)['tube'])->put($response->getBody()->getContents());
-                        $pheanstalk->bury($job);
+                        //$pheanstalk->bury($job);
+                        $pheanstalk->delete($job);
                     } else {
                         echo 'Request failed: HTTP status code: ' . $response->getStatusCode();
                         $pheanstalk->bury($job);
