@@ -88,6 +88,8 @@ $(document).ready(function () {
         if ($('#mailerCheckbox').is(':checked')) { array.push("mailer"); }
         if ($('#auditCheckbox').is(':checked')) { array.push("audit"); }
         if ($('#translateCheckbox').is(':checked')) { array.push("translate"); }
+        if ($('#paymentCheckbox').is(':checked')) { array.push("payment"); }
+        if ($('#filerCheckbox').is(':checked')) { array.push("filer"); }
 	return JSON.stringify(array);
     }
 
