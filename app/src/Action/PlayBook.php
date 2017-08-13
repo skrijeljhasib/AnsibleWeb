@@ -165,7 +165,7 @@ class PlayBook
 		foreach ($app->getRequest()->getParameters()->get('project') as $project) {
 		    $deployService = new DeployService(); 
                     $json = $deployService->load(
-                        $app->getRequest()->getParameters(),
+                        $app,
                         $this->ansible_api["ansible_playbook"],
 			$project
                     );
@@ -178,9 +178,15 @@ class PlayBook
 		foreach (json_decode($app->getRequest()->getParameters()->get('project')) as $project) {
 		    $deployService = new DeployService(); 
                     $json = $deployService->load(
-                        $app->getRequest()->getParameters(),
+                        $app,
                         $this->ansible_api["ansible_playbook"],
 			$project
+                    );
+                    $pheanstalk->useTube($this->tube)->put($json);
+		    $json = $deployService->dns(
+                        $app,
+                        $this->ansible_api["ansible_playbook"],
+                        $project
                     );
                     $pheanstalk->useTube($this->tube)->put($json);
 		}

@@ -28,6 +28,12 @@ class Host
     protected $name;
 
     /**
+     * @Column(type="string", length=64)
+     * @var string
+     **/
+    protected $domain;
+
+    /**
      * @Column(type="string", length=15, nullable=true)
      * @var string
      **/
@@ -91,6 +97,22 @@ class Host
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDomain(): string
+    {
+        return $this->domain;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setDomain(string $name)
+    {
+        $this->domain = $domain;
     }
 
     /**

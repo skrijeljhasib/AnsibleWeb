@@ -82,14 +82,16 @@ $(document).ready(function () {
 
     function checkProject() {
 	var array = [];
-	if ($('#chatCheckbox').is(':checked')) { array.push("chat"); }
 	if ($('#connectCheckbox').is(':checked')) { array.push("connect"); }
+	if ($('#connect-adminCheckbox').is(':checked')) { array.push("conncet-admin"); }
+	if ($('#chatCheckbox').is(':checked')) { array.push("chat"); }
         if ($('#loggerCheckbox').is(':checked')) { array.push("logger"); }
         if ($('#mailerCheckbox').is(':checked')) { array.push("mailer"); }
         if ($('#auditCheckbox').is(':checked')) { array.push("audit"); }
         if ($('#translateCheckbox').is(':checked')) { array.push("translate"); }
         if ($('#paymentCheckbox').is(':checked')) { array.push("payment"); }
         if ($('#filerCheckbox').is(':checked')) { array.push("filer"); }
+	if ($('#esmCheckbox').is(':checked')) { array.push("esm"); }
 	return JSON.stringify(array);
     }
 

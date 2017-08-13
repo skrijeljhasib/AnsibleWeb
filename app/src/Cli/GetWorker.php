@@ -225,6 +225,8 @@ class GetWorker extends AbstractCliAction
                                         echo 'Error playbook addDnsEntryToOvh';
                                         break;
                                     }
+				    $host->setDomain($dns['dns_domain_name']);
+				    $hosts_gateway->put($host);
 
                             if (!empty($order)) {
                                 if (!is_null($order->getLanguage()) && $order->getLanguage()) {
