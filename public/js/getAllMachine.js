@@ -43,11 +43,18 @@ $(document).ready(function () {
             var jsonObject = JSON.parse(msg.data);
 	    console.log(msg.data);
             if (jsonObject.progress == "100") {
-                output.innerHTML = 'Done';
+                output.innerHTML = jsonObject.task + ' ends';
 		$('#status').removeClass('alert alert-warning');
                 $('#status').addClass('alert alert-info');
                 machineTable.ajax.reload();
                 $('#refresh').attr('disabled', false);
+            }
+            if (jsonObject.progress == "0") {
+                output.innerHTML = jsonObject.task + ' starts';
+                $('#status').removeClass('alert alert-info');
+                $('#status').addClass('alert alert-warning');
+                machineTable.ajax.reload();
+                $('#refresh').attr('disabled', true);
             }
             return;
         };
@@ -127,18 +134,18 @@ $(document).ready(function () {
             }
         }).done(function (data) {
 		myObj = JSON.parse(data);
-            	var txt = '<table class="table table-responsive">';
-		txt += '<tr class="' + tabledeploy(myObj.connect) + '"><td>connect</td><td>' + myObj.connect + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.connectadmin) + '"><td>connect-admin</td><td>' + myObj.connectadmin + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.logger) + '"><td>logger</td><td>' + myObj.logger + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.audit) + '"><td>audit</td><td>' + myObj.audit + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.filer) + '"><td>filer</td><td>' + myObj.filer + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.mailer) + '"><td>mailer</td><td>' + myObj.mailer + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.translate) + '"><td>translate</td><td>' + myObj.translate + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.payment) + '"><td>payment</td><td>' + myObj.payment + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.chat) + '"><td>chat</td><td>' + myObj.chat + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.chatdemo) + '"><td>chat-demo</td><td>' + myObj.chatdemo + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.esm) + '"><td>esm</td><td>' + myObj.esm + '</td></tr>';
+            	var txt = '<table class="table table-responsive table-hover">';
+		txt += '<tr class="' + tabledeploy(myObj.connect) + '" onclick="$(\'#selectproject\').val(\'connect\');"><td>connect</td><td>' + myObj.connect + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.connectadmin) + '" onclick="$(\'#selectproject\').val(\'connect-admin\');"><td>connect-admin</td><td>' + myObj.connectadmin + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.logger) + '" onclick="$(\'#selectproject\').val(\'logger\');"><td>logger</td><td>' + myObj.logger + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.audit) + '" onclick="$(\'#selectproject\').val(\'audit\');"><td>audit</td><td>' + myObj.audit + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.filer) + '" onclick="$(\'#selectproject\').val(\'filer\');"><td>filer</td><td>' + myObj.filer + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.mailer) + '" onclick="$(\'#selectproject\').val(\'mailer\');"><td>mailer</td><td>' + myObj.mailer + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.translate) + '" onclick="$(\'#selectproject\').val(\'translate\');"><td>translate</td><td>' + myObj.translate + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.payment) + '" onclick="$(\'#selectproject\').val(\'payment\');"><td>payment</td><td>' + myObj.payment + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.chat) + '" onclick="$(\'#selectproject\').val(\'chat\');"><td>chat</td><td>' + myObj.chat + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.esm) + '" onclick="$(\'#selectproject\').val(\'esm\');"><td>esm</td><td>' + myObj.esm + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.chatapp) + '" onclick="$(\'#selectproject\').val(\'chatapp\');"><td>chatapp</td><td>' + myObj.chatapp + '</td></tr>';
 		txt += '</table>';
 		$('#projectlist').html(txt);
 

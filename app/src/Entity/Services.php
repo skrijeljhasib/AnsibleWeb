@@ -86,6 +86,12 @@ class Services
     protected $translate = false;
 
     /**
+     * @Column(type="boolean")
+     * @var boolean
+     */
+    protected $chatapp = false;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -150,6 +156,7 @@ class Services
 		case 'mailer' : $this->mailer = true; break;
 		case 'translate' : $this->translate = true; break;
 		case 'payment' : $this->payment = true; break;
+		case 'chatapp' : $this->chatapp = true; break;
 	}
     }
 
