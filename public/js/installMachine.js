@@ -84,15 +84,15 @@ $(document).ready(function () {
 	var array = [];
 	if ($('#connectCheckbox').is(':checked')) { array.push("connect"); }
 	if ($('#connectadminCheckbox').is(':checked')) { array.push("connectadmin"); }
-	if ($('#chatCheckbox').is(':checked')) { array.push("chat"); }
+        if ($('#translateCheckbox').is(':checked')) { array.push("translate"); }
+	if ($('#esmCheckbox').is(':checked')) { array.push("esm"); }
         if ($('#loggerCheckbox').is(':checked')) { array.push("logger"); }
         if ($('#mailerCheckbox').is(':checked')) { array.push("mailer"); }
         if ($('#auditCheckbox').is(':checked')) { array.push("audit"); }
-        if ($('#translateCheckbox').is(':checked')) { array.push("translate"); }
-        if ($('#paymentCheckbox').is(':checked')) { array.push("payment"); }
         if ($('#filerCheckbox').is(':checked')) { array.push("filer"); }
-	if ($('#esmCheckbox').is(':checked')) { array.push("esm"); }
+	if ($('#chatCheckbox').is(':checked')) { array.push("chat"); }
 	if ($('#chatappCheckbox').is(':checked')) { array.push("chatapp"); }
+        if ($('#paymentCheckbox').is(':checked')) { array.push("payment"); }
 	return JSON.stringify(array);
     }
 
