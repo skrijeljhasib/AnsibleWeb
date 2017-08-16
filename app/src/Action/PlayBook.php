@@ -170,6 +170,12 @@ class PlayBook
 			$project
                     );
                     $pheanstalk->useTube($this->tube)->put($json);
+                    $json = $deployService->dns(
+                        $app,
+                        $this->ansible_api["ansible_playbook"],
+                        $project
+                    );
+                    $pheanstalk->useTube($this->tube)->put($json);
 		}
 		$this->tube = null;
                 break;

@@ -41,8 +41,9 @@ class DeployService
     {
 	$app_get = $app->getRequest()->getParameters();
 	$contents = file_get_contents($url . '/repo/deploy_project/' . $project . '/dns.json');
-	$contents = str_replace("{{{ NAME }}}",$app_get->get('name'),$contents);
+	$contents = str_replace("{{{ HOST_IP }}}",$app_get->get('ip'),$contents);
 	$contents = str_replace("{{{ PROJECT }}}",$project,$contents);
+        $contents = str_replace("{{{ NAME }}}",$app_get->get('name'),$contents);
  	return $contents;
     }
 }

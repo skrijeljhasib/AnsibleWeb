@@ -40,4 +40,17 @@ class DeleteMachineService
 
         return $contents;
     }
+
+    public function dns($openstack_auth, $app, $url)
+    {
+        $contents = file_get_contents($url . '/repo/deploy/machine_delete/delete.json');
+        $contents = str_replace("{{{ AUTH_URL }}}",$openstack_auth['auth_url'],$contents);
+        $contents = str_replace("{{{ AUTH_USERNAME }}}",$openstack_auth['username'],$contents);
+        $contents = str_replace("{{{ AUTH_PASSWORD }}}",$openstack_auth['password'],$contents);
+        $contents = str_replace("{{{ AUTH_PROJECT }}}",$openstack_auth['project_name'],$contents);
+        $contents = str_replace("{{{ HOST_REGION }}}",$host->getLocation(),$contents);
+        $contents = str_replace("{{{ HOST_NAME }}}",$host->getName(),$contents);
+
+        return $contents;
+    }
 }
