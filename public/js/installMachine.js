@@ -83,7 +83,7 @@ $(document).ready(function () {
     function checkProject() {
 	var array = [];
 	if ($('#connectCheckbox').is(':checked')) { array.push("connect"); }
-	if ($('#connect-adminCheckbox').is(':checked')) { array.push("conncet-admin"); }
+	if ($('#connectadminCheckbox').is(':checked')) { array.push("connectadmin"); }
 	if ($('#chatCheckbox').is(':checked')) { array.push("chat"); }
         if ($('#loggerCheckbox').is(':checked')) { array.push("logger"); }
         if ($('#mailerCheckbox').is(':checked')) { array.push("mailer"); }

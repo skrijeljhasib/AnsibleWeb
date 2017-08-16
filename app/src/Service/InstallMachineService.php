@@ -85,6 +85,9 @@ class InstallMachineService
         $host = new Host();
         $host->setName($machine_template['name']);
         $host->setLocation($machine_template['region_name']);
+	$key = "dns_domain_name";
+	$value = json_decode($app->getRequest()->getParameters()->get('dns'))->$key;
+	$host->setDomain($value);
 	$host->setHostID('');
         $host->setStatus('CREATING');
         $hosts_gateway->put($host);

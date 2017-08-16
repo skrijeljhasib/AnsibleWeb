@@ -148,7 +148,7 @@ class Services
         switch ($service) {
 		case 'esm' : $this->esm = true; break;
 		case 'connect' : $this->connect = true; break;
-		case 'connect-admin' : $this->connectadmin = true; break;
+		case 'connectadmin' : $this->connectadmin = true; break;
 		case 'chat' : $this->chat = true; break;
 		case 'audit' : $this->audit = true; break;
 		case 'logger' : $this->logger = true; break;

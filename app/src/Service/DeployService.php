@@ -29,7 +29,7 @@ class DeployService
 
         if (!$service) {
 		$service = new Services();
-		$service->setName($$app_get->get('name'));
+		$service->setName($app_get->get('name'));
 	}
 
 	$service->setService($project);

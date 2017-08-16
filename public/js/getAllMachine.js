@@ -136,7 +136,7 @@ $(document).ready(function () {
 		myObj = JSON.parse(data);
             	var txt = '<table class="table table-responsive table-hover">';
 		txt += '<tr class="' + tabledeploy(myObj.connect) + '" onclick="$(\'#selectproject\').val(\'connect\');"><td>connect</td><td>' + myObj.connect + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.connectadmin) + '" onclick="$(\'#selectproject\').val(\'connect-admin\');"><td>connect-admin</td><td>' + myObj.connectadmin + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.connectadmin) + '" onclick="$(\'#selectproject\').val(\'connectadmin\');"><td>connectadmin</td><td>' + myObj.connectadmin + '</td></tr>';
 		txt += '<tr class="' + tabledeploy(myObj.logger) + '" onclick="$(\'#selectproject\').val(\'logger\');"><td>logger</td><td>' + myObj.logger + '</td></tr>';
 		txt += '<tr class="' + tabledeploy(myObj.audit) + '" onclick="$(\'#selectproject\').val(\'audit\');"><td>audit</td><td>' + myObj.audit + '</td></tr>';
 		txt += '<tr class="' + tabledeploy(myObj.filer) + '" onclick="$(\'#selectproject\').val(\'filer\');"><td>filer</td><td>' + myObj.filer + '</td></tr>';

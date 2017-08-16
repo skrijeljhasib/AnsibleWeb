@@ -110,7 +110,7 @@ class Host
     /**
      * @param string $name
      */
-    public function setDomain(string $name)
+    public function setDomain(string $domain)
     {
         $this->domain = $domain;
     }

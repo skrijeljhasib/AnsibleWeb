@@ -33,7 +33,7 @@ use Project\Entity\Package;
                     <div class="panel-body">
                         <div id="deploybody">
                             <ul class="nav nav-tabs" role="tablist" id="deployTabs">
-				<?php 	$apps = array("chat", "connect", "connect-admin", "logger", "audit","mailer", "translate", "payment", "filer","esm","chatapp");
+				<?php 	$apps = array("chat", "connect", "connectadmin", "logger", "audit","mailer", "translate", "payment", "filer","esm","chatapp");
 					$active = "active";
 					foreach($apps as $app) { 
 						echo '<li role="presentation" class="'.$active.'"><a href="#'.$app.'" aria-controls="deploy"
@@ -64,6 +64,9 @@ use Project\Entity\Package;
                         </div>
                     </div>
                 </div>
+		<input type="checkbox" name="dns[]" id="dnsCheckbox" checked readonly style="display:none;"/>
+		<input type="hidden" id="dns_type" value="A"/>
+		<input type="hidden" id="dns_domain_name" value="vehbo.ovh"/>
             </div></div>
 
             <br>
