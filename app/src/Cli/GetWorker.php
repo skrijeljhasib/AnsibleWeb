@@ -338,7 +338,7 @@ class GetWorker extends AbstractCliAction
                                 		break;
                             		}
                                 }
-                                 if (!is_null($order->getDeploy()) && $order->getDeploy() && (is_array(json_decode($order->getDeploy())))) {
+                                 if (!is_null($order->getDeploy()) && $order->getDeploy() && (!empty(json_decode($order->getDeploy())))) {
                                     $response = $guzzle_client->request('GET', '/PlayBook',
                                 [
                                     'query' => [
