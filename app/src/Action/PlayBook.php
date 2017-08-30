@@ -162,6 +162,7 @@ class PlayBook
 
 	    case 'deployproject':
                 $this->tube = 'ansible-post';
+		if (!is_array($app->getRequest()->getParameters()->get('project'))) { break; }
 		foreach ($app->getRequest()->getParameters()->get('project') as $project) {
 		    $deployService = new DeployService(); 
                     $json = $deployService->load(
@@ -181,6 +182,7 @@ class PlayBook
                 break;
 	     case 'redeployproject':
                 $this->tube = 'ansible-post';
+		if (!is_array(json_decode($app->getRequest()->getParameters()->get('project')))) { break; }
 		foreach (json_decode($app->getRequest()->getParameters()->get('project')) as $project) {
 		    $deployService = new DeployService(); 
                     $json = $deployService->load(
