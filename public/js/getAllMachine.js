@@ -135,16 +135,16 @@ $(document).ready(function () {
         }).done(function (data) {
 		myObj = JSON.parse(data);
             	var txt = '<table class="table table-responsive table-hover">';
-		txt += '<tr class="' + tabledeploy(myObj.connect) + '" onclick="$(\'#selectproject\').val(\'connect\');"><td>connect</td><td>' + myObj.connect + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.connectadmin) + '" onclick="$(\'#selectproject\').val(\'connectadmin\');"><td>connectadmin</td><td>' + myObj.connectadmin + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.logger) + '" onclick="$(\'#selectproject\').val(\'logger\');"><td>logger</td><td>' + myObj.logger + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.audit) + '" onclick="$(\'#selectproject\').val(\'audit\');"><td>audit</td><td>' + myObj.audit + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.filer) + '" onclick="$(\'#selectproject\').val(\'filer\');"><td>filer</td><td>' + myObj.filer + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.mailer) + '" onclick="$(\'#selectproject\').val(\'mailer\');"><td>mailer</td><td>' + myObj.mailer + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.translate) + '" onclick="$(\'#selectproject\').val(\'translate\');"><td>translate</td><td>' + myObj.translate + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.payment) + '" onclick="$(\'#selectproject\').val(\'payment\');"><td>payment</td><td>' + myObj.payment + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.chat) + '" onclick="$(\'#selectproject\').val(\'chat\');"><td>chat</td><td>' + myObj.chat + '</td></tr>';
-		txt += '<tr class="' + tabledeploy(myObj.esm) + '" onclick="$(\'#selectproject\').val(\'esm\');"><td>esm</td><td>' + myObj.esm + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.connect) + '" onclick="$(\'#selectproject\').val(\'connect\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>connect</td><td>' + myObj.connect + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.connectadmin) + '" onclick="$(\'#selectproject\').val(\'connectadmin\');$(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>connectadmin</td><td>' + myObj.connectadmin + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.logger) + '" onclick="$(\'#selectproject\').val(\'logger\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>logger</td><td>' + myObj.logger + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.audit) + '" onclick="$(\'#selectproject\').val(\'audit\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>audit</td><td>' + myObj.audit + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.filer) + '" onclick="$(\'#selectproject\').val(\'filer\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>filer</td><td>' + myObj.filer + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.mailer) + '" onclick="$(\'#selectproject\').val(\'mailer\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>mailer</td><td>' + myObj.mailer + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.translate) + '" onclick="$(\'#selectproject\').val(\'translate\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>translate</td><td>' + myObj.translate + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.payment) + '" onclick="$(\'#selectproject\').val(\'payment\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>payment</td><td>' + myObj.payment + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.chat) + '" onclick="$(\'#selectproject\').val(\'chat\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>chat</td><td>' + myObj.chat + '</td></tr>';
+		txt += '<tr class="' + tabledeploy(myObj.esm) + '" onclick="$(\'#selectproject\').val(\'esm\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>esm</td><td>' + myObj.esm + '</td></tr>';
 		txt += '<tr class="' + tabledeploy(myObj.chatapp) + '" onclick="$(\'#selectproject\').val(\'chatapp\');"><td>chatapp</td><td>' + myObj.chatapp + '</td></tr>';
 		txt += '</table>';
 		$('#projectlist').html(txt);
