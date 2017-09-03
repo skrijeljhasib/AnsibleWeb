@@ -76,6 +76,12 @@ class Host
     protected $inventory = '';
 
     /**
+     * @Column(type="integer")
+     * @var int
+     **/
+    protected $ownerid = 0;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -165,6 +171,22 @@ class Host
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOwnerId(): int
+    {
+        return $this->ownerid;
+    }
+
+    /**
+     * @param int $state
+     */
+    public function setOwnerId(int $ownerid)
+    {
+        $this->ownerid = $ownerid;
     }
 
     /**

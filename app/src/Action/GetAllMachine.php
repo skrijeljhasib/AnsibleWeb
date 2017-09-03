@@ -19,7 +19,10 @@ class GetAllMachine extends AjaxAction
     {
         try {
             $host_gateway = $app->getServicesFactory()->get('gateway.hosts');
-            $dbhosts = $host_gateway->fetch();
+            //$dbhosts = $host_gateway->fetch();
+	    if ($user_id = $app->getServicesFactory()->get('connect.client')->getUser()->getId()) {
+	    	$dbhosts = $host_gateway->fetchAllOwner($user_id);
+	    }
         } catch (Exception $e) {
             throw new Exception('Can not load hosts from DB');
         }

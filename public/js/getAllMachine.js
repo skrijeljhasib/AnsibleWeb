@@ -99,6 +99,7 @@ $(document).ready(function () {
         $('#machinetoedit').val(form[0].name.value);
 	$('#edithostname').text(form[0].name.value);
 	$('#edithostgroup').val(form[0][1].value);
+	$('#edithostowner').val(form[0][2].value);
     });
 
     $('#hostEditModal').on('hide.bs.modal', function (e) {
@@ -201,7 +202,8 @@ function edithost() {
             url: 'EditMachine',
             data: {
                 name: $('#machinetoedit').val(),
-		group: $('#edithostgroup').val()
+		group: $('#edithostgroup').val(),
+		owner: $('#edithostowner').val()
             }
         }).done(function () {
 
@@ -326,8 +328,8 @@ function deployapp() {
                 project: JSON.stringify(array)
             }
         }).done(function () {
-            machineTable.ajax.reload();
-
+            //machineTable.ajax.reload();
+	    console.log('deploy done');
         }).fail(function (error) {
             console.log(JSON.stringify(error));
         });

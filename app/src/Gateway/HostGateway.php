@@ -25,6 +25,20 @@ class HostGateway
     }
 
     /**
+     * @param integer $ownerid
+     *
+     * @return array|object
+     */
+    public function fetchAllOwner($ownerid)
+    {
+        if ($ownerid) {
+            return $this->getRepository()->findBy(array('ownerid' => $ownerid));
+        } else {
+            return $this->getRepository()->findAll();
+        }
+    }
+
+    /**
      * @param string $name
      *
      * @return array|object
