@@ -11,6 +11,7 @@ namespace Project\Action;
 use ObjectivePHP\Html\Exception;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Application\Action\AjaxAction;
+use Project\Entity\Host;
 
 class GetAllMachine extends AjaxAction
 {
@@ -28,6 +29,19 @@ class GetAllMachine extends AjaxAction
         }
 
         $hosts['data'] = [];
+	if (is_null($dbhosts)) {
+		$host = new Host();
+	        $host->setName('No Machine');
+        	$host->setLocation('');
+        	$host->setDomain('');
+        	$host->setHostID('');
+        	$host->setStatus('');
+		$host = $host->toArray();
+		$host['action'] = "";
+		$hosts['data'][] = $host;
+		return $hosts;
+
+	}	
 
         foreach ($dbhosts as $host) {
 

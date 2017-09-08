@@ -21,6 +21,9 @@ $(document).ready(function () {
             url: 'GetAllMachine',
             type: 'GET'
         },
+	language: {
+            infoEmpty: "No records available",
+    	},
         columns: [
             {"data": "id"},
             {"data": "name"},
