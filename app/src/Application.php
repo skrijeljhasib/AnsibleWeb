@@ -17,6 +17,7 @@ use ObjectivePHP\Application\Operation\ServiceLoader;
 use ObjectivePHP\Application\Operation\ViewRenderer;
 use ObjectivePHP\Application\Operation\ViewResolver;
 use ObjectivePHP\Application\View\Helper\Vars;
+use ObjectivePHP\Application\Workflow\Filter\EnvFilter;
 use ObjectivePHP\Application\Workflow\Filter\UrlFilter;
 use ObjectivePHP\Cli\Router\CliRouter;
 use ObjectivePHP\Package\Doctrine\DoctrinePackage;
@@ -38,6 +39,7 @@ use Project\Middleware\LayoutSwitcher;
 use Project\Filter\CliFilter;
 use Project\Filter\PlayBookFilter;
 
+use Project\Middleware\FakeUser;
 /**
  * Class Application
  *
@@ -87,8 +89,23 @@ class Application extends AbstractApplication
             Vars::$config = $app->getConfig();
         });
 	
+	//$this->getStep('authentication')
+        //        ->plug(ConnectMiddleware::class, CliFilter::class, PlayBookFilter::class);
 	$this->getStep('authentication')
-                ->plug(ConnectMiddleware::class, CliFilter::class, PlayBookFilter::class);
+            ->plug(ConnectMiddleware::class, CliFilter::class, new EnvFilter(['test', 'prod']), function ($app) {
+		return !(bool)preg_match('#.*/api/.*#', $app->getRequest()->getUri()->getPath());
+            })
+            ->plug(FakeUser::class, new EnvFilter(['dev']))
+            ->plug(function ($app) {
+                if (!in_array($app->getServicesFactory()->get('connect.client')->getUser()->getCurrentRole(), ['USER', 'ADMIN'], true)) {
+                    throw new \LogicException('Unauthorized', 401);
+                }
+            }, new EnvFilter(['test', 'prod']), function ($app) {
+                return !(php_sapi_name() === 'cli');
+            }, function ($app) {
+                     return !(bool)preg_match('#.*/api/.*#', $app->getRequest()->getUri()->getPath());
+                 }
+	);
         
 	// the dispatcher will actually run the matched route
         $this->getStep('route')->plug(new Dispatcher())->as('dispatcher');

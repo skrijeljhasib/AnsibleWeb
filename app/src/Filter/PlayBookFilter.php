@@ -6,9 +6,11 @@ class PlayBookFilter {
 	public function __invoke($app) {
 		if (($_SERVER["REDIRECT_URL"]) != '/PlayBook') {
 			return true;
-		} else {
-			return false;
-		}
+		};
+		if (($_SERVER["REDIRECT_URL"]) != '/redeploy') {
+			return true;
+                };
+		return false;
 	}
 
 }

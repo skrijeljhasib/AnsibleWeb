@@ -180,6 +180,22 @@ class PlayBook
 		}
 		$this->tube = null;
                 break;
+
+             case 'redeployprojectagain':
+                $this->tube = 'ansible-post';
+                if (!is_array(json_decode($app->getRequest()->getParameters()->get('project')))) { break; }
+                foreach (json_decode($app->getRequest()->getParameters()->get('project')) as $project) {
+                    $deployService = new DeployService();
+                    $json = $deployService->load(
+                        $app,
+                        $this->ansible_api["ansible_playbook"],
+                        $project
+                    );
+                    $pheanstalk->useTube($this->tube)->put($json);
+                }
+                $this->tube = null;
+                break;
+
 	     case 'redeployproject':
                 $this->tube = 'ansible-post';
 		if (!is_array(json_decode($app->getRequest()->getParameters()->get('project')))) { break; }
