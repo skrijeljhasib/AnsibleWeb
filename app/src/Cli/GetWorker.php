@@ -102,7 +102,7 @@ class GetWorker extends AbstractCliAction
                             ]
                         		);
                         		try {
-                                   	$response = $guzzle_client->request('GET', '/PlayBook',
+                                   	$response = $guzzle_client->request('GET', '/api/PlayBook',
                                         [
                                             'query' => [
                                                 'playbook' => 'delDnsEntryToOvh',
@@ -117,7 +117,7 @@ class GetWorker extends AbstractCliAction
                                         	echo 'Error playbook delDnsEntryToOvh';
                                         	break;
                                     	}
-                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                        $response = $guzzle_client->request('GET', '/api/PlayBook',
                                         [
                                             'query' => [
                                                 'playbook' => 'deletetemplate',
@@ -167,7 +167,7 @@ class GetWorker extends AbstractCliAction
                             ]
                         );
                         try {
-                            $response = $guzzle_client->request('GET', '/PlayBook',
+                            $response = $guzzle_client->request('GET', '/api/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'waitssh',
@@ -181,7 +181,7 @@ class GetWorker extends AbstractCliAction
                             }
 
 			    for ($i = 1; $i <= 3; $i++) {
-                            	$response = $guzzle_client->request('GET', '/PlayBook',
+                            	$response = $guzzle_client->request('GET', '/api/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'installdependencies',
@@ -210,7 +210,7 @@ class GetWorker extends AbstractCliAction
 					$dns['dns_type'] = 'A';
 					$dns['dns_domain_name'] = 'vehbo.ovh';
 			    }
-                                    $response = $guzzle_client->request('GET', '/PlayBook',
+                                    $response = $guzzle_client->request('GET', '/api/PlayBook',
                                         [
                                             'query' => [
                                                 'playbook' => 'addDnsEntryToOvh',
@@ -231,7 +231,7 @@ class GetWorker extends AbstractCliAction
                             if (!empty($order)) {
                                 if (!is_null($order->getLanguage()) && $order->getLanguage()) {
                                     $language = json_decode($order->getLanguage(), true);
-                                    $response = $guzzle_client->request('GET', '/PlayBook',
+                                    $response = $guzzle_client->request('GET', '/api/PlayBook',
                                         [
                                             'query' => [
                                                 'playbook' => 'php',
@@ -248,7 +248,7 @@ class GetWorker extends AbstractCliAction
                                 }
 
                                 if (!is_null($order->getPackages()) && $order->getPackages()) {
-                                    $response = $guzzle_client->request('GET', '/PlayBook',
+                                    $response = $guzzle_client->request('GET', '/api/PlayBook',
                                         [
                                             'query' => [
                                                 'playbook' => 'installpackage',
@@ -266,7 +266,7 @@ class GetWorker extends AbstractCliAction
                                 if (!is_null($order->getWebserver()) && $order->getWebserver()) {
                                     $webserver = json_decode($order->getWebserver(), true);
                                     if ($webserver['webserver'] == 'apache') {
-                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                        $response = $guzzle_client->request('GET', '/api/PlayBook',
                                             [
                                                 'query' => [
                                                     'playbook' => $webserver['webserver'],
@@ -278,7 +278,7 @@ class GetWorker extends AbstractCliAction
                                         );
                                     }
                                     if ($webserver['webserver'] == 'nginx') {
-                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                        $response = $guzzle_client->request('GET', '/api/PlayBook',
                                             [
                                                 'query' => [
                                                     'playbook' => $webserver['webserver'],
@@ -296,7 +296,7 @@ class GetWorker extends AbstractCliAction
                                 if (!is_null($order->getDatabase()) && $order->getDatabase()) {
                                     $database = json_decode($order->getDatabase(), true);
                                     if ($database['database'] == 'mysql') {
-                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                        $response = $guzzle_client->request('GET', '/api/PlayBook',
                                             [
                                                 'query' => [
                                                     'playbook' => 'mysql',
@@ -310,7 +310,7 @@ class GetWorker extends AbstractCliAction
                                         );
                                     }
                                     if ($database['database'] == 'mongodb') {
-                                        $response = $guzzle_client->request('GET', '/PlayBook',
+                                        $response = $guzzle_client->request('GET', '/api/PlayBook',
                                             [
                                                 'query' => [
                                                     'playbook' => 'mongodb',
@@ -325,7 +325,7 @@ class GetWorker extends AbstractCliAction
                                     }
 				 }
 				 if (!is_null($order->getTemplateJson()) && $order->getTemplateJson() == '"Template:Yes"') {
-			            $response = $guzzle_client->request('GET', '/PlayBook',
+			            $response = $guzzle_client->request('GET', '/api/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'installtemplate',
@@ -339,7 +339,7 @@ class GetWorker extends AbstractCliAction
                             		}
                                 }
                                  if (!is_null($order->getDeploy()) && $order->getDeploy() && (!empty(json_decode($order->getDeploy())))) {
-                                    $response = $guzzle_client->request('GET', '/PlayBook',
+                                    $response = $guzzle_client->request('GET', '/api/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'deployproject',
@@ -358,7 +358,7 @@ class GetWorker extends AbstractCliAction
 
                             }
 
-                            $response = $guzzle_client->request('GET', '/PlayBook',
+                            $response = $guzzle_client->request('GET', '/api/PlayBook',
                                 [
                                     'query' => [
                                         'playbook' => 'notify',

@@ -181,7 +181,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'PlayBook',
+            url: 'api/PlayBook',
             data: {
                 playbook: 'getallmachine'
             }
@@ -268,7 +268,7 @@ function check() {
         output.innerHTML = 'Deleting';
         $.ajax({
             type: 'GET',
-            url: 'PlayBook',
+            url: 'api/PlayBook',
             data: {
                 playbook: 'deletemachine',
                 name: $('#machinetodelete').val()
@@ -296,7 +296,7 @@ function deletesoft() {
         output.innerHTML = 'Deleting';
         $.ajax({
             type: 'GET',
-            url: 'PlayBook',
+            url: 'api/PlayBook',
             data: {
                 playbook: 'deletemachinedb',
                 name: $('#machinetosoftdelete').val()
@@ -323,7 +323,7 @@ function deployapp() {
         output.innerHTML = 'Deploying ' + $('#selectproject').val();
         $.ajax({
             type: 'GET',
-            url: 'PlayBook',
+            url: 'api/PlayBook',
             data: {
                 playbook: 'redeployproject',
 		name: $('#deployhostname').val(),

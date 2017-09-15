@@ -1,6 +1,6 @@
 <?php
 
-namespace Project\Action;
+namespace Project\Api;
 
 use Pheanstalk\Pheanstalk;
 use Project\Application;

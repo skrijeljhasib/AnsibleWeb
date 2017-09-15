@@ -154,7 +154,7 @@ $(document).ready(function () {
     function installmachine() {
                 $.ajax({
                     type: 'GET',
-                    url: 'PlayBook',
+                    url: 'api/PlayBook',
                     data: {
                         playbook: 'installmachine',
                         host: checkHost(),
