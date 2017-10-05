@@ -150,6 +150,7 @@ $(document).ready(function () {
 		txt += '<tr class="' + tabledeploy(myObj.chat) + '" onclick="$(\'#selectproject\').val(\'chat\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>chat</td><td>' + myObj.chat + '</td></tr>';
 		txt += '<tr class="' + tabledeploy(myObj.esm) + '" onclick="$(\'#selectproject\').val(\'esm\'); $(this).addClass(\'danger\').siblings().removeClass(\'danger\');"><td>esm</td><td>' + myObj.esm + '</td></tr>';
 		txt += '<tr class="' + tabledeploy(myObj.chatapp) + '" onclick="$(\'#selectproject\').val(\'chatapp\');"><td>chatapp</td><td>' + myObj.chatapp + '</td></tr>';
+                txt += '<tr class="' + tabledeploy(myObj.chatapp) + '" onclick="$(\'#selectproject\').val(\'notification\');"><td>notification</td><td>' + myObj.notification + '</td></tr>';
 		txt += '</table>';
 		$('#projectlist').html(txt);
 
