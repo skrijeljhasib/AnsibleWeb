@@ -13,7 +13,7 @@ class FakeUser
     public function __invoke(ApplicationInterface $app)
     {
         $fakeUser = new User();
-        $fakeUser->setCurrentRole('USER')
+        $fakeUser->setCurrentRole('ADMIN')
                  ->setEmail('devs@flash-global.net')
                  ->setFirstName('Dev')
                  ->setLastName('Dev')
