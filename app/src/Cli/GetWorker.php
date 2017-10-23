@@ -73,6 +73,7 @@ class GetWorker extends AbstractCliAction
                             	$host->setHostID($hostid);
                             	$host->setLocation($location);
                             	$host->setStatus($status);
+				$host->setDomain('vehbo.ovh');
 			    }
 			    $host->setInventory($inventory);
                             $hosts_gateway->put($host);

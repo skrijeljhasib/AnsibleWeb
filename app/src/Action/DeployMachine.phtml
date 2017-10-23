@@ -33,7 +33,7 @@ use Project\Entity\Package;
                     <div class="panel-body">
                         <div id="deploybody">
                             <ul class="nav nav-tabs" role="tablist" id="deployTabs">
-				<?php 	$apps = array("chat", "connect", "connectadmin", "logger", "audit","mailer", "translate", "payment", "filer","esm","chatapp");
+				<?php 	$apps = array("chat", "connect", "connectadmin", "logger", "audit","mailer", "translate", "payment", "filer","esm","chatapp","notification");
 					$active = "active";
 					foreach($apps as $app) { 
 						echo '<li role="presentation" class="'.$active.'"><a href="#'.$app.'" aria-controls="deploy"
@@ -48,7 +48,9 @@ use Project\Entity\Package;
 				foreach($apps as $app) {
                                 echo '<div role="tabpanel" class="tab-pane '.$active.'" id="'.$app.'">
 				    <br><div class="checkbox">
-					<label><input type="checkbox" name="'.$app.'" id="'.$app.'Checkbox" class="checkbox" checked>
+					<label><input type="checkbox" name="'.$app.'" id="'.$app.'Checkbox" class="checkbox" ';
+				if ($app == 'esm') { echo 'checked disabled'; }
+				echo '>
                                     	<b>Install '.$app.' Project</b></label><br><br>
                                     <label> Select your Branch:
                                         <select required name="'.$app.'_version" id="'.$app.'_branch" class="form-control">

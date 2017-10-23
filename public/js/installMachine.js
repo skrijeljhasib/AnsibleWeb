@@ -92,6 +92,7 @@ $(document).ready(function () {
         if ($('#filerCheckbox').is(':checked')) { array.push("filer"); }
 	if ($('#chatCheckbox').is(':checked')) { array.push("chat"); }
 	if ($('#chatappCheckbox').is(':checked')) { array.push("chatapp"); }
+	if ($('#notificationCheckbox').is(':checked')) { array.push("notification"); }
         if ($('#paymentCheckbox').is(':checked')) { array.push("payment"); }
 	return JSON.stringify(array);
     }
