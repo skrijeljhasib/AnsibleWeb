@@ -14,6 +14,7 @@ class FakeUser
     {
         $fakeUser = new User();
         $fakeUser->setCurrentRole('ADMIN')
+		 ->setId(0)
                  ->setEmail('devs@flash-global.net')
                  ->setFirstName('Dev')
                  ->setLastName('Dev')
