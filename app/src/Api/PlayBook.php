@@ -97,7 +97,7 @@ class PlayBook
 		$key = "name";
 		if (preg_match("/^(?=.{1,255}$)[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?(?:\.[0-9a-z](?:(?:[0-9a-z]|-){0,61}[0-9a-z])?)*\.?$/", json_decode($app->getRequest()->getParameters()->get('host'))->$key, $output_array)) {
 		   $dns_config = $app->getConfig()->get(DnsConfig::class);
-		   if (preg_match('/'. $dns_config['env'] .'/',json_decode($app->getRequest()->getParameters()->get('host'))->$key) {
+		   if (preg_match('/'. $dns_config['env'] .'/',json_decode($app->getRequest()->getParameters()->get('host'))->$key)) {
                 	$this->tube = 'installmachine';
                 	$machineService = new InstallMachineService();
                 	$json = $machineService->load(
