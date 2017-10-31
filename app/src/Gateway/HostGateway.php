@@ -31,7 +31,7 @@ class HostGateway
      */
     public function fetchAllOwner($ownerid)
     {
-        if ($ownerid) {
+        if ($ownerid >= 0) {
             return $this->getRepository()->findBy(array('ownerid' => $ownerid));
         } else {
             return $this->getRepository()->findAll();

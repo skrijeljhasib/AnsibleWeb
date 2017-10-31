@@ -21,7 +21,8 @@ class GetAllMachine extends AjaxAction
         try {
             $host_gateway = $app->getServicesFactory()->get('gateway.hosts');
             //$dbhosts = $host_gateway->fetch();
-	    if ($user_id = $app->getServicesFactory()->get('connect.client')->getUser()->getId()) {
+	    $user_id = $app->getServicesFactory()->get('connect.client')->getUser()->getId();
+	    if ($user_id >= 0) {
 	    	$dbhosts = $host_gateway->fetchAllOwner($user_id);
 	    }
         } catch (Exception $e) {
