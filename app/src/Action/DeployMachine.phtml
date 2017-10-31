@@ -26,7 +26,7 @@ use Project\Entity\Package;
                     </div>
                 </div>
                 <div class="panel-body">
-                       <label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' required autofocus>
+                       <label for='name'>Hostname: </label><input id='name' class='form-control' name='host[name]' type='text' pattern="/<?php echo Vars::collection('dns_config')['env']; ?>/" required autofocus>
 		
 		<br><br><div id="deploypanel" class="panel panel-default">
                     <div class="panel-heading"><a href="#deploypanel" onClick="$(deploybody).toggle();">Projects</a></div>
@@ -68,7 +68,7 @@ use Project\Entity\Package;
                 </div>
 		<input type="checkbox" name="dns[]" id="dnsCheckbox" checked readonly style="display:none;"/>
 		<input type="hidden" id="dns_type" value="A"/>
-		<input type="hidden" id="dns_domain_name" value="vehbo.ovh"/>
+		<input type="hidden" id="dns_domain_name" value="<?php echo Vars::collection('dns_config')['domain'][0]; ?>"/>
             </div></div>
 
             <br>

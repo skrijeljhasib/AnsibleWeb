@@ -14,6 +14,7 @@ $ovh_dns_auth = [
 
 $dns_config = [
 	"enabled" => "false",
+	"env" => "",
     "domain" => [
 
     ],

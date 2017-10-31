@@ -10,6 +10,7 @@ namespace Project\Action;
 
 
 use ObjectivePHP\Html\Exception;
+use Project\Config\DnsConfig;
 use Project\Application;
 
 class CheckHostName
@@ -17,7 +18,10 @@ class CheckHostName
 
     public function __invoke(Application $app)
     {
-
+	$dns_config = $app->getConfig()->get(DnsConfig::class);
+	if (!preg_match('/'. $dns_config['env'] .'/' , $app->getRequest()->getParameters()->get('name'))) {
+		die('nok');
+	}
         try {
             $host_gateway = $app->getServicesFactory()->get('gateway.hosts');
             $hosts = $host_gateway->fetch();

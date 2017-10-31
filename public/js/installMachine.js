@@ -1,6 +1,8 @@
 $(document).ready(function () {
     
     var templatejson = $('#selected').text();
+    $('#name').css('border-color', 'red');
+    $('#SendToAnsibleApi').attr('disabled', true);
     $('.dropdown-menu a').click(function(){
 	$('#selected').text($(this).text());
     	templatejson = $(this).text();

@@ -5,6 +5,7 @@ namespace Project\Cli;
 use ObjectivePHP\Application\ApplicationInterface;
 use ObjectivePHP\Cli\Action\AbstractCliAction;
 use Project\Config\Url;
+use Project\Config\DnsConfig;
 use Project\Entity\Host;
 use Pheanstalk\Pheanstalk;
 use GuzzleHttp\Client;
@@ -26,6 +27,7 @@ class GetWorker extends AbstractCliAction
     public function run(ApplicationInterface $app)
     {
         $url = $app->getConfig()->get(Url::class);
+	$dns_config = $app->getConfig()->get(DnsConfig::class);
 
         $pheanstalk = new Pheanstalk($url['beanstalk']);
 
@@ -73,7 +75,7 @@ class GetWorker extends AbstractCliAction
                             	$host->setHostID($hostid);
                             	$host->setLocation($location);
                             	$host->setStatus($status);
-				$host->setDomain('vehbo.ovh');
+				$host->setDomain($dns_config['dns_config']['domain'][0]);
 			    }
 			    $host->setInventory($inventory);
                             $hosts_gateway->put($host);
@@ -209,7 +211,7 @@ class GetWorker extends AbstractCliAction
 			    }
 			    if (!$dns_order) {
 					$dns['dns_type'] = 'A';
-					$dns['dns_domain_name'] = 'vehbo.ovh';
+					$dns['dns_domain_name'] = $dns_config['dns_config']['domain'][0];
 			    }
                                     $response = $guzzle_client->request('GET', '/api/PlayBook',
                                         [
